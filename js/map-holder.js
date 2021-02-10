@@ -282,7 +282,7 @@ function updatePoint2(){
 		.attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
 		.attr("r", 5)
 		.style("fill", function(d){
-			return chooseColorByMag(d.mag,0) 
+			return "#B80F0A";
 		})
 		.style("stroke", "#000")
 	

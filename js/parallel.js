@@ -29,8 +29,12 @@ function cancelSelection() {
 function parallelFiltering(d) {
   var rangeC = y["place"].range();
   var rangeT = y["attacktype1_txt"].range();
+  var rangeT2 = y["weaptype1_txt"].range();
+  var rangeT3 = y["targtype1_txt"].range();
   var rangePointsC = d3.range(rangeC[0], rangeC[1], y["place"].step());
   var rangePointsT = d3.range(rangeT[0], rangeT[1], y["attacktype1_txt"].step());
+  var rangePointsT2 = d3.range(rangeT2[0], rangeT2[1], y["weaptype1_txt"].step());
+  var rangePointsT3 = d3.range(rangeT3[0], rangeT3[1], y["targtype1_txt"].step());
   value = dimensions.every(function (p, i) {
     if (extents[i][0] == 0 && extents[i][1] == 0) {
       return true;
@@ -44,6 +48,16 @@ function parallelFiltering(d) {
       if (type_selection == undefined) return true;
       dValue = rangePointsT[types.indexOf(d[p.key])];
       return dValue >= type_selection[0] && dValue <= type_selection[1];
+    }
+    else if (p.key == "weaptype1_txt") {
+      if (type2_selection == undefined) return true;
+      dValue = rangePointsT2[types2.indexOf(d[p.key])];
+      return dValue >= type2_selection[0] && dValue <= type2_selection[1];
+    }
+    else if (p.key == "targtype1_txt") {
+      if (type3_selection == undefined) return true;
+      dValue = rangePointsT3[types3.indexOf(d[p.key])];
+      return dValue >= type3_selection[0] && dValue <= type3_selection[1];
     }else {
       return extents[i][1] <= d[p.key] && d[p.key] <= extents[i][0];
     }
@@ -63,6 +77,14 @@ function brushParallel() {
       else if (dimensions[i].key == "attacktype1_txt") {
         type_selection = d3.event.selection;
         extents[i] = d3.event.selection.map(scalePointInverseT, y[dimensions[i].key]);
+      }
+      else if (dimensions[i].key == "weaptype1_txt") {
+        type2_selection = d3.event.selection;
+        extents[i] = d3.event.selection.map(scalePointInverseT2, y[dimensions[i].key]);
+      }
+      else if (dimensions[i].key == "targtype1_txt") {
+        type3_selection = d3.event.selection;
+        extents[i] = d3.event.selection.map(scalePointInverseT3, y[dimensions[i].key]);
       }
       else {
         extents[i] = d3.event.selection.map(y[dimensions[i].key].invert, y[dimensions[i].key]);
@@ -99,6 +121,24 @@ function scalePointInverseT(pos) {
   return inverseT;
 }
 
+function scalePointInverseT2(pos) {
+  var xPos = pos;
+  var domainT = y["weaptype1_txt"].domain();
+  var rangeT = y["weaptype1_txt"].range();
+  var rangePointsT = d3.range(rangeT[0], rangeT[1], y["weaptype1_txt"].step());
+  var inverseT = domainT[d3.bisect(rangePointsT, xPos)];
+  return inverseT;
+}
+
+function scalePointInverseT3(pos) {
+  var xPos = pos;
+  var domainT = y["targtype1_txt"].domain();
+  var rangeT = y["targtype1_txt"].range();
+  var rangePointsT = d3.range(rangeT[0], rangeT[1], y["targtype1_txt"].step());
+  var inverseT = domainT[d3.bisect(rangePointsT, xPos)];
+  return inverseT;
+}
+
 
 function draw(d) {
   
@@ -115,6 +155,8 @@ var background;
 var foreground;
 var country_selection;
 var type_selection;
+var type2_selection;
+var type3_selection;
 
 var y = {};
 var names = [];
@@ -140,6 +182,14 @@ function start(){
       name: "attacktype1_txt",
       key: "attacktype1_txt"
     },
+    {
+      name: "weaptype1_txt",
+      key: "weaptype1_txt"
+    },
+    {
+      name: "targtype1_txt",
+      key: "targtype1_txt"
+    }
            
     ];
 
@@ -180,6 +230,32 @@ function start(){
 
       y[j] = d3.scalePoint()
         .domain(types)
+        .range([0, height_parallel]);
+      
+    }else if (j == "weaptype1_txt"){
+      types2 = [" "];
+      data.forEach(element => {
+        if (!types2.includes(element[j])) {
+          types2.push(element[j])
+        }
+      });
+      types2.push("  ");
+
+      y[j] = d3.scalePoint()
+        .domain(types2)
+        .range([0, height_parallel]);
+      
+    }else if (j == "targtype1_txt"){
+      types3 = [" "];
+      data.forEach(element => {
+        if (!types3.includes(element[j])) {
+          types3.push(element[j])
+        }
+      });
+      types3.push("  ");
+
+      y[j] = d3.scalePoint()
+        .domain(types3)
         .range([0, height_parallel]);
       
     }
