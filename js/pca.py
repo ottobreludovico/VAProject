@@ -25,7 +25,7 @@ with open(file, mode='r') as csv_file:
             line_count += 1
             header = row
         else:
-            if (float(row[header.index('nkill')]) >= 1):
+            if (float(row[header.index('nkill')]) >= 0):
                 data.append(row)
                 line_count += 1
 
