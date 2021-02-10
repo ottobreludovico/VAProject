@@ -251,6 +251,14 @@ manager.addListener('dataReady', function (e) {
   	start();
 });
 
+manager.addListener('scatterplotBrushing', function (e) {
+  svgParallel.selectAll('.path_foreground')
+  .style("stroke", setColorByScatterplot)
+  .attr("class", setClass)
+  .style("opacity", setOpacityByScatterplot);
+  svgParallel.selectAll('.path_highlighted').raise();
+});
+
 
 manager.addListener('yearChanged', function (e) {
 	cambio=false;
@@ -272,6 +280,42 @@ function updateParallel(){
   .append("g")
   .attr("transform", "translate(" + margin_parallel.left + "," + margin_parallel.top + ")");
   start()
+}
+
+
+manager.addListener('placeChanged', function (e) {
+	  cambio=true;
+	  updateParallel();
+});
+
+
+function setColorByScatterplot(d) {
+  if (manager.filteringByScatterplot == undefined){ return "#B80F0A";}
+  if (manager.filteringByScatterplot(d)){
+	  console.log(1)
+    return "#008000";
+  }
+  else{
+    return "#B80F0A";
+  }
+}
+
+function setOpacityByScatterplot(d){
+  if (manager.filteringByScatterplot == undefined) return 1;
+  value = manager.filteringByScatterplot(d);
+  if (value) {
+    return 1
+  }
+  return 0.6;
+}
+
+function setClass(d) {
+  if (manager.filteringByScatterplot == undefined) return 'path_foreground path_normal';
+  value = manager.filteringByScatterplot(d);
+  if (value){
+    return 'path_foreground path_highlighted';
+  }
+  else return 'path_foreground path_normal';
 }
 
 
