@@ -8,7 +8,7 @@ var svgParallel = d3.select(".parallel_area").append("svg")
 function brushstart() {
   d3.event.sourceEvent.stopPropagation();
 }
-//var cambio=false;
+var cambio=false;
 
 function cancelSelection() {
   key = this.__data__.key;
@@ -69,7 +69,7 @@ function brushParallel() {
       }
     }
   }
-  //manager.notifyParallelBrushing();
+  manager.notifyParallelBrushing();
   foreground.style("display", function (d) {
       value = parallelFiltering(d);
       if (value) {
@@ -118,9 +118,10 @@ var type_selection;
 
 var y = {};
 var names = [];
+var data;
 
 function parallel_getData(){
-	  return manager.getDataFilteredByYear();
+	  return manager.getDataFilteredByParallel();
 }
 
 function start(){
@@ -243,7 +244,7 @@ function start(){
   .attr("x", -8)
   .attr("width", 16);
       
-  //manager.filteringByParallel = parallelFiltering;  
+  manager.filteringByParallel = parallelFiltering;  
 }
 
 manager.addListener('dataReady', function (e) {
@@ -252,7 +253,7 @@ manager.addListener('dataReady', function (e) {
 
 
 manager.addListener('yearChanged', function (e) {
-	//cambio=false;
+	cambio=false;
   d3.select(".parallel_area").select("svg").remove();
   svgParallel = d3.select(".parallel_area").append("svg")
     .attr("width", width_parallel + margin_parallel.left + margin_parallel.right)
@@ -275,6 +276,6 @@ function updateParallel(){
 
 
 manager.addListener('placeChanged', function (e) {
-	  //cambio=true;
+	  cambio=true;
 	  updateParallel();
 });

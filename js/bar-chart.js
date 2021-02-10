@@ -72,10 +72,6 @@ manager.addListener('dataReady', function (e) {
             .text(function(d) { return d[1]; });
 }); 
 
-function bar_getData(){
-    return manager.getDataFilteredByYear();
-}
-
 function computeFrequency(data){
     frequency = {};
     for (i = 0; i < data.length; i++) {
@@ -117,10 +113,6 @@ function computeFrequency(data){
 
     return items;
 }
-
-manager.addListener('yearChanged', function (e) {
-	updateBarChart()
-})  
 
 
 function updateBarChart(){ 
@@ -191,3 +183,94 @@ function updateBarChart(){
 
 
 }
+
+function updateChart(){ 
+    data = bar_getData()
+
+    var fqcs = computeFrequency(data);
+    xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
+    yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1]; }))]);
+
+    xAxisBar = svgBar.select(".x-axisBar")
+        .call(d3.axisBottom(xBar))
+    
+    yAxisBar = svgBar.select(".y-axisBar")
+        .call(d3.axisLeft(yBar))
+
+    xAxisBar.selectAll("text")
+    .attr("transform", "rotate(45)")
+    .style("text-anchor", "start")
+    .attr("dx", ".71em");
+        
+    yAxisBar.selectAll("text")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+
+    svgBar.selectAll(".barRect").data(fqcs).exit().remove();
+    svgBar.selectAll(".barValues").data([]).exit().remove();
+    
+
+    svgBar.selectAll(".bar")
+    .data(fqcs)
+    .enter().append("rect")
+    .attr("class", "barRect")
+    .attr("x", function(fcy) {return xBar(fcy[0]); })
+    .attr("width", xBar.bandwidth)
+    .attr("y", function(fcy) { return yBar(fcy[1]); })
+    .attr("height", function(fcy) { return heightBar - yBar(fcy[1]); })
+    .attr("margin-left", "1px").attr("selected",false)
+    .style("fill", "#2e4352")
+    .on("click", function(d,i){
+    
+    });
+
+
+    svgBar.selectAll(".bar")
+    .data(fqcs)
+    .enter()
+    .append("text")
+            .attr("class", "barValues")
+            .attr("x", function(d) { return xBar(d[0]) + (xBar.bandwidth())/2; })
+            .attr("y", function(d) { return yBar(d[1]) - 8; })
+            .style("fill", "black")
+            .style("text-anchor", "middle")
+            .attr("dy", ".35em")
+            .text(function(d) {return d[1]; });
+
+
+    svgBar.selectAll(".barRect").data(fqcs).transition().duration(500)
+            .attr("x", function (d) { return xBar(d[0]); })
+            .attr("y", function (d) { return yBar(d[1]); })
+            .attr("width",  xBar.bandwidth)
+            .attr("height", function(fcy) { return heightBar - yBar(fcy[1]);});
+
+    svgBar.selectAll(".barValues").data(fqcs).transition().duration(500)
+            .attr("x", function(d) { return xBar(d[0]) + (xBar.bandwidth())/2; })
+            .attr("y", function(d) { return yBar(d[1]) - 8; })
+            .style("text-anchor", "middle")
+
+}
+
+function bar_getData(){
+    return manager.getDataFilteredByParallel();
+}
+
+manager.addListener('parallelBrushing', function (e) {
+    if (manager.filteringByYear){
+        d3.selectAll(".barRectMag").remove();
+        showValues.checked = false;
+        updateChart();
+    }
+});
+
+manager.addListener('yearChanged', function (e) {
+    showValues.checked = false;
+    d3.selectAll(".barRectMag").remove();
+    updateChart();
+});
+
+showValues.addEventListener("change", function(){
+    d3.selectAll(".barRectMag").remove();
+    updateChart();
+})

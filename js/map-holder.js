@@ -65,7 +65,7 @@ function initiateZoom() {
   midX = ($("#map-holder").width() - minZoom * w) / 2;
   midY = ($("#map-holder").height() - minZoom * h) / 2;
   // change zoom transform to min zoom and centre offsets
-  svg.call(zoom.transform, d3.zoomIdentity.translate(midX, midY).scale(minZoom));
+  svg1.call(zoom.transform, d3.zoomIdentity.translate(midX, midY).scale(minZoom));
 }
 
 // zoom to show a bounding box, with optional additional padding as percentage of box size
@@ -100,7 +100,7 @@ function boxZoom(box, centroid, paddingPerc) {
   dleft = Math.max($("svg").width() - w * zoomScale, dleft);
   dtop = Math.max($("svg").height() - h * zoomScale, dtop);
   // set zoom
-  svg
+  svg1
     .transition()
     .duration(500)
     .call(
@@ -115,7 +115,7 @@ function boxZoom(box, centroid, paddingPerc) {
 // on window resize
 $(window).resize(function() {
   // Resize SVG
-  svg
+  svg1
     .attr("width", $("#map-holder").width())
     .attr("height", $("#map-holder").height())
   ;
@@ -123,7 +123,7 @@ $(window).resize(function() {
 });
 
 // create an SVG
-var svg = d3
+var svg1 = d3
   .select("#map-holder")
   .append("svg")
   // set to the same size as the "map-holder" div
@@ -133,15 +133,16 @@ var svg = d3
   .call(zoom)
 ;
 
-var data;
+
+var data1=[];
 
 manager.addListener('dataReady', function (e) {
   d3.json(
     "https://raw.githubusercontent.com/andybarefoot/andybarefoot-www/master/maps/mapdata/custom50.json", function(json) {
       //Bind data and create one path per GeoJSON feature
-      data=map_getData();
-      console.log(data);
-      countriesGroup = svg.append("g").attr("id", "map");
+      data1=map_getData();
+      console.log(data1);
+      countriesGroup = svg1.append("g").attr("id", "map");
       // add a background rectangle
       countriesGroup
         .append("rect")
@@ -233,7 +234,7 @@ manager.addListener('dataReady', function (e) {
   
       circle=countriesGroup
         .selectAll(".circleMap")
-        .data(data)
+        .data(data1)
         .enter()
         .append("circle")
         .attr("class","circleMap")
@@ -253,3 +254,29 @@ function map_getData(){
 	return manager.getDataFilteredByParallel();
 }
 
+manager.addListener('yearChanged', function (e) {
+	updatePoint3()
+})  
+
+function updatePoint3(){
+	newdataM = [];
+	newdataM = map_getData();
+
+	circle=countriesGroup
+	.selectAll(".circleMap")
+	.remove()
+	.exit();
+
+	circle=countriesGroup
+		.selectAll(".circleMap")
+		.data(newdataM)
+		.enter()
+		.append("circle")
+		.attr("class","circleMap")
+		.attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
+		.attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
+		.attr("r", 5)
+		.style("fill", "#B80F0A")
+		.style("stroke", "#000")
+	
+}

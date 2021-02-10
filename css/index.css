@@ -22,10 +22,12 @@ html,body {
 #barChart{
     border-style:solid; 
     border-color:black; 
+    border-width:2px; 
+    margin: 1px;
+    width: 100%;
     background-color: white;
     float: left;
     height: 100%;
-    width: 100%;
 }
 
 #showDiv label {
@@ -52,7 +54,7 @@ html,body {
     fill: #2e4352;
 }
 
-#showDiv{   
+#showDiv{  
     margin-top: 10px;
     margin-right: 10px;
     float: right;
