@@ -238,8 +238,8 @@ manager.addListener('dataReady', function (e) {
         .enter()
         .append("circle")
         .attr("class","circleMap")
-        .attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
-        .attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
+        .attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
+        .attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
         .attr("r", 5)
         .style("fill", function(d){
           return "#B80F0A";

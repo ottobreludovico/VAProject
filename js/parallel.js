@@ -37,7 +37,7 @@ function parallelFiltering(d) {
     }
     if (p.key == "place") {
       if (country_selection == undefined) return true;
-      dValue = rangePointsC[countries.indexOf(d[p.key])];
+      dValue = rangePointsC[places.indexOf(d[p.key])];
       return dValue >= country_selection[0] && dValue <= country_selection[1];
     }
     else if (p.key == "attacktype1_txt") {
@@ -149,17 +149,17 @@ function start(){
     names.push(dimensions[i].name);
     if (j == "place") {
    
-      countries = [" "];
+      places = [" "];
       data.forEach(element => {
-        if (!countries.includes(element[j])) {
-          countries.push(element[j])
+        if (!places.includes(element[j])) {
+          places.push(element[j])
         }
       });
-      countries.sort();
-      countries.push("  ");
+      places.sort();
+      places.push("  ");
     
       y[j] = d3.scalePoint()
-        .domain(countries)
+        .domain(places)
         .range([0, height_parallel]);
         
     }
