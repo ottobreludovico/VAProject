@@ -254,13 +254,55 @@ function map_getData(){
 	return manager.getDataFilteredByParallel();
 }
 
+function map_getDataMap(){
+	return manager.getDataFilteredByMap();
+}
+
+
 manager.addListener('yearChanged', function (e) {
 	updatePoint3()
 })  
 
-function updatePoint3(){
-	newdataM = [];
+function updatePoint2(){
 	newdataM = map_getData();
+
+	circle=countriesGroup
+	.selectAll(".circleMap")
+	.remove()
+	.exit();
+			
+			
+	circle=countriesGroup
+		.selectAll(".circleMap")
+		.data(newdataM)
+		.enter()
+		.append("circle")
+		.attr("class","circleMap")
+		.attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
+		.attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
+		.attr("r", 5)
+		.style("fill", function(d){
+			return chooseColorByMag(d.mag,0) 
+		})
+		.style("stroke", "#000")
+	
+	d3.selectAll(".circleMap")
+		.style("fill", function(d){
+			if (d.place == manager.place){ return "#B80F0A";}
+			else return "#B80F0A";
+		})
+}
+
+function updatePoint3(){
+  newdataM = [];
+	if (manager.place != undefined) newdataM = map_getDataMap().slice();
+
+	appendData = map_getData();
+
+	for (var i = 0; i < appendData.length; i++){
+		newdataM.push(appendData[i]);
+	}
+
 
 	circle=countriesGroup
 	.selectAll(".circleMap")
@@ -279,4 +321,31 @@ function updatePoint3(){
 		.style("fill", "#B80F0A")
 		.style("stroke", "#000")
 	
+}
+
+manager.addListener('scatterplotBrushing', function (e) {
+	var dt = map_getData();
+	d3.selectAll(".circleMap")
+	.data(dt)
+	.transition()
+	.duration(130)
+	.style('fill', setColorMapByScatterplot)
+});
+
+manager.addListener('parallelBrushing', function (e) { 
+	if (manager.place != undefined){
+		updatePoint3();
+	}
+	else updatePoint2(); 
+});
+
+function setColorMapByScatterplot(d) {
+  if (manager.filteringByScatterplot == undefined){ return "#B80F0A";}
+  if (manager.filteringByScatterplot(d)){
+	  console.log(1)
+    return "#008000";
+  }
+  else{
+    return "#B80F0A";
+  }
 }

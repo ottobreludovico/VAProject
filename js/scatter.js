@@ -170,7 +170,7 @@ function selected(){
         }
         else return false;
     })
-    //manager.notifyScatterplotBrushing();
+    manager.notifyScatterplotBrushing();
 }
 
 function scatter_getData(){
