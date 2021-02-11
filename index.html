@@ -4,11 +4,18 @@
 
 </head>
 <body>
-    <div class = "filters" style="height: 2%;">
-                <label style="font-size: 32px; margin-left: 10%; margin-top: 0.4%;">Global Terrorism</label>
+    <div class="container-fluid flex-container" style="">
+        <div class = "row" style="">
+            <div class="col-md-9">
+                <label style="font-size: 32px;">Global Terrorism</label>
+            </div>
+
+            <div class="col-md-1 filters">
                 <label id = "labelCompare" for="compareCheck"> Compare</label>
                 <input type="checkbox" id="compareCheck" name="compare" value="Compare" onclick="nulla()">
-                <label style="font-size: 16px; margin-left: 60%; margin-top: 0.4%;">Select Year</label>
+            </div>
+            <div class="col-md-2 filters">
+                <label style="font-size: 16px;">Select Year</label>
                 <select name="select" class="form-select bg-dark text-white selct">
                     <option value="2017">2017</option>
                     <option value="2016">2016</option>
@@ -59,35 +66,39 @@
                     <option value="1971">1971</option>
                     <option value="1970">1970</option>
                 </select>
-    </div>
+            </div>         
+        </div>
   
-   <div id="app" class="flex-container">
-        <div class="flex-item" style="">
-            <div id="map-holder"></div>
-        </div>
-        <div class="flex-item" style="">
-            <div class="parallel_area">
-        
-            </div> 
-        </div>
-        <div class="flex-item-2" style="">
-            <div id="barChart"> 
-                <div id="showDiv"><input type="checkbox" id ="showValues"> <label for="showValues">Show all</label></div> <!-- FEDERICO -->
-                <div style="clear:both;"></div>
+
+        <div class="row" style="margin: 20px; height: 41%;">
+            <div class="flex-item col-md-6" style="">
+                <div id="map-holder"></div>
             </div>
-             
+            <div class="flex-item col-md-6" style="">
+                <div class="parallel_area">
+            
+                </div> 
+            </div>
         </div>
-        <div class="flex-item-2" style="">
-            <div id="my_dataviz"></div>
-       </div>
-        <div class="flex-item-2" style="">
-            <div id="scatter_area"></div>
-        </div>
+
+        <div class="row" style="margin: 20px; height: 41%;">
+            <div class="flex-item-2 col-md-4" style="">
+                <div id="barChart"> 
+                    <div id="showDiv"><input type="checkbox" id ="showValues"> <label for="showValues">Show all</label></div>
+                    <div style="clear:both;"></div>
+                </div>
+                    
+            </div>
+            <div class="flex-item-2 col-md-4" style="">
+                <div id="my_dataviz"></div>
+            </div>
+            <div class="flex-item-2 col-md-4" style="">
+                <div id="scatter_area"></div>
+            </div>
+
+        </div>             
     </div>
 
-
-
-    </div>
     <script>
         function nulla(){
             if(manager.secondPlace== undefined){

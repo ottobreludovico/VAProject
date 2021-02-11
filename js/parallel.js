@@ -408,3 +408,11 @@ manager.addListener('placeChanged', function (e) {
 	  cambio=true;
 	  updateParallel();
 });
+
+$(window).resize(function() {
+  // Resize SVG
+  svgParallel
+    .attr("width", $("#map-holder").width())
+    .attr("height", $("#map-holder").height())
+  ;
+});
