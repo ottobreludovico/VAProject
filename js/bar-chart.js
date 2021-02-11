@@ -15,7 +15,7 @@ var svgBar = d3.select("#barChart").append("svg")
                             .attr("transform", "translate(" + marginBar.left + "," + marginBar.top + ")");
 */
 var svgBar = d3.select("#barChart").append("svg")
-                            .attr("width", "100%")
+                            .attr("width", "90%")
                             .attr("height", "100%")
                             .append("g")
                             .attr("transform", "translate(" + marginBar.left + "," + marginBar.top + ")");
@@ -33,6 +33,7 @@ manager.addListener('dataReady', function (e) {
     .call(d3.axisBottom(xBar))
 
     xAxisBar.selectAll("text")
+    .style("fill", "#E8EDDF")
     .attr("transform", "rotate(45)")
     .style("text-anchor", "start")
     .attr("dx", ".71em");
@@ -43,6 +44,7 @@ manager.addListener('dataReady', function (e) {
     .call(d3.axisLeft(yBar))
 
     yAxisBar.selectAll("text")
+    .style("fill", "#E8EDDF")
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
@@ -66,7 +68,7 @@ manager.addListener('dataReady', function (e) {
             .attr("class", "barValues")
             .attr("x", function(d) { return xBar(d[0]) + (xBar.bandwidth())/2; })
             .attr("y", function(d) { return yBar(d[1]) - 8; })
-            .style("fill", "black")
+            .style("fill", "#E8EDDF")
             .style("text-anchor", "middle")
             .attr("dy", ".35em")
             .text(function(d) { return d[1]; });
@@ -95,7 +97,7 @@ function computeFrequency(data){
 
         for (var i = items.length - 1; i >= 0; i--){
             var el = items[i];
-            if (el[1] <= 4){
+            if (el[1] <= 40){
                 if (! (others.includes(el[0]))) others.push(el[0]);
                 tot_others += el[1];
                 items.splice(i, 1);
@@ -164,7 +166,7 @@ function updateBarChart(){
             .attr("class", "barValues")
             .attr("x", function(d) { return xBar(d[0]) + (xBar.bandwidth())/2; })
             .attr("y", function(d) { return yBar(d[1]) - 8; })
-            .style("fill", "black")
+            .style("fill", "#E8EDDF")
             .style("text-anchor", "middle")
             .attr("dy", ".35em")
             .text(function(d) {return d[1]; });
@@ -200,12 +202,14 @@ function updateChart(){
     xAxisBar.selectAll("text")
     .attr("transform", "rotate(45)")
     .style("text-anchor", "start")
-    .attr("dx", ".71em");
+    .attr("dx", ".71em")
+    .style("fill", "#E8EDDF");
         
     yAxisBar.selectAll("text")
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
+    .style("fill", "#E8EDDF");
 
     svgBar.selectAll(".barRect").data(fqcs).exit().remove();
     svgBar.selectAll(".barValues").data([]).exit().remove();
@@ -233,7 +237,7 @@ function updateChart(){
             .attr("class", "barValues")
             .attr("x", function(d) { return xBar(d[0]) + (xBar.bandwidth())/2; })
             .attr("y", function(d) { return yBar(d[1]) - 8; })
-            .style("fill", "black")
+            .style("fill", "#E8EDDF")
             .style("text-anchor", "middle")
             .attr("dy", ".35em")
             .text(function(d) {return d[1]; });

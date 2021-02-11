@@ -132,7 +132,7 @@ var svg1 = d3
   // add zoom functionality
   .call(zoom)
 ;
-
+  
 
 var data1=[];
 
@@ -141,7 +141,7 @@ manager.addListener('dataReady', function (e) {
     "https://raw.githubusercontent.com/andybarefoot/andybarefoot-www/master/maps/mapdata/custom50.json", function(json) {
       //Bind data and create one path per GeoJSON feature
       data1=map_getData();
-      console.log(data1);
+    
       countriesGroup = svg1.append("g").attr("id", "map");
       // add a background rectangle
       countriesGroup
@@ -173,9 +173,85 @@ manager.addListener('dataReady', function (e) {
         })
         // add an onclick action to zoom into clicked country
         .on("click", function(d, i) {
-            d3.selectAll(".country").classed("country-on", false);
+          console.log(d.properties.name);
+          if (manager.parallelFiltering){
+            manager._updateDataFromYear();
+            updatePoint2();
+          }
+          if (d.properties.name != manager.place && d.properties.name != manager.secondPlace){
+            var selectedYear = yearSelector.value.split("-")[0];
+          
+  
+            //
+            if (!manager.compareMode) d3.selectAll(".country").classed("country-on", false);
+            else if (manager.secondPlace != undefined) {
+              d3.selectAll(".country").classed("country-on", function(d){
+                if(d.properties.name == manager.place) return true;
+                return false;
+              });
+            }
+    
+            manager.triggerPlaceFilterEvent(d.properties.name, selectedYear);
+    
             d3.select(this).classed("country-on", true);
-        boxZoom(pathM.bounds(d), pathM.centroid(d), 20);
+            if(!manager.compareMode)boxZoom(pathM.bounds(d), pathM.centroid(d), 20);
+            else{
+              initiateZoom();
+            }
+            d3.selectAll(".circleMap")
+            .style("fill", function(d){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            })
+          }
+          else{
+            var selectedYear = yearSelector.value.split("-")[0];
+            if (d.properties.name == manager.place && manager.secondPlace != undefined){
+              manager.place = manager.secondPlace;
+             // place1Div.innerHTML = manager.place;
+             // place2Div.innerHTML = "";
+              manager.secondPlace = undefined;
+              d3.selectAll(".country").classed("country-on", function(d){
+                if(d.properties.name == manager.place) return true;
+                return false;
+              });
+              d3.selectAll(".circleMap")
+              .style("fill", function(d){
+                if (d.place == manager.place) {return "#b3b1b1";}
+                else return "#b3b1b1";
+              })
+              var nameCountry = manager.place
+              manager.place = undefined;
+             // place1Div.innerHTML = "";
+              manager.triggerPlaceFilterEvent(nameCountry, selectedYear);
+            }
+            else if (d.properties.name == manager.place && manager.secondPlace == undefined){
+              manager.place = undefined;
+              //place1Div.innerHTML = "";
+              d3.select(this).classed("country-on", false);
+              manager.triggerYearFilterEvent(selectedYear);
+              updatePoint();
+              updatePoint2();
+            }
+            else if (d.properties.name == manager.secondPlace){
+              manager.secondPlace = undefined;
+              //place2Div.innerHTML = "";
+              d3.selectAll(".country").classed("country-on", function(d){
+                if(d.properties.name == manager.place) return true;
+                return false;
+              });
+              d3.selectAll(".circleMap")
+              .style("fill", function(d){
+                if (d.place == manager.place) {return "#b3b1b1";}
+                else return "#b3b1b1";
+              })
+              var nameCountry = manager.place
+              manager.place = undefined;
+              manager.triggerPlaceFilterEvent(nameCountry, selectedYear);
+            }
+          }
+          
         });
       // Add a label group to each feature/country. This will contain the country name and a background rectangle
       // Use CSS to have class "countryLabel" initially hidden
@@ -202,9 +278,46 @@ manager.addListener('dataReady', function (e) {
        })
         // add an onlcick action to zoom into clicked country
         .on("click", function(d, i) {
-            d3.selectAll(".country").classed("country-on", false);
-            d3.select("#country" + d.properties.iso_a3).classed("country-on", true);
-          boxZoom(pathM.bounds(d), pathM.centroid(d), 20);
+          var selectedYear = yearSelector.value.split("-")[0];
+          if(d.properties.name == manager.place && manager.secondPlace != undefined){
+            manager.place = manager.secondPlace;
+            manager.secondPlace = undefined;
+            d3.selectAll(".country").classed("country-on", function(d){
+              if(d.properties.name == manager.place) return true;
+              return false;
+            });
+            d3.selectAll(".circleMap")
+            .style("fill", function(d){
+              if (d.place == manager.place) {return "#b3b1b1";}
+              else return "#b3b1b1";
+            })
+            var nameCountry = manager.place
+            manager.place = undefined;
+            manager.triggerPlaceFilterEvent(nameCountry, selectedYear);
+          }
+          else if(d.properties.name == manager.place && manager.secondPlace == undefined){
+            manager.place = undefined;
+            d3.select(this).classed("country-on", false);
+            manager.triggerYearFilterEvent(selectedYear);
+            updatePoint();
+            updatePoint2();
+          }
+          else if (d.properties.name == manager.secondPlace){
+            manager.secondPlace = undefined;
+            d3.selectAll(".country").classed("country-on", function(d){
+              if(d.properties.name == manager.place) return true;
+              return false;
+            });
+            d3.selectAll(".circleMap")
+            .style("fill", function(d){
+              if (d.place == manager.place) {return "#b3b1b1";}
+              else return "#b3b1b1";
+            })
+            var nameCountry = manager.place
+            manager.place = undefined;
+            manager.triggerPlaceFilterEvent(nameCountry, selectedYear);
+          }
+  
         });
       // add the text to the label group showing country name
       countryLabels
@@ -238,8 +351,8 @@ manager.addListener('dataReady', function (e) {
         .enter()
         .append("circle")
         .attr("class","circleMap")
-        .attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
-        .attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
+        .attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
+        .attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
         .attr("r", 5)
         .style("fill", function(d){
           return "#B80F0A";
@@ -320,6 +433,13 @@ function updatePoint3(){
 		.attr("r", 5)
 		.style("fill", "#B80F0A")
 		.style("stroke", "#000")
+
+    d3.selectAll(".circleMap")
+		.style("fill", function(d){
+			if (d.place == manager.place) {return "#ffd500";}
+      else if (d.place == manager.secondPlace) return "#8f00ff";
+      else return "#b3b1b1";
+		})
 	
 }
 
@@ -348,4 +468,27 @@ function setColorMapByScatterplot(d) {
   else{
     return "#B80F0A";
   }
+}
+
+function updatePoint(){
+
+	d3.json(
+		"https://raw.githubusercontent.com/andybarefoot/andybarefoot-www/master/maps/mapdata/custom50.json",
+		function(json) {
+
+			countriesM = countriesGroup
+				.selectAll("path")
+				.data(json.features)
+				.attr("id", function(dM, i) {
+				  	d3.selectAll(".country").classed("country-on", false);
+					boxZoom(pathM.bounds(dM), pathM.centroid(dM), 10);
+				});
+		}
+	);
+}
+
+function update() {
+	d3.selectAll(".circleMap")
+		.attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
+		.attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
 }

@@ -4,9 +4,12 @@
 
 </head>
 <body>
-    <div class = "filters" >
-                <label style="font-size: 16px; margin-left: 1%; margin-top: 0.8%;">Select Year</label>
-                <select name="select" class="selct">
+    <div class = "filters" style="height: 2%;">
+                <label style="font-size: 32px; margin-left: 10%; margin-top: 0.4%;">Global Terrorism</label>
+                <label id = "labelCompare" for="compareCheck"> Compare</label>
+                <input type="checkbox" id="compareCheck" name="compare" value="Compare" onclick="nulla()">
+                <label style="font-size: 16px; margin-left: 60%; margin-top: 0.4%;">Select Year</label>
+                <select name="select" class="form-select bg-dark text-white selct">
                     <option value="2017">2017</option>
                     <option value="2016">2016</option>
                     <option value="2015">2015</option>
@@ -63,27 +66,42 @@
             <div id="map-holder"></div>
         </div>
         <div class="flex-item" style="">
+            <div class="parallel_area">
+        
+            </div> 
+        </div>
+        <div class="flex-item-2" style="">
             <div id="barChart"> 
                 <div id="showDiv"><input type="checkbox" id ="showValues"> <label for="showValues">Show all</label></div> <!-- FEDERICO -->
                 <div style="clear:both;"></div>
             </div>
+             
         </div>
-        <div class="flex-item" style="">
-             <div class="parallel_area">
-        
-            </div> 
-        </div>
-        <div class="flex-item" style="">
-            <div id="scatter_area">
+        <div class="flex-item-2" style="">
+            <div id="my_dataviz"></div>
+       </div>
+        <div class="flex-item-2" style="">
+            <div id="scatter_area"></div>
         </div>
     </div>
 
 
 
     </div>
+    <script>
+        function nulla(){
+            if(manager.secondPlace== undefined){
+
+            }else
+            {
+            manager.secondPlace= undefined
+            }
+        }    
+    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Yanone+Kaffeesatz:200" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/index.css">
@@ -99,7 +117,8 @@
     <script src="./js/parallel.js"></script>
     <script src="./js/map-holder.js"></script>
     <script src="./js/bar-chart.js"></script>
-    <script src="./js/scatter.js"></script>
+  <!--  <script src="./js/scatter.js"></script> -->
+    <script src="./js/prova.js"></script>
    
 
 </body>

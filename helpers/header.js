@@ -25,7 +25,7 @@ var yearsSelect = [ "2017",
                     "1978"
                     ]
 
-/*var compareSelector = document.getElementById("compareCheck");
+var compareSelector = document.getElementById("compareCheck");
 
 compareSelector.addEventListener("change", function(){
 	if (manager.compareMode== false)
@@ -38,7 +38,7 @@ compareSelector.addEventListener("change", function(){
 		    
 
 	}
-})*/
+})
 
 
 

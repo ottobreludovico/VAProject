@@ -1,9 +1,12 @@
 
 html,body {
-    font: 18px sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
     margin: 0; 
     height: 100%; 
     overflow: hidden;
+    background-color: #333533;
+    color:white;
 }
 
 .flex-container {
@@ -11,29 +14,39 @@ html,body {
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
+    padding: 1%;
   }
   
 .flex-item {
     width: 50%;
-    height: 50%;
+    height: 49%;
+    padding: 1%;
+}
+
+.flex-item-2 {
+    width: 33%;
+    height: 49%;
+    padding: 1%;
 }
 
 /*-------------------*/
 #barChart{
-    border-style:solid; 
-    border-color:black; 
+    background-color: #242423;
+    box-shadow: 5px 10px 18px #242423;
+    border: 2px solid #242423;
+    border-radius: 25px;
     border-width:2px; 
     margin: 1px;
     width: 100%;
-    background-color: white;
     float: left;
     height: 100%;
+    color: #e8eddf !important;
 }
 
 #showDiv label {
     left: 5%;
     padding: 4px;
-    background-color: #ddd;
+    background-color: #2e4352;
     font-family: sans-serif, Arial;
     font-size: 16px;
     border: 2px solid #444;
@@ -41,13 +54,13 @@ html,body {
 }
 
 #showDiv label:hover {
-  background-color: #2e4352;
-  color: white;
+  background-color: #404b53;
+  color: #e8eddf;
 }
 
 #showDiv input[type="checkbox"]:checked + label {
     background-color: #2e4352;
-    color: white;
+    color: #e8eddf;
 }
 
 .bar {
@@ -71,9 +84,10 @@ html,body {
 
 /*PARALLEL*/
 .parallel_area{
-    background-color: white;
-    border-style:solid; 
-    border-color:black; 
+    background-color: #242423;
+    box-shadow: 5px 10px 18px #242423;
+    border: 2px solid #242423;
+    border-radius: 25px;
     border-width:2px; 
     float: left;
     display: block;
@@ -85,37 +99,42 @@ html,body {
 
 .brushParallel .extent {
     fill-opacity: .3;
-    stroke: #fff;
     shape-rendering: crispEdges;
+}
+
+.brushParallel .selection {
+    fill: green;
+    stroke: none;
 }
 
 .axisParallel line,
 .axisParallel path {
     fill: none;
-    stroke: #000;
+    stroke: #E8EDDF;
     shape-rendering: crispEdges;
 }
 
 .axisParallel text {
-    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
     cursor: move;
 }
-
+.tick text{
+    fill: #E8EDDF;
+}
 .background path {
     fill: none;
-    stroke: #ddd;
     shape-rendering: crispEdges;
 }
 
 .foreground path {
     fill: none;
-    stroke: steelblue;
+    stroke: #E8EDDF;
 }
 
 /*------------------*/
 #map-holder {
-    border-style:solid; 
-    border-color:black; 
+    border: 2px solid #242423;
+    box-shadow: 5px 10px 18px #242423;
+    border-radius: 25px;
     border-width:2px; 
     float: left;
     margin: 1px;
@@ -130,6 +149,7 @@ svgMap rect{
 }
 
 svgMap{
+    border-radius: 25px;
     fill: #bff5ff;
 }
 
@@ -150,4 +170,61 @@ svgMap{
 }
 .countryLabelBg{
     fill: rgb(94, 103, 223);   /* country label background colour */
+}
+
+#scatter_area{
+    background-color: #242423;
+    box-shadow: 5px 10px 18px #242423;
+    border: 2px solid #242423;
+    border-radius: 25px;
+    border-width:2px; 
+    display: block;
+    margin: 1px;
+    width: 100%;
+    height: 100%;
+}
+
+#my_dataviz{
+    background-color: #242423;
+    box-shadow: 5px 10px 18px #242423;
+    border: 2px solid #242423;
+    border-radius: 25px;
+    border-width:2px; 
+    display: block;
+    margin: 1px;
+    width: 100%;
+    height: 100%;
+}
+
+#showValues{
+    visibility: hidden;
+}
+
+.selct {
+    display: inline-block;
+	width:8%;
+}
+
+#compareCheck, #showValues{
+    visibility: hidden;
+}
+
+#labelCompare{
+    padding: 4px;
+    display: inline-block;
+    background-color: #ddd;
+    font-family: sans-serif, Arial;
+    font-size: 16px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    color:black;
+}
+
+#labelCompare:hover {
+    background-color: #dfd;
+}
+
+.filters input[type="checkbox"]:checked + #labelCompare {
+    background-color: #bfb;
+    border-color: #4c4;
 }

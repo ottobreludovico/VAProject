@@ -99,8 +99,6 @@ function brushParallel() {
       }
       return "none";
   });
-
-
 }
 
 function scalePointInverseC(pos) {
@@ -141,7 +139,6 @@ function scalePointInverseT3(pos) {
 
 
 function draw(d) {
-  
   points = [];
   for (i in dimensions) {
     n = dimensions[i].name;
@@ -287,7 +284,15 @@ function start(){
     .append("path")
     .attr("d", draw)
     .attr('class', 'path_foreground path_normal')
-    .style("stroke", "#B80F0A");
+    .style("stroke", function(d){
+      if(manager.compareMode){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#B80F0A";
+      }
+      else if (d.place == manager.secondPlace) return "#8f00ff";
+      else return "#B80F0A";
+    });
     
 
   svgParallel.selectAll('.path_highlighted').raise();
@@ -297,15 +302,17 @@ function start(){
       .enter().append("g")
       .attr("class", "axis")
       .attr("transform", function (d) { return "translate(" + x(d.name) + ")"; })
+      .style("fill","#E8EDDF");
+
 
   gP.append("g")
     .attr("class", "axis")
     .each(function (p) { d3.select(this).call(d3.axisLeft().scale(y[p.key])); })
     .append("text")
+    .style("fill", "#E8EDDF")
     .style("text-anchor", "middle")
     .attr("y", -9)
-    .text(function (p) { return p.name; })
-    .style("fill", "black");
+    .text(function (p) { return p.name; });
       
       
   gP.append("g")
@@ -369,7 +376,9 @@ function setColorByScatterplot(d) {
   if (manager.filteringByScatterplot == undefined){ return "#B80F0A";}
   if (manager.filteringByScatterplot(d)){
 	  console.log(1)
-    return "#008000";
+    if (d.place == manager.place) {return "#ffd500";}
+    else if (d.place == manager.secondPlace) return "#8f00ff";
+    else {return "#008000"}
   }
   else{
     return "#B80F0A";

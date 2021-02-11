@@ -7,6 +7,7 @@ Manager = function () {
     this.dataYear = [];
     this.data = [];
     this.dataMap = [];
+    this.dataplaceludo=[];
     this.dataScattered = [];
     this.dataplace=[];
     this.place= undefined;
@@ -21,7 +22,7 @@ Manager = function () {
 Manager.prototype.loadData = function () {
     _obj = this;
     var currYear = 2017;
-    d3.csv("./Dataset/globalterrorismdb.csv", function (data) {
+    d3.csv("./Dataset/pronto2.csv", function (data) {
         currData = []
         places = ["---"]
         data.forEach(d => {
@@ -97,6 +98,10 @@ Manager.prototype.getDataFilteredByYear = function () {
     return this.data;
 }
 
+Manager.prototype.getDataByPlace = function () {
+    return this.dataplaceludo;
+}
+
 Manager.prototype.triggerFilterEvent = function () {
     this._updateDataFromWeek();
     this.notifyUpdatedDataFiltering();
@@ -136,13 +141,16 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
     this.parallelFiltering = false;
     if (this.compareMode == false){
         this.place = selectedPlace;
-        place1Div.innerHTML = this.place;
+        //place1Div.innerHTML = this.place;
         this.dataplace =[];
         this.dataMap = []
         for (i = 0; i < this.dataOriginal.length; i++) {
             d = this.dataOriginal[i];
             foundplace = d.place
             foundYear = d.iyear
+            if (selectedPlace == foundplace){
+                this.dataplaceludo.push(d);
+            }
             if (selectedPlace == foundplace && selectedYear == foundYear){
                 this.dataplace.push(d);
             }
@@ -155,7 +163,7 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
     else{
         if (this.place == undefined){
             this.place = selectedPlace;
-            place1Div.innerHTML = this.place;
+            //place1Div.innerHTML = this.place;
             this.dataplace =[];
             this.dataMap = []
             for (i = 0; i < this.dataOriginal.length; i++) {
@@ -173,7 +181,7 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
         }
         else if (this.secondPlace == undefined){
             this.secondPlace = selectedPlace;
-            place2Div.innerHTML = this.secondPlace;
+            //place2Div.innerHTML = this.secondPlace;
             this.dataMap = []
             for (i = 0; i < this.dataOriginal.length; i++) {
                 d = this.dataOriginal[i];
@@ -196,7 +204,7 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                 }
             }
             this.secondPlace = selectedPlace;
-            place2Div.innerHTML = this.secondPlace;
+            //place2Div.innerHTML = this.secondPlace;
             for (i = 0; i < this.dataOriginal.length; i++) {
                 d = this.dataOriginal[i];
                 foundplace = d.place

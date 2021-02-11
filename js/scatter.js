@@ -17,7 +17,7 @@ var focus;
 var svgScatter = d3.select("#scatter_area").append("svg")
     .attr("width", "99%")
     .attr("height", "100%")
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + marginScatter.left + "," + marginScatter.top + ")");
 
 manager.addListener('dataReady', function (e) {
@@ -49,7 +49,7 @@ manager.addListener('dataReady', function (e) {
             .enter().append("circle")
             .attr('class', 'dot')
             .attr("r",3.5)
-            .attr("fill","grey")
+            .attr("fill","#2e4352")
             .attr("opacity",".3")
             .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
             .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
@@ -70,7 +70,8 @@ manager.addListener('dataReady', function (e) {
         .attr("x",0 - (heightScatter / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("PCA Component 2");  
+        .text("PCA Component 2")
+        .style("fill","#E8EDDF");  
 
                 
     svgScatter.append("text")             
@@ -78,7 +79,8 @@ manager.addListener('dataReady', function (e) {
             "translate(" + ((widthScatter + marginScatter.right + marginScatter.left)/2) + " ," + 
                             (heightScatter + marginScatter.top + marginScatter.bottom - 30)+ ")")
         .style("text-anchor", "middle")
-        .text("PCA Component 1");
+        .text("PCA Component 1")
+        .style("fill","#E8EDDF");
 
     focus.append("g")
         .attr("class", "brushT")
@@ -113,7 +115,7 @@ function updateScatter(){
     dots.enter().append("circle")
         .attr('class', 'dot')
         .attr("r",3.5)
-        .attr("fill","grey")
+        .attr("fill","#2e4352")
         .attr("opacity",".3")
         .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
         .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
@@ -123,7 +125,7 @@ function updateScatter(){
     focus.select("g").selectAll("circle")
         .data(data).transition().duration(500)
         .attr("r",3.5)
-        .attr("fill","grey")
+        .attr("fill","#2e4352")
         .attr("opacity",".3")
         .attr("stroke","#000")
         .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
