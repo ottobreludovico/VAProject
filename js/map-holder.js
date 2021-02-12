@@ -351,8 +351,8 @@ manager.addListener('dataReady', function (e) {
         .enter()
         .append("circle")
         .attr("class","circleMap")
-        .attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
-        .attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
+        .attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
+        .attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
         .attr("r", 5)
         .style("fill", function(d){
           return "#B80F0A";
@@ -391,8 +391,8 @@ function updatePoint2(){
 		.enter()
 		.append("circle")
 		.attr("class","circleMap")
-		.attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
-		.attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
+		.attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
+		.attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
 		.attr("r", 5)
 		.style("fill", function(d){
 			return "#B80F0A";
@@ -428,8 +428,8 @@ function updatePoint3(){
 		.enter()
 		.append("circle")
 		.attr("class","circleMap")
-		.attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
-		.attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
+		.attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
+		.attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
 		.attr("r", 5)
 		.style("fill", "#B80F0A")
 		.style("stroke", "#000")
@@ -489,6 +489,6 @@ function updatePoint(){
 
 function update() {
 	d3.selectAll(".circleMap")
-		.attr("cx", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[0]; })
-		.attr("cy", function (dM) { return projection([+dM["longitude"], +dM["latitude"]])[1]; })
+		.attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
+		.attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
 }

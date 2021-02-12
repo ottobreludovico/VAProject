@@ -3,7 +3,7 @@ var clientHeight = document.documentElement.clientHeight;
 
 var margin_parallel = { top: 30, right: 30, bottom: 10, left: 55 },
  width_parallel = (clientWidth - margin_parallel.left - margin_parallel.right)*0.5,
- height_parallel = (clientHeight - margin_parallel.top -margin_parallel.bottom)*0.4;
+ height_parallel = (clientHeight - margin_parallel.top -margin_parallel.bottom)*0.35;
 
 var marginBar = {top: 20, right: 20, bottom: 70, left: 50},
  widthBar = (clientWidth - marginBar.left - marginBar.right)*0.25,
@@ -33,4 +33,7 @@ var marginDepth2 = {top2: 10, right2: 20, bottom2: 30, left2: -10},
  widthBox2 = (clientWidth - marginBox2.left2 - marginBox2.right2)*0.05,
  heightBox2 = (clientHeight - marginBox2.top2 - marginBox2.bottom2)*0.2;
 
-
+ 
+ var margin = {top: 10, right: 30, bottom: 50, left: 50},
+ width = (clientWidth - marginBar.left - marginBar.right)*0.27,
+ height = (clientHeight - marginBar.top - marginBar.bottom)*0.38;

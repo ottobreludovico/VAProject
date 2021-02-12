@@ -1,14 +1,12 @@
 var cambio2=false;
 var max;
-var margin = {top: 10, right: 30, bottom: 50, left: 50},
-    width = 600 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
+
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", "100%")
+    .attr("height", "100%")
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
@@ -162,3 +160,11 @@ function updateProva(){
         )
 
 }
+
+$(window).resize(function() {
+  // Resize SVG
+  svg
+    .attr("width", $("#my_dataviz").width())
+    .attr("height", $("#my_dataviz").height())
+  ;
+});
