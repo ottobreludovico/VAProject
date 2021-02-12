@@ -165,7 +165,7 @@ function parallel_getData(){
 
 function start(){
   data = parallel_getData();
-  console.log(data);
+
   dimensions = [
     {
       name: "place",

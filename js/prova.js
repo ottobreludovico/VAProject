@@ -17,8 +17,7 @@ manager.addListener('dataReady', function (e) {
 
   // Now I can use this dataset:
     var fqcs2 = computeFrequency2(data);
-    console.log(fqcs2);
-
+    
     // Add X axis --> it is a date format
     var x = d3.scalePoint()
       .domain(fqcs2.map(function(d) { return +d[0]; }))

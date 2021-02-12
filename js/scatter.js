@@ -51,6 +51,7 @@ manager.addListener('dataReady', function (e) {
             .attr("r",3.5)
             .attr("fill","#2e4352")
             .attr("opacity",".3")
+            .style("stroke", "#000")
             .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
             .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
         
