@@ -70,6 +70,9 @@ for el in data:
     data_for_pca.append(
         [float(mapRegionType(el[header.index('region_txt')])),
         float(el[header.index('latitude')]), 
+        float(el[header.index('iyear')]),
+        float(el[header.index('iday')]),
+        float(el[header.index('imonth')]),
         float(el[header.index('longitude')]), 
         float(el[header.index('nkill')]),]
         )

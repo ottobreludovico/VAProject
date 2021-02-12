@@ -6,7 +6,7 @@ from sklearn.manifold import TSNE
 if len(sys.argv) > 1:
     file = sys.argv[1]
 else:
-    file = '../Dataset/globalterrorismpca.csv'
+    file = '../Dataset/prontopca.csv'
 
 if len(sys.argv) > 2:
     out_file = sys.argv[2]
@@ -67,6 +67,9 @@ data_for_tSNE = []
 for el in data:
     data_for_tSNE.append(
         [float(mapRegionType(el[header.index('region_txt')])),
+        float(el[header.index('iyear')]),
+        float(el[header.index('iday')]),
+        float(el[header.index('imonth')]),
         float(el[header.index('latitude')]), 
         float(el[header.index('longitude')]), 
         float(el[header.index('nkill')]),]

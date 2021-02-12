@@ -1,7 +1,12 @@
 var x_Scatter = d3.scaleLinear().range([0, widthScatter]),
     y_Scatter = d3.scaleLinear().range([heightScatter, 0])
 
-
+    var color = {
+        "nkill < 5.0":    "#ffffff",
+        "nkill < 20.0":    "#EF7215",
+        "nkill < 50.0":    "#B80F0A",
+        "nkill 50.0+":  "#8f00ff",  
+    };
 
 var xAxis = d3.axisBottom(x_Scatter);
 
@@ -54,8 +59,9 @@ manager.addListener('dataReady', function (e) {
             .style("stroke", "#000")
             .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
             .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
-        
+            .style("fill", function(d) { return color[computeNkill(d.nkill)]; })
           
+
     focus.append("g")
         .attr("class", "x-axisScatter")
         .attr("transform", "translate(0," + heightScatter + ")")
@@ -86,6 +92,29 @@ manager.addListener('dataReady', function (e) {
     focus.append("g")
         .attr("class", "brushT")
         .call(brushTot);    
+
+    var legend = svgScatter.selectAll(".legend")
+            .data(["nkill 50.0+", "nkill < 50.0",  "nkill < 20.0", "nkill < 5.0"])
+        .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", function(d, i) { 
+                return "translate(50," + i * 20 + ")"; 
+            });
+
+    legend.append("rect")
+        .attr("x", widthScatter - 18)
+        .attr("width", 2)
+        .attr("height", 18)
+        .style("fill", function (d) { return color[d] });
+
+    legend.append("text")
+        .attr("x", widthScatter - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .style("fill", "#ffffff")
+        .text(function(d) { return d; });
+
     
 });
     /**/
@@ -120,6 +149,7 @@ function updateScatter(){
         .attr("opacity",".3")
         .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
         .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
+        .style("fill", function(d) { return color[computeNkill(d.nkill)]; })
         .style("stroke", "#000")
         .merge(dots);
 
@@ -131,11 +161,19 @@ function updateScatter(){
         .attr("stroke","#000")
         .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
         .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
+        .style("fill", function(d) { return color[computeNkill(d.nkill)]; })
         .attr('class', function (d) {
             if (filteringByScatterplot(d)) return 'selected'
             else return '';
         });
     
+}
+
+function computeNkill(nkill){
+    if (nkill < 5.0) return "nkill < 5.0";
+    else if (nkill < 20.0) return "nkill < 20.0";
+    else if (nkill < 50.0) return "nkill < 50.0";
+    else return "nkill 50.0+";
 }
 
 
