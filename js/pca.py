@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 if len(sys.argv) > 1:
     file = sys.argv[1]
 else:
-    file = '../Dataset/globalterrorismdb.csv'
+    file = '../Dataset/iniziale.csv'
 
 if len(sys.argv) > 2:
     out_file = sys.argv[2]

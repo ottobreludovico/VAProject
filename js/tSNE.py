@@ -6,12 +6,12 @@ from sklearn.manifold import TSNE
 if len(sys.argv) > 1:
     file = sys.argv[1]
 else:
-    file = '../Dataset/pronto2.csv'
+    file = '../Dataset/globalterrorismpca.csv'
 
 if len(sys.argv) > 2:
     out_file = sys.argv[2]
 else:
-    out_file = '../Dataset/globalterrorisTSNE.csv'
+    out_file = '../Dataset/pronto.csv'
 
 
 data = []

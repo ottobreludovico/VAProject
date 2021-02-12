@@ -22,7 +22,7 @@ Manager = function () {
 Manager.prototype.loadData = function () {
     _obj = this;
     var currYear = 2017;
-    d3.csv("./Dataset/iniziale.csv", function (data) {
+    d3.csv("./Dataset/pronto.csv", function (data) {
         currData = []
         places = ["---"]
         data.forEach(d => {
