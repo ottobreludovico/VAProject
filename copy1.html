@@ -5,6 +5,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="./js/d3-scale-radial.js"></script>
     <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
@@ -32,13 +33,13 @@
                 <a href="#menu-toggle" class="btn btn-secondary float-right" id="menu-toggle">Toggle Menu</a>
                 
                 <div class = "row" style="">
-                    <div class="col-md-9">
+                    <div class="col-md-7">
                         <label style="font-size: 32px;">Global Terrorism</label>
                     </div>
         
                     <div class="col-md-1 filters">
-                        <!--<label id = "labelCompare" for="compareCheck"> Compare</label>
-                        <input type="checkbox" id="compareCheck" name="compare" value="Compare" onclick="nulla()">-->
+                        <label id = "labelCompare" for="compareCheck"> Compare</label>
+                        <input type="checkbox" id="compareCheck" name="compare" value="Compare" onclick="nulla()">
                     </div>
                     <div class="col-md-2 filters">
                         <label style="font-size: 16px;">Select Year</label>
@@ -92,13 +93,20 @@
                             <option value="1971">1971</option>
                             <option value="1970">1970</option>
                         </select>
-                    </div>         
+                    </div>
+                    <div class="col-md-2 filters">
+                        <label style="font-size: 16px;">Select Group</label>
+                        <select name="selectG" class="form-select bg-dark text-white selct">
+                            <option value="MANO-D">MANO-D</option>
+                            <option value="Irish Republican Army ">Irish Republican Army</option>
+                        </select>
+                    </div>              
                 </div>
             
         
                 <div class="row" style="margin: 20px; height: 82%;">
                     <div class="flex-item-2 col-md-6" style="">
-                       
+                       <div id="prova2"></div>
                     </div>
                     <div class="col-md-6" style="">
                         <div class="row flex-item-2" style="margin: 20px; height: 41%;">
@@ -126,7 +134,7 @@
     <script src="https://d3js.org/d3.v4.js"></script>  
     <script src="./helpers/utils.js"></script>
     <script src="./helpers/dimensions.js"></script>
-    <script src="./helpers/header.js"></script>
+    <script src="./helpers/header1.js"></script>
     <script src="./helpers/manager.js"></script>
-
+    <script src="./js/prova1.js"></script>
 </body>

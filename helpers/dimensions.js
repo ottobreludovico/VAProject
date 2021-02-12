@@ -32,8 +32,11 @@ var marginDepth2 = {top2: 10, right2: 20, bottom2: 30, left2: -10},
  var marginBox2 = {top2: 10, right2: 40, bottom2: 30, left2: -10},
  widthBox2 = (clientWidth - marginBox2.left2 - marginBox2.right2)*0.05,
  heightBox2 = (clientHeight - marginBox2.top2 - marginBox2.bottom2)*0.2;
-
  
  var margin = {top: 10, right: 30, bottom: 50, left: 50},
  width = (clientWidth - marginBar.left - marginBar.right)*0.27,
  height = (clientHeight - marginBar.top - marginBar.bottom)*0.38;
+
+ var marginC = {top: 30, right: 30, bottom: 30, left: 30},
+ widthC = (clientWidth - marginC.left - marginC.right)*1,
+ heightC = (clientHeight - marginC.top - marginC.bottom)*1;

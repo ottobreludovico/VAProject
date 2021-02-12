@@ -10,6 +10,7 @@ Manager = function () {
     this.dataplaceludo=[];
     this.dataScattered = [];
     this.dataplace=[];
+    this.dataGroupYear=[]
     this.place= undefined;
     this.filteredByParallel = undefined;
     this.listenersContainer = new EventTarget();
@@ -22,17 +23,26 @@ Manager = function () {
 Manager.prototype.loadData = function () {
     _obj = this;
     var currYear = 2017;
+    var currGroup= "MANO-D";
     d3.csv("./Dataset/pronto.csv", function (data) {
         currData = []
+        currDataGroupYear = []
         places = ["---"]
+        groups = ["---"]
         data.forEach(d => {
             if (d.iyear == currYear) {
-            currData.push(d);
-            places.push(d.place);
+                if(d.gname=currGroup){
+                    currDataGroupYear.push(d);
+                    groups.push(d.gname);
+                }
+                currData.push(d);
+                places.push(d.place);
             }
         });
         _obj.placesNames = unique(places);
+        _obj.groupsNames = unique(groups);
         _obj.data = currData;
+        _obj.dataGroupYear = currDataGroupYear;
         _obj.dataOriginal = data;
         _obj.dataYear = currData;
         _obj.dataMap = currData;
@@ -66,6 +76,11 @@ Manager.prototype.notifyYearChanged = function () {
 Manager.prototype.notifyPlaceChanged = function () {
     this.listenersContainer.dispatchEvent(new Event('placeChanged'));
 }
+
+Manager.prototype.notifyGroupChanged = function () {
+    this.listenersContainer.dispatchEvent(new Event('groupChanged'));
+}
+
 Manager.prototype.notifyUpdatedDataFiltering = function () {
     this.listenersContainer.dispatchEvent(new Event('updatedDataFiltering'));
 }
@@ -98,6 +113,10 @@ Manager.prototype.getDataFilteredByYear = function () {
     return this.data;
 }
 
+Manager.prototype.getDataFilteredByG = function () {
+    return this.dataGroupYear;
+}
+
 Manager.prototype.getDataByPlace = function () {
     return this.dataplaceludo;
 }
@@ -105,6 +124,22 @@ Manager.prototype.getDataByPlace = function () {
 Manager.prototype.triggerFilterEvent = function () {
     this._updateDataFromWeek();
     this.notifyUpdatedDataFiltering();
+}
+
+Manager.prototype.triggerGroupFilterEvent = function (selectedGroup, selectedYear) {
+    this.dataGroupYear = [];
+    for (i = 0; i < this.dataOriginal.length; i++) {
+        d = this.dataOriginal[i];
+        foundGroup = d.gname;
+        foundYear = d.iyear;
+        if (selectedGroup == foundGroup && selectedYear==foundYear){
+            this.dataGroupYear.push(d);
+        }
+    }
+    console.log(this.dataGroupYear)
+    this._updateDataFromYear();    
+    this.notifyGroupChanged();
+    this.notifyYearChanged();
 }
 
 Manager.prototype.triggerYearFilterEvent = function (selectedYear) {
