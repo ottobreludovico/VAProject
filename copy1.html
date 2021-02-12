@@ -17,10 +17,10 @@
                 <img src="/images/logo.png" class="menu-image" alt="logo">
             </li>
             <li>
-              <a href="/index.html">Countries</a>
+                <a href="/index.html">Countries</a>
             </li>
             <li>
-              <a href="/copy1.html">Terroristic Groups</a>
+                <a href="/copy1.html">Terroristic Groups</a>
             </li>
           </ul>
         </div>
@@ -30,14 +30,15 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <a href="#menu-toggle" class="btn btn-secondary float-right" id="menu-toggle">Toggle Menu</a>
+                
                 <div class = "row" style="">
                     <div class="col-md-9">
                         <label style="font-size: 32px;">Global Terrorism</label>
                     </div>
         
                     <div class="col-md-1 filters">
-                        <label id = "labelCompare" for="compareCheck"> Compare</label>
-                        <input type="checkbox" id="compareCheck" name="compare" value="Compare" onclick="nulla()">
+                        <!--<label id = "labelCompare" for="compareCheck"> Compare</label>
+                        <input type="checkbox" id="compareCheck" name="compare" value="Compare" onclick="nulla()">-->
                     </div>
                     <div class="col-md-2 filters">
                         <label style="font-size: 16px;">Select Year</label>
@@ -95,48 +96,24 @@
                 </div>
             
         
-                <div class="row" style="margin: 20px; height: 41%;">
-                    <div class="flex-item col-md-6" style="">
-                        <div id="map-holder"></div>
+                <div class="row" style="margin: 20px; height: 82%;">
+                    <div class="flex-item-2 col-md-6" style="">
+                       
                     </div>
-                    <div class="flex-item col-md-6" style="">
-                        <div class="parallel_area">
-                    
-                        </div> 
-                    </div>
-                </div>
-        
-                <div class="row" style="margin: 20px; height: 41%;">
-                    <div class="flex-item col-md-4" style="">
-                        <div id="barChart"> 
-                            <div id="showDiv"><input type="checkbox" id ="showValues"> <label for="showValues">Show all</label></div>
-                            <div style="clear:both;"></div>
-                        </div>
+                    <div class="col-md-6" style="">
+                        <div class="row flex-item-2" style="margin: 20px; height: 41%;">
                             
+                        </div> 
+                        <div class="row flex-item-2" style="margin: 20px; height: 41%;">
+                            
+                        </div>         
                     </div>
-                    <div class="flex-item col-md-4" style="">
-                        <div id="my_dataviz"></div>
-                    </div>
-                    <div class="flex-item col-md-4" style="">
-                        <div id="scatter_area"></div>
-                    </div>
-        
-                </div>             
+                </div>    
         
             </div>
         </div>
         <!-- /#page-content-wrapper -->  
     </div>
-    <script>
-        function nulla(){
-            if(manager.secondPlace== undefined){
-
-            }else
-            {
-            manager.secondPlace= undefined
-            }
-        }    
-    </script>
     <script>
          $("#menu-toggle").click(function (e) {
             e.preventDefault();
@@ -146,18 +123,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-    <script src="https://d3js.org/d3.v4.js"></script>
-    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>    
+    <script src="https://d3js.org/d3.v4.js"></script>  
     <script src="./helpers/utils.js"></script>
     <script src="./helpers/dimensions.js"></script>
     <script src="./helpers/header.js"></script>
     <script src="./helpers/manager.js"></script>
-    <script src="./js/parallel.js"></script>
-    <script src="./js/map-holder.js"></script>
-    <script src="./js/bar-chart.js"></script>
-    <script src="./js/scatter.js"></script>
-    <script src="./js/prova.js"></script>
-   
 
 </body>
