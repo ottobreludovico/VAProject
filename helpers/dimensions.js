@@ -10,7 +10,7 @@ var marginBar = {top: 20, right: 20, bottom: 70, left: 50},
  heightBar = (clientHeight - marginBar.top - marginBar.bottom)*0.33;
 
 var marginScatter = {top: 20, right: 20, bottom: 70, left: 40},
- widthScatter = (clientWidth - marginScatter.left - marginScatter.right)*0.35,
+ widthScatter = (clientWidth - marginScatter.left - marginScatter.right)*0.24,
  heightScatter = (clientHeight - marginScatter.top - marginScatter.bottom)*0.35;
 
 var marginLine = {top: 30, right: 30, bottom: 20, left: 60},
