@@ -119,7 +119,6 @@ $(window).resize(function() {
     .attr("width", $("#map-holder").width())
     .attr("height", $("#map-holder").height())
   ;
-  initiateZoom();
 });
 
 // create an SVG
@@ -127,8 +126,8 @@ var svg1 = d3
   .select("#map-holder")
   .append("svg")
   // set to the same size as the "map-holder" div
-  .attr("width", $("#map-holder").width())
-  .attr("height", $("#map-holder").height())
+  .attr("width", "100%")
+  .attr("height", "100%")
   // add zoom functionality
   .call(zoom)
 ;
