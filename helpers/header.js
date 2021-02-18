@@ -1,29 +1,18 @@
 var yearSelector = document.querySelector("select[name='select']");
+/*yearSelector.addEventListener('change', function () {
+    var selectedYear = yearSelector.value.split("-")[0];
+    var selectedGroup = String(groupSelector.value);
+    if(selectedGroup=="Tutti"){
+        manager.triggerYearFilterEvent(selectedYear);
+    }else{
+        manager.triggerGroupFilterEvent(selectedGroup,selectedYear);
+    }   
+});*/
+
 yearSelector.addEventListener('change', function () {
     var selectedYear = yearSelector.value.split("-")[0];
     manager.triggerYearFilterEvent(selectedYear);
 });
-
-var yearsSelect = [ "2017",
-                    "2016",
-                    "2015",
-                    "2014",
-                    "2013",
-                    "2012",
-                    "2011",
-                    "2010",
-                    "2009",
-                    "2008",
-                    "2007",
-                    "2006",
-                    "2005",
-                    "2004",
-                    "2003",
-                    "2002",
-                    "2001",
-                    "2000",
-                    "1978"
-                    ]
 
 var compareSelector = document.getElementById("compareCheck");
 
@@ -39,6 +28,22 @@ compareSelector.addEventListener("change", function(){
 
 	}
 })
+var click=false;
 
-
-
+Vue.component('v-select', VueSelect.VueSelect);
+var vm;
+manager.addListener("dataReady", function(d){
+    vm = new Vue({
+        el: '#selector',
+        data: {
+          reasons: manager.groupsNames,
+          selectedludo: "Tutti"
+        },
+        methods: {
+            onChange(event) {
+                this.selectedludo=event;
+                manager.triggerGroupFilterEvent(event);
+            } 
+        }
+      })   
+})

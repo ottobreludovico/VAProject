@@ -106,7 +106,6 @@ html,body {
 .axisParallel line,
 .axisParallel path {
     fill: none;
-    stroke: #E8EDDF;
     shape-rendering: crispEdges;
 }
 
@@ -123,7 +122,6 @@ html,body {
 
 .foreground path {
     fill: none;
-    stroke: #E8EDDF;
 }
 
 /*------------------*/
@@ -199,8 +197,38 @@ svgMap{
 .selct {
     display: inline-block;
     width: 40%;
+    border: 2px solid #242423; 
+    border-radius: 25px;
 }
 
+.selct1 {
+  display: inline-block;
+  width:70%; 
+  font-size:14px; 
+  color:#FFFAFF; 
+  border: 2px solid #242423; 
+  border-radius: 25px;
+}
+
+.selct1 > .dropdown-menu{
+  font-size: 14px;
+  background-color: #242423;
+  color: #FFFAFF;
+}
+
+.v-select .selected-tag{
+  font-size: 14px;
+  color: #FFFAFF;
+}
+
+.v-select .dropdown-toggle .clear{
+  color: #FFFAFF;
+}
+
+.v-select .open-indicator:before{
+  border-color: #FFFAFF;
+  color: #FFFAFF;
+}
 #compareCheck, #showValues{
     visibility: hidden;
 }
@@ -211,7 +239,7 @@ svgMap{
     background-color: #ddd;
     font-family: sans-serif, Arial;
     font-size: 16px;
-    border: 2px solid #444;
+    border: 2px solid black;
     border-radius: 4px;
     color:black;
 }
@@ -220,7 +248,7 @@ svgMap{
     background-color: #dfd;
 }
 
-.filters input[type="checkbox"]:checked + #labelCompare {
+.filters input[type="checkbox"]:checked + #labelCompare > #labelCompare{
     background-color: #bfb;
     border-color: #4c4;
 }
@@ -346,3 +374,31 @@ body {
       float:right;
   }
   
+  .d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+  }
+  
+  /* Creates a small triangle extender for the tooltip */
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+  }
+  
+  /* Style northward tooltips differently */
+  .d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+  }

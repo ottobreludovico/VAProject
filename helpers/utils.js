@@ -1,5 +1,6 @@
 var nkillDiv = document.getElementById("nkillPanel");
-var showValues = document.getElementById("showValues")
+var showValues = document.getElementById("showValues");
+var sv = document.getElementById("sv");
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var place1Div = document.getElementById("place1");
 var place2Div = document.getElementById("place2");
@@ -46,6 +47,14 @@ function unique(origArr) {
       }
   }
   return newArr;
+}
+
+function truncateString(str, num) {
+  if (str.length > num) {
+    return str.slice(0, num) + "...";
+  } else {
+    return str;
+  }
 }
 
 function list_push(data){

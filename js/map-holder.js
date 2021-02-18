@@ -34,6 +34,13 @@ function zoomed() {
   ;
 }
 
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<i>Group name: </i><strong>"+d.gname+"</strong><p><i>Victims: </i><strong>"+d.nkill+"</strong></p>";
+  })
+
 // Define map zoom behaviour
 var zoom = d3
   .zoom()
@@ -130,7 +137,8 @@ var svg1 = d3
   .attr("height", "100%")
   // add zoom functionality
   .call(zoom)
-;
+  .call(tip);
+
   
 
 var data1=[];
@@ -172,7 +180,6 @@ manager.addListener('dataReady', function (e) {
         })
         // add an onclick action to zoom into clicked country
         .on("click", function(d, i) {
-          console.log(d.properties.name);
           if (manager.parallelFiltering){
             manager._updateDataFromYear();
             updatePoint2();
@@ -180,7 +187,7 @@ manager.addListener('dataReady', function (e) {
           if (d.properties.name != manager.place && d.properties.name != manager.secondPlace){
             var selectedYear = yearSelector.value.split("-")[0];
           
-  
+            
             //
             if (!manager.compareMode) d3.selectAll(".country").classed("country-on", false);
             else if (manager.secondPlace != undefined) {
@@ -191,6 +198,7 @@ manager.addListener('dataReady', function (e) {
             }
     
             manager.triggerPlaceFilterEvent(d.properties.name, selectedYear);
+            manager.notifyTriggerLudo()
     
             d3.select(this).classed("country-on", true);
             if(!manager.compareMode)boxZoom(pathM.bounds(d), pathM.centroid(d), 20);
@@ -199,9 +207,60 @@ manager.addListener('dataReady', function (e) {
             }
             d3.selectAll(".circleMap")
             .style("fill", function(d){
-              if (d.place == manager.place) {return "#ffd500";}
-              else if (d.place == manager.secondPlace) return "#8f00ff";
-              else return "#b3b1b1";
+              if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+                else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+                else return "#b3b1b1";
+              }
+              else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place) {return "#ffd500";}
+                else if (d.place == manager.secondPlace) return "#8f00ff";
+                else return "#b3b1b1";
+              }
+              else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                else return "#b3b1b1";
+              }else if(manager.group!=undefined && manager.place==undefined){
+                if (d.gname == manager.group) {return "#B80F0A";}
+                else return "#b3b1b1";
+              }else if(manager.group==undefined && manager.place!=undefined){
+                if (d.place == manager.place) {return "#ffd500";}
+                else if (d.place == manager.secondPlace) return "#8f00ff";
+                else return "#b3b1b1";
+              }else{
+                return "#B80F0A"
+              }
+            })
+            .style("opacity",function(d){
+              if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else return 0.2;
+                  }else if(manager.group!=undefined && manager.place==undefined){
+                    if (d.gname == manager.group) {return 1.0;}
+                    else return 0.2;
+                  }else if(manager.group==undefined && manager.place!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }else{
+                    return 1.0
+                  }
             })
           }
           else{
@@ -217,19 +276,73 @@ manager.addListener('dataReady', function (e) {
               });
               d3.selectAll(".circleMap")
               .style("fill", function(d){
-                if (d.place == manager.place) {return "#b3b1b1";}
-                else return "#b3b1b1";
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                  if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                  else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                  else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+                  else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+                  else return "#b3b1b1";
+                }
+                else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                  if (d.place == manager.place) {return "#ffd500";}
+                  else if (d.place == manager.secondPlace) return "#8f00ff";
+                  else return "#b3b1b1";
+                }
+                else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                  if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                  else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                  else return "#b3b1b1";
+                }else if(manager.group!=undefined && manager.place==undefined){
+                  if (d.gname == manager.group) {return "#B80F0A";}
+                  else return "#b3b1b1";
+                }else if(manager.group==undefined && manager.place!=undefined){
+                  if (d.place == manager.place) {return "#ffd500";}
+                  else if (d.place == manager.secondPlace) return "#8f00ff";
+                  else return "#b3b1b1";
+                }else{
+                  return "#B80F0A"
+                }
+              })
+              .style("opacity",function(d){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                      if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                      else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                      else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+                      else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+                      else return 0.2;
+                    }
+                    else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                      if (d.place == manager.place) {return 1.0;}
+                      else if (d.place == manager.secondPlace) return 1.0;
+                      else return 0.2;
+                    }
+                    else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                      if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                      else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                      else return 0.2;
+                    }else if(manager.group!=undefined && manager.place==undefined){
+                      if (d.gname == manager.group) {return 1.0;}
+                      else return 0.2;
+                    }else if(manager.group==undefined && manager.place!=undefined){
+                      if (d.place == manager.place) {return 1.0;}
+                      else if (d.place == manager.secondPlace) return 1.0;
+                      else return 0.2;
+                    }else{
+                      return 1.0
+                    }
               })
               var nameCountry = manager.place
               manager.place = undefined;
              // place1Div.innerHTML = "";
               manager.triggerPlaceFilterEvent(nameCountry, selectedYear);
+              manager.notifyTriggerLudo()
             }
             else if (d.properties.name == manager.place && manager.secondPlace == undefined){
               manager.place = undefined;
               //place1Div.innerHTML = "";
               d3.select(this).classed("country-on", false);
               manager.triggerYearFilterEvent(selectedYear);
+              manager.notifyTriggerLudo()
               updatePoint();
               updatePoint2();
             }
@@ -242,12 +355,65 @@ manager.addListener('dataReady', function (e) {
               });
               d3.selectAll(".circleMap")
               .style("fill", function(d){
-                if (d.place == manager.place) {return "#b3b1b1";}
-                else return "#b3b1b1";
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                  if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                  else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                  else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+                  else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+                  else return "#b3b1b1";
+                }
+                else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                  if (d.place == manager.place) {return "#ffd500";}
+                  else if (d.place == manager.secondPlace) return "#8f00ff";
+                  else return "#b3b1b1";
+                }
+                else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                  if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                  else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                  else return "#b3b1b1";
+                }else if(manager.group!=undefined && manager.place==undefined){
+                  if (d.gname == manager.group) {return "#B80F0A";}
+                  else return "#b3b1b1";
+                }else if(manager.group==undefined && manager.place!=undefined){
+                  if (d.place == manager.place) {return "#ffd500";}
+                  else if (d.place == manager.secondPlace) return "#8f00ff";
+                  else return "#b3b1b1";
+                }else{
+                  return "#B80F0A"
+                }
+              })
+              .style("opacity",function(d){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                      if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                      else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                      else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+                      else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+                      else return 0.2;
+                    }
+                    else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                      if (d.place == manager.place) {return 1.0;}
+                      else if (d.place == manager.secondPlace) return 1.0;
+                      else return 0.2;
+                    }
+                    else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                      if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                      else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                      else return 0.2;
+                    }else if(manager.group!=undefined && manager.place==undefined){
+                      if (d.gname == manager.group) {return 1.0;}
+                      else return 0.2;
+                    }else if(manager.group==undefined && manager.place!=undefined){
+                      if (d.place == manager.place) {return 1.0;}
+                      else if (d.place == manager.secondPlace) return 1.0;
+                      else return 0.2;
+                    }else{
+                      return 1.0
+                    }
               })
               var nameCountry = manager.place
               manager.place = undefined;
               manager.triggerPlaceFilterEvent(nameCountry, selectedYear);
+              manager.notifyTriggerLudo()
             }
           }
           
@@ -287,8 +453,60 @@ manager.addListener('dataReady', function (e) {
             });
             d3.selectAll(".circleMap")
             .style("fill", function(d){
-              if (d.place == manager.place) {return "#b3b1b1";}
-              else return "#b3b1b1";
+              if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+                else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+                else return "#b3b1b1";
+              }
+              else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place) {return "#ffd500";}
+                else if (d.place == manager.secondPlace) return "#8f00ff";
+                else return "#b3b1b1";
+              }
+              else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                else return "#b3b1b1";
+              }else if(manager.group!=undefined && manager.place==undefined){
+                if (d.gname == manager.group) {return "#B80F0A";}
+                else return "#b3b1b1";
+              }else if(manager.group==undefined && manager.place!=undefined){
+                if (d.place == manager.place) {return "#ffd500";}
+                else if (d.place == manager.secondPlace) return "#8f00ff";
+                else return "#b3b1b1";
+              }else{
+                return "#B80F0A"
+              }
+            })
+            .style("opacity",function(d){
+              if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else return 0.2;
+                  }else if(manager.group!=undefined && manager.place==undefined){
+                    if (d.gname == manager.group) {return 1.0;}
+                    else return 0.2;
+                  }else if(manager.group==undefined && manager.place!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }else{
+                    return 1.0
+                  }
             })
             var nameCountry = manager.place
             manager.place = undefined;
@@ -309,9 +527,61 @@ manager.addListener('dataReady', function (e) {
             });
             d3.selectAll(".circleMap")
             .style("fill", function(d){
-              if (d.place == manager.place) {return "#b3b1b1";}
-              else return "#b3b1b1";
+              if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+                else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+                else return "#b3b1b1";
+              }
+              else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place) {return "#ffd500";}
+                else if (d.place == manager.secondPlace) return "#8f00ff";
+                else return "#b3b1b1";
+              }
+              else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+                else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+                else return "#b3b1b1";
+              }else if(manager.group!=undefined && manager.place==undefined){
+                if (d.gname == manager.group) {return "#B80F0A";}
+                else return "#b3b1b1";
+              }else if(manager.group==undefined && manager.place!=undefined){
+                if (d.place == manager.place) {return "#ffd500";}
+                else if (d.place == manager.secondPlace) return "#8f00ff";
+                else return "#b3b1b1";
+              }else{
+                return "#B80F0A"
+              }
             })
+            .style("opacity",function(d){
+              if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else return 0.2;
+                  }else if(manager.group!=undefined && manager.place==undefined){
+                    if (d.gname == manager.group) {return 1.0;}
+                    else return 0.2;
+                  }else if(manager.group==undefined && manager.place!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }else{
+                    return 1.0
+                  }
+            });
             var nameCountry = manager.place
             manager.place = undefined;
             manager.triggerPlaceFilterEvent(nameCountry, selectedYear);
@@ -352,11 +622,70 @@ manager.addListener('dataReady', function (e) {
         .attr("class","circleMap")
         .attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
         .attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
-        .attr("r", 5)
+        .attr("r", 3)
         .style("fill", function(d){
-          return "#B80F0A";
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+            else return "#b3b1b1";
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+            else return "#b3b1b1";
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "#B80F0A";}
+            else return "#b3b1b1";
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }else{
+            return "#B80F0A"
+          }
+        })
+        .style("opacity",function(d){
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+                else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+                else return 0.2;
+              }
+              else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                if (d.place == manager.place) {return 1.0;}
+                else if (d.place == manager.secondPlace) return 1.0;
+                else return 0.2;
+              }
+              else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                else return 0.2;
+              }else if(manager.group!=undefined && manager.place==undefined){
+                if (d.gname == manager.group) {return 1.0;}
+                else return 0.2;
+              }else if(manager.group==undefined && manager.place!=undefined){
+                if (d.place == manager.place) {return 1.0;}
+                else if (d.place == manager.secondPlace) return 1.0;
+                else return 0.2;
+              }else{
+                return 1.0
+              }
         })
         .style("stroke", "#000")
+        .on("mouseover", function(d, i) {
+          tip.show(d);
+        })
+        .on("mouseout", function(d, i) {
+           tip.hide();
+        });
       
     }
   );  
@@ -370,6 +699,9 @@ function map_getDataMap(){
 	return manager.getDataFilteredByMap();
 }
 
+function mapG_getData(){
+  return manager.getDataFilteredByG();
+}
 
 manager.addListener('yearChanged', function (e) {
 	updatePoint3()
@@ -380,10 +712,74 @@ function updatePoint2(){
 
 	circle=countriesGroup
 	.selectAll(".circleMap")
-	.remove()
-	.exit();
+	.style("fill", function(d){
+    if(manager.filteringByParallel(d)){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
+    }else{
+      return "#ffffff"
+    }
+  })
+  .style("opacity",function(d){
+    if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+          else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+          else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+          else return 0.2;
+        }
+        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place) {return 1.0;}
+          else if (d.place == manager.secondPlace) return 1.0;
+          else return 0.2;
+        }
+        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+          else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+          else return 0.2;
+        }else if(manager.group!=undefined && manager.place==undefined){
+          if (d.gname == manager.group) {return 1.0;}
+          else return 0.2;
+        }else if(manager.group==undefined && manager.place!=undefined){
+          if (d.place == manager.place) {return 1.0;}
+          else if (d.place == manager.secondPlace) return 1.0;
+          else return 0.2;
+        }else{
+          return 1.0
+        }
+  })
+  .on("mouseover", function(d, i) {
+    tip.show(d);
+  })
+  .on("mouseout", function(d, i) {
+     tip.hide();
+  });
 			
-			
+	/*		
 	circle=countriesGroup
 		.selectAll(".circleMap")
 		.data(newdataM)
@@ -392,55 +788,256 @@ function updatePoint2(){
 		.attr("class","circleMap")
 		.attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
 		.attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
-		.attr("r", 5)
+		.attr("r", 3)
 		.style("fill", function(d){
-			return "#B80F0A";
+			if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
 		})
-		.style("stroke", "#000")
-	
-	d3.selectAll(".circleMap")
-		.style("fill", function(d){
-			if (d.place == manager.place){ return "#B80F0A";}
-			else return "#B80F0A";
-		})
+		.style("stroke", "#000")*/
 }
 
 function updatePoint3(){
   newdataM = [];
-	if (manager.place != undefined) newdataM = map_getDataMap().slice();
 
-	appendData = map_getData();
-
-	for (var i = 0; i < appendData.length; i++){
-		newdataM.push(appendData[i]);
-	}
-
-
+  data1=[]
+	data1 = map_getDataMap();
 	circle=countriesGroup
 	.selectAll(".circleMap")
 	.remove()
 	.exit();
-
+  
 	circle=countriesGroup
 		.selectAll(".circleMap")
-		.data(newdataM)
+		.data(data1)
 		.enter()
 		.append("circle")
 		.attr("class","circleMap")
 		.attr("cx", function (dM) { return projection([dM["longitude"], dM["latitude"]])[0]; })
 		.attr("cy", function (dM) { return projection([dM["longitude"], dM["latitude"]])[1]; })
-		.attr("r", 5)
-		.style("fill", "#B80F0A")
-		.style("stroke", "#000")
-
-    d3.selectAll(".circleMap")
+		.attr("r", 3)
+    .style("opacity",function(d){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+            else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+            else return 0.2;
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return 1.0;}
+            else if (d.place == manager.secondPlace) return 1.0;
+            else return 0.2;
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+            else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+            else return 0.2;
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return 1.0;}
+            else return 0.2;
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return 1.0;}
+            else if (d.place == manager.secondPlace) return 1.0;
+            else return 0.2;
+          }else{
+            return 1.0
+          }
+    })
 		.style("fill", function(d){
-			if (d.place == manager.place) {return "#ffd500";}
-      else if (d.place == manager.secondPlace) return "#8f00ff";
-      else return "#b3b1b1";
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
 		})
-	
+		.style("stroke", "#000")
+    .on("mouseover", function(d, i) {
+      tip.show(d);
+    })
+    .on("mouseout", function(d, i) {
+       tip.hide();
+    });
 }
+
+manager.addListener('groupChanged', function (e) {
+  if(manager.group==undefined){
+      d3.selectAll(".circleMap")
+      .data(data1)
+      .transition()
+      .duration(130)
+      .style("opacity",function(d){
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+              else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+              else return 0.2;
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return 1.0;}
+              else if (d.place == manager.secondPlace) return 1.0;
+              else return 0.2;
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+              else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+              else return 0.2;
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return 1.0;}
+              else return 0.2;
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return 1.0;}
+              else if (d.place == manager.secondPlace) return 1.0;
+              else return 0.2;
+            }else{
+              return 1.0
+            }
+      })
+      .style('fill', function(d){
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) { return "#ffd500";}
+        else if (d.place == manager.secondPlace){ return "#8f00ff";}
+        else {return "#b3b1b1";}
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
+      })
+      .style("stroke", "#000")
+      .on("mouseover", function(d, i) {
+        tip.show(d);
+      })
+      .on("mouseout", function(d, i) {
+         tip.hide();
+      });
+  }else{
+    d3.selectAll(".circleMap")
+    .data(data1)
+    .transition()
+    .duration(130)
+    .style("opacity",function(d){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+            else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+            else return 0.2;
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return 1.0;}
+            else if (d.place == manager.secondPlace) return 1.0;
+            else return 0.2;
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+            else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+            else return 0.2;
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return 1.0;}
+            else return 0.2;
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return 1.0;}
+            else if (d.place == manager.secondPlace) return 1.0;
+            else return 0.2;
+          }else{
+            return 1.0
+          }
+    })
+    .style("stroke", "#000")
+    .style('fill', function(d){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
+    })
+    .on("mouseover", function(d, i) {
+      tip.show(d);
+    })
+    .on("mouseout", function(d, i) {
+       tip.hide();
+    });
+  }
+});
 
 manager.addListener('scatterplotBrushing', function (e) {
 	var dt = map_getData();
@@ -449,20 +1046,35 @@ manager.addListener('scatterplotBrushing', function (e) {
 	.transition()
 	.duration(130)
 	.style('fill', setColorMapByScatterplot)
+  .on("mouseover", function(d, i) {
+    tip.show(d);
+  })
+  .on("mouseout", function(d, i) {
+     tip.hide();
+  });
 });
 
 manager.addListener('parallelBrushing', function (e) { 
-	if (manager.place != undefined){
-		updatePoint3();
-	}
-	else updatePoint2(); 
+  updatePoint2(); 
 });
+
+function setColorMapByGroup(d) {
+  if (manager.filteringByGroup == undefined){ return "#b3b1b1";}
+  if (manager.filteringByGroup(d)){
+
+    return "#B80F0A";
+  }
+  else{
+    return "#b3b1b1";
+  }
+}
 
 function setColorMapByScatterplot(d) {
   if (manager.filteringByScatterplot == undefined){ return "#B80F0A";}
   if (manager.filteringByScatterplot(d)){
-	  console.log(1)
-    return "#008000";
+    if (d.place == manager.place) {return "#ffd500";}
+    else if (d.place == manager.secondPlace) return "#8f00ff";
+    else {return "#008000"}
   }
   else{
     return "#B80F0A";

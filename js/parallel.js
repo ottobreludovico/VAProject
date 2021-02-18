@@ -8,7 +8,7 @@ var svgParallel = d3.select(".parallel_area").append("svg")
 function brushstart() {
   d3.event.sourceEvent.stopPropagation();
 }
-var cambio=false;
+//var cambio=false;
 
 function cancelSelection() {
   key = this.__data__.key;
@@ -157,15 +157,29 @@ var type3_selection;
 
 var y = {};
 var names = [];
-var data;
+var data=[];
 
 function parallel_getData(){
-	  return manager.getDataFilteredByParallel();
+	  return manager.getDataFilteredByPlace();
+}
+
+function parallel_getDataT(){
+  return manager.getDataFilteredByYear();
+}
+
+function parallel_getDataG(){
+  return manager.getDataFilteredByG();
 }
 
 function start(){
-  data = parallel_getData();
+  if(manager.place==undefined && manager.group==undefined){
+    data = parallel_getDataT();
+  }else if(manager.place==undefined && manager.group!=undefined){
+    data = parallel_getDataG();
 
+  }else{
+    data = parallel_getData();
+  }
   dimensions = [
     {
       name: "place",
@@ -195,7 +209,6 @@ function start(){
     j = dimensions[i].key;
     names.push(dimensions[i].name);
     if (j == "place") {
-   
       places = [" "];
       data.forEach(element => {
         if (!places.includes(element[j])) {
@@ -272,8 +285,7 @@ function start(){
     .data(data)
     .enter().append("path")
     .attr("d", draw)
-    .attr("class", "path_background")
-    .style("stroke", "#FFFFFF");
+    .attr("class", "path_background");
 
 
   foreground = svgParallel.append("g")
@@ -284,15 +296,44 @@ function start(){
     .append("path")
     .attr("d", draw)
     .attr('class', 'path_foreground path_normal')
+    .style("stroke-opacity", .4)
     .style("stroke", function(d){
-      if(manager.compareMode){
+      /*if(manager.compareMode){
         if (d.place == manager.place) {return "#ffd500";}
         else if (d.place == manager.secondPlace) return "#8f00ff";
         else return "#B80F0A";
       }
       else if (d.place == manager.secondPlace) return "#8f00ff";
-      else return "#B80F0A";
-    });
+      else return "#B80F0A";*/
+
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
+    })
+    .style("stroke-width", 1.0);
     
 
   svgParallel.selectAll('.path_highlighted').raise();
@@ -344,7 +385,7 @@ manager.addListener('scatterplotBrushing', function (e) {
 
 
 manager.addListener('yearChanged', function (e) {
-	cambio=false;
+	//cambio=false;
   d3.select(".parallel_area").select("svg").remove();
   svgParallel = d3.select(".parallel_area").append("svg")
     .attr("width", width_parallel + margin_parallel.left + margin_parallel.right)
@@ -353,6 +394,16 @@ manager.addListener('yearChanged', function (e) {
     .attr("transform", "translate(" + margin_parallel.left + "," + margin_parallel.top + ")");
 	start();
 	
+});
+
+manager.addListener('groupChanged', function (e) {
+  d3.select(".parallel_area").select("svg").remove();
+  svgParallel = d3.select(".parallel_area").append("svg")
+  .attr("width", '100%')
+  .attr("height", '100%')
+  .append("g")
+  .attr("transform", "translate(" + margin_parallel.left + "," + margin_parallel.top + ")");
+  start()    
 });
 
 function updateParallel(){
@@ -367,7 +418,7 @@ function updateParallel(){
 
 
 manager.addListener('placeChanged', function (e) {
-	  cambio=true;
+	  //cambio=true;
 	  updateParallel();
 });
 
@@ -375,7 +426,7 @@ manager.addListener('placeChanged', function (e) {
 function setColorByScatterplot(d) {
   if (manager.filteringByScatterplot == undefined){ return "#B80F0A";}
   if (manager.filteringByScatterplot(d)){
-	  console.log(1)
+
     if (d.place == manager.place) {return "#ffd500";}
     else if (d.place == manager.secondPlace) return "#8f00ff";
     else {return "#008000"}
@@ -404,10 +455,6 @@ function setClass(d) {
 }
 
 
-manager.addListener('placeChanged', function (e) {
-	  cambio=true;
-	  updateParallel();
-});
 
 $(window).resize(function() {
   // Resize SVG

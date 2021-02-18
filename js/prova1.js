@@ -37,7 +37,7 @@ manager.addListener('dataReady', function (e) {
 
     // Second barplot Scales
     var ybis = d3.scaleRadial()
-        .range([innerRadius, 5])   // Domain will be defined later.
+        .range([innerRadius, 0])   // Domain will be defined later.
         .domain([0, maxK]);
 
     // Add the bars

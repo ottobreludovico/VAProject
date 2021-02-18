@@ -1,0 +1,93 @@
+if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
+
+
+
+      if(d[0] == manager.place) return "#ffd500";
+        else if(d[0] == manager.secondPlace) return"#8f00ff";
+        else return "#2e4352";
+
+
+        manager.addListener("dataReady", function(d){
+    new Vue({
+        el: '#selector',
+        data: {
+          selected: '',
+          reasons: manager.groupsNames
+        }
+      })   
+})
+
+
+manager.triggerGroupFilterEvent(selectedGroup2);
+
+.style("opacity",function(d){
+  if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.6;}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.6;}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+        else return 0.4;
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return 1.0;}
+        else if (d.place == manager.secondPlace) return 1.0;
+        else return 0.4;
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.6;}
+        else return 0.4;
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return 1.0;}
+        else return 0.6;
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return 1.0;}
+        else if (d.place == manager.secondPlace) return 1.0;
+        else return 0.6;
+      }else{
+        return 1.0
+      }
+})
+
+
+.selct1 {
+    display: inline-block;
+    width:70%; 
+    font-size:14px; 
+    color:white; 
+    border: 2px solid #242423; 
+    border-radius: 25px;
+}
+
+.selct {
+  display: inline-block;
+}
+
+.selct1 > .dropdown-menu{
+  font-size: 14px;
+}
