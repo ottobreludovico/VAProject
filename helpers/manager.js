@@ -116,7 +116,7 @@ Manager.prototype.getDataOriginal = function () {
 }
 
 Manager.prototype.getDataFilteredByYear = function () {
-    return this.data;
+    return this.dataYear; //CONTROLLARE BENE
 }
 
 Manager.prototype.getDataFilteredByG = function () {
@@ -142,13 +142,14 @@ Manager.prototype.triggerLudo = function () {
 
 
 Manager.prototype.triggerGroupFilterEvent = function (selectedGroup) {
-    if(selectedGroup!="Tutti"){
+    console.log(selectedGroup);
+    if(selectedGroup!="Tutti" && selectedGroup!="" && selectedGroup!=null){
         this.group=selectedGroup;
         this.dataGroupYear = [];
         for (i = 0; i < this.dataYear.length; i++) {
             d = this.dataYear[i];    
             foundGroup = d.gname;
-            if (selectedGroup == foundGroup){
+            if (selectedGroup == foundGroup ){
                 this.dataGroupYear.push(d);
             }
         }
@@ -335,6 +336,7 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
 Manager.prototype._updateDataFromYear = function () {
     this.data = [];
     this.filteredByParallel = [];
+    this.dataGroupYear=[];
     //this.dataplace =[]
     for (i = 0; i < this.dataYear.length; i++) {
         if(this.group!=undefined){
@@ -378,7 +380,7 @@ Manager.prototype._updateDataFromPlace = function () {
 }
 
 Manager.prototype._updateDataFromGroupYear = function () {
-    if(this.group!="Tutti"){
+    if(this.group!="Tutti" && this.group!=null && this.group!=undefined){
         this.data = [];
         this.filteredByParallel = [];
         for (i = 0; i < this.dataGroupYear.length; i++) {
@@ -398,6 +400,7 @@ Manager.prototype._updateDataFromGroupYear = function () {
         for (i = 0; i < this.data.length; i++) {
             this.filteredByParallel.push(this.data[i]);
         }
+        console.log(this.filteredByParallel);
     }
     
 }

@@ -14,6 +14,10 @@ var marginP = {top: 10, right: 30, bottom: 50, left: 50},
  widthP = (document.getElementById("my_dataviz").clientWidth - marginP.left - marginP.right),
  heightP = (document.getElementById("my_dataviz").clientHeight - marginP.top - marginP.bottom);
 
+ var marginG = {top: 10, right: 0, bottom: 50, left: 150},
+ widthG = (document.getElementById("my_dataviz").clientWidth - marginP.left - marginP.right),
+ heightG = (document.getElementById("my_dataviz").clientHeight - marginP.top - marginP.bottom);
+
  /*var marginC = {top: 30, right: 30, bottom: 30, left: 30},
  widthC = (clientWidth - marginC.left - marginC.right)*1,
  heightC = (clientHeight - marginC.top - marginC.bottom)*1;*/

@@ -27,11 +27,11 @@ function cancelSelection() {
 }
 
 function parallelFiltering(d) {
-  var rangeC = y["place"].range();
+  var rangeC = y["region_txt"].range();
   var rangeT = y["attacktype1_txt"].range();
   var rangeT2 = y["weaptype1_txt"].range();
   var rangeT3 = y["targtype1_txt"].range();
-  var rangePointsC = d3.range(rangeC[0], rangeC[1], y["place"].step());
+  var rangePointsC = d3.range(rangeC[0], rangeC[1], y["region_txt"].step());
   var rangePointsT = d3.range(rangeT[0], rangeT[1], y["attacktype1_txt"].step());
   var rangePointsT2 = d3.range(rangeT2[0], rangeT2[1], y["weaptype1_txt"].step());
   var rangePointsT3 = d3.range(rangeT3[0], rangeT3[1], y["targtype1_txt"].step());
@@ -39,7 +39,7 @@ function parallelFiltering(d) {
     if (extents[i][0] == 0 && extents[i][1] == 0) {
       return true;
     }
-    if (p.key == "place") {
+    if (p.key == "region_txt") {
       if (country_selection == undefined) return true;
       dValue = rangePointsC[places.indexOf(d[p.key])];
       return dValue >= country_selection[0] && dValue <= country_selection[1];
@@ -70,7 +70,7 @@ function parallelFiltering(d) {
 function brushParallel() {
   for (i in dimensions) {
     if (d3.event.target == y[dimensions[i].key].brush) {
-      if (dimensions[i].key == "place") {
+      if (dimensions[i].key == "region_txt") {
         country_selection = d3.event.selection;
         extents[i] = d3.event.selection.map(scalePointInverseC, y[dimensions[i].key]);
       }
@@ -103,9 +103,9 @@ function brushParallel() {
 
 function scalePointInverseC(pos) {
   var xPos = pos;
-  var domainC = y["place"].domain();
-  var rangeC = y["place"].range();
-  var rangePointsC = d3.range(rangeC[0], rangeC[1], y["place"].step());
+  var domainC = y["region_txt"].domain();
+  var rangeC = y["region_txt"].range();
+  var rangePointsC = d3.range(rangeC[0], rangeC[1], y["region_txt"].step());
   var inverseC = domainC[d3.bisect(rangePointsC, xPos)];
   return inverseC;
 }
@@ -174,16 +174,16 @@ function parallel_getDataG(){
 function start(){
   if(manager.place==undefined && manager.group==undefined){
     data = parallel_getDataT();
+    console.log(data);
   }else if(manager.place==undefined && manager.group!=undefined){
     data = parallel_getDataG();
-
   }else{
     data = parallel_getData();
   }
   dimensions = [
     {
-      name: "place",
-      key: "place"
+      name: "region_txt",
+      key: "region_txt"
     },
     {
       name: "nkill",
@@ -208,7 +208,7 @@ function start(){
   for (i in dimensions) {
     j = dimensions[i].key;
     names.push(dimensions[i].name);
-    if (j == "place") {
+    if (j == "region_txt") {
       places = [" "];
       data.forEach(element => {
         if (!places.includes(element[j])) {
@@ -296,7 +296,21 @@ function start(){
     .append("path")
     .attr("d", draw)
     .attr('class', 'path_foreground path_normal')
-    .style("stroke-opacity", .4)
+    .style("stroke-opacity", function(d){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0.6;
+      }
+    })
     .style("stroke", function(d){
       /*if(manager.compareMode){
         if (d.place == manager.place) {return "#ffd500";}
@@ -307,10 +321,10 @@ function start(){
       else return "#B80F0A";*/
 
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
-        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#B80F0A";}
-        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#8f00ff";
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
         else return "#b3b1b1";
       }
       else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -319,8 +333,8 @@ function start(){
         else return "#b3b1b1";
       }
       else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#ffd500";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#B80F0A";}
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
         else return "#b3b1b1";
       }else if(manager.group!=undefined && manager.place==undefined){
         if (d.gname == manager.group) {return "#B80F0A";}

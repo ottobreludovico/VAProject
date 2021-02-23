@@ -1,6 +1,8 @@
 var nkillDiv = document.getElementById("nkillPanel");
 var showValues = document.getElementById("showValues");
+var showValues2 = document.getElementById("showValues2");
 var sv = document.getElementById("sv");
+var sv2 = document.getElementById("sv2");
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var place1Div = document.getElementById("place1");
 var place2Div = document.getElementById("place2");
@@ -72,43 +74,11 @@ function list_push(data){
   }
 }
 
-
-
-
-function chooseColorBynkill(nkill,plID){
-  if (manager.compareMode == true && plID != 0){
-    if (plID == 1){
-      if /*(nkill<4.5){ return    '#c7e9c0'} 
-      else if (nkill<5){ return   "#a1d99b"} 
-      else if */(nkill<5){ return "#57be73"} 
-      else if (nkill<6){ return   "#207a3e"} 
-      else if (nkill<7){ return   "#015021"} 
-      else{ return              "#00250f"} 
-    }
-    else{
-      if /*(nkill<4.5){ return      '#dadaeb'} 
-      else if (nkill<5){ return   "#E9CFEC"} 
-      else if */(nkill<5){ return "#e252be"} 
-      else if (nkill<6){ return   "#a52d7d"} 
-      else if (nkill<7){ return   "#8400e9"} 
-      else{ return              "#311432"} 
-    }
+function count(el,a){
+  var c=0;
+  for(var i=0;i<a.length;i++){
+    if(a[i]==el){
+      c++;}
   }
-  else if (manager.compareMode == false && plID == 1){
-    if /*(nkill<4.5){ return      '#c7e9c0'} 
-    else if (nkill<5){ return   "#a1d99b"} 
-    else if */(nkill<5){ return "#57be73"} 
-    else if (nkill<6){ return   "#207a3e"} 
-    else if (nkill<7){ return   "#015021"} 
-    else{ return              "#00250f"} 
-  }
-  else{
-    if /*(nkill<4.5){ return      '#c7e9c0'} 
-    else if (nkill<5){ return   "#a1d99b"} 
-    else if */(nkill<5){ return "#FFC281"} 
-    else if (nkill<6){ return   "#EF7215"} 
-    else if (nkill<7){ return   "#B80F0A"} 
-    else{ return              "#3A1F04"} 
-  }
-  
+  return c;
 }

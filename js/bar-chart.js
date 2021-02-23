@@ -70,7 +70,13 @@ manager.addListener('dataReady', function (e) {
     .attr("height", function(fcy) { return heightBar - yBar(fcy[1]); })
     .attr("fill", "#B80F0A")
     .attr("margin-left", "1px").attr("selected",false)
-    .on("click", function(d,i){});
+    .on("click", function(d,i){})
+    .on('mouseenter', function (actual, i) {
+        d3.select(this).attr('opacity', 0.5)
+    })
+    .on('mouseleave', function (actual, i) {
+        d3.select(this).attr('opacity', 1)
+    });
 
     rectBar
         .append("text")
@@ -83,6 +89,7 @@ manager.addListener('dataReady', function (e) {
             .text(function(d) { return d[1]; });
 
     svgBar.append("line")
+    .attr("id","limit")
     .attr("x1", xBar(1))
     .attr("x2", widthBar)
     .attr("y1", yBar(media))
@@ -155,8 +162,74 @@ function computeFrequencyR(data){
     return items2;
 }
 
+function computeFrequencyF(data){
+    var frequency = {};
+    var items=[]
+    sum=0;
+    for (i = 0; i < data.length; i++) {
+        country = data[i].place;
+        if (frequency[country] != undefined){
+            frequency[country] += parseInt(data[i].nkill);
+            sum+=parseInt(data[i].nkill);
+        }
+        else{
+            frequency[country] = parseInt(data[i].nkill);
+            sum+=parseInt(data[i].nkill);
+        }
+    }
+
+
+    items = Object.keys(frequency).map(function (country) {
+        return [country, frequency[country]];
+    });
+    media=sum/Object.keys(frequency).length;
+
+    items.sort(function(a, b) {
+        return (a[1] < b[1]) ? 1 : -1;;
+    });
+    if(items.length>15){
+        items.splice(15, items.length);      
+    }
+
+    return items;
+}
+
+function computeFrequencyFR(data){
+    var frequencyR = {};
+    sum=0;
+    var items2=[];
+    for (i = 0; i < data.length; i++) {
+        prov = data[i].provstate;
+
+        if (frequencyR[prov] != undefined){
+            frequencyR[prov][0] += parseInt(data[i].nkill);
+            sum+=parseInt(data[i].nkill);
+        }
+        else{
+            frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
+            sum+=parseInt(data[i].nkill)
+        }
+    }
+
+    var items2 = Object.keys(frequencyR).map(function (prov) {
+        return [prov, frequencyR[prov]];
+    });
+
+
+    media=sum/Object.keys(frequencyR).length;
+    items2.sort(function(a, b) {
+        return (a[1][0] < b[1][0]) ? 1 : -1;;
+    });
+
+    if(items2.length>15){
+        items2.splice(15, items2.length);      
+    }
+    return items2;
+}
+
 
 var R=false;
+var F=false;
 var tutte=true;
 function updateChart(){
     if(manager.place==undefined && manager.group!=undefined){
@@ -179,15 +252,29 @@ function updateChart(){
     }
 
     if(R){
-        fqcs=[];
-        fqcs = computeFrequencyR(data);
-        xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
-        yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1][0]; }))]);
+        if(F){
+            fqcs=[];
+            fqcs = computeFrequencyFR(data);
+            xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
+            yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1][0]; }))]);
+        }else{
+            fqcs=[];
+            fqcs = computeFrequencyR(data);
+            xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
+            yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1][0]; }))]);
+        }     
     }else{
-        fqcs=[];
-        fqcs = computeFrequency(data);
-        xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
-        yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1]; }))]);
+        if(F){
+            fqcs=[];
+            fqcs = computeFrequencyF(data);
+            xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
+            yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1]; }))]);
+        }else{
+            fqcs=[];
+            fqcs = computeFrequency(data);
+            xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
+            yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1]; }))]);
+        }
     }
 
 
@@ -234,7 +321,13 @@ function updateChart(){
         }
     })
     .attr("margin-left", "1px").attr("selected",false)
-    .on("click", function(d,i){});
+    .on("click", function(d,i){})
+    .on('mouseenter', function (actual, i) {
+        d3.select(this).attr('opacity', 0.5)
+    })
+    .on('mouseleave', function (actual, i) {
+        d3.select(this).attr('opacity', 1)
+    });
 
     rectBar
         .append("text")
@@ -247,6 +340,7 @@ function updateChart(){
             .text(function(d) { return d[1][0]; }); 
 
     svgBar.append("line")
+    .attr("id","limit")
     .attr("x1", xBar(1))
     .attr("x2", widthBar)
     .attr("y1", yBar(media))
@@ -277,7 +371,13 @@ function updateChart(){
         }
     })
     .attr("margin-left", "1px").attr("selected",false)
-    .on("click", function(d,i){});
+    .on("click", function(d,i){})
+    .on('mouseenter', function (actual, i) {
+        d3.select(this).attr('opacity', 0.5)
+    })
+    .on('mouseleave', function (actual, i) {
+        d3.select(this).attr('opacity', 1)
+    });
 
     rectBar
         .append("text")
@@ -290,6 +390,7 @@ function updateChart(){
             .text(function(d) { return d[1]; }); 
 
     svgBar.append("line")
+    .attr("id","limit")
     .attr("x1", xBar(1))
     .attr("x2", widthBar)
     .attr("y1", yBar(media))
@@ -344,6 +445,18 @@ showValues.addEventListener("change", function(){
     }else{
         sv.innerHTML="Show Countries";
         R=true;
+    }
+    svgBar.selectAll("*").remove();
+    updateChart();
+})
+
+showValues2.addEventListener("change", function(){
+    if(F==true){
+        F=false;
+        sv2.innerHTML="Show kill";
+    }else{
+        sv2.innerHTML="Show freq";
+        F=true;
     }
     svgBar.selectAll("*").remove();
     updateChart();
