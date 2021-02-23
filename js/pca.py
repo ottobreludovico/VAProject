@@ -13,7 +13,7 @@ else:
 if len(sys.argv) > 2:
     out_file = sys.argv[2]
 else:
-    out_file = '../Dataset/globalterrorismpca.csv'
+    out_file = '../Dataset/pronto.csv'
 
 
 data = []
@@ -37,42 +37,62 @@ for el in data:
             j = el.index(field)
             data[i][j] = 0.0
 
-def mapRegionType(rT):
-    if rT == "Southeast Asia":
+
+def mapWeapType(wT):
+    if wT == "Unknown":
         return 1
-    elif rT == "Central America & Caribbean":
+    elif wT == "Firearms":
         return 2
-    elif rT == "Western Europe":
+    elif wT == "Incendiary":
         return 3
-    elif rT == "North America":
+    elif wT == "Explosives":
         return 4
-    elif rT == "Middle East & North Africa":
+    elif wT == "Vehicle":
         return 5
-    elif rT == "South America":
+    elif wT == "Melee":
         return 6
-    elif rT == "South Asia":
+    elif wT == "Chemical":
     	return 7
-    elif rT == "South Africa":
+    elif wT == "Sabotage Equipment":
     	return 8
-    elif rT == "Eastern Europe":
+    elif wT == "Biological":
     	return 9
-    elif rT == "Sub-Saharan Africa":
+    elif wT == "Suicide":
     	return 10
-    elif rT == "Australasia & Oceania":
-    	return 11
- 	#"Central Asia":
+   #16, 2, 3, 5, 13, 15, 7, 23, empty, other 
     else:
         return 0
+
+def mapAttackType(aT):
+    if aT == "Unknown":
+        return 1
+    elif aT == "Assassination":
+        return 2
+    elif aT == "Hostage Taking":
+        return 3
+    elif aT == "Hijacking":
+        return 4
+    elif aT == "Bombing/Explosion":
+        return 5
+    elif aT == "Facility/Infrastructure Attack":
+        return 6
+    elif aT == "Armed Assault":
+    	return 7
+    elif aT == "Unarmed Assault":
+    	return 8
+   #3, other 
+    else:
+        return 0
+
 
 
 data_for_pca = []
 for el in data:
     data_for_pca.append(
-        [float(mapRegionType(el[header.index('region_txt')])),
+        [float(mapWeapType(el[header.index('weaptype1_txt')])),
+        float(mapAttackType(el[header.index('attacktype1_txt')])),
         float(el[header.index('latitude')]), 
         float(el[header.index('iyear')]),
-        float(el[header.index('iday')]),
-        float(el[header.index('imonth')]),
         float(el[header.index('longitude')]), 
         float(el[header.index('nkill')]),]
         )

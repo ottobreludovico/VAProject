@@ -102,18 +102,53 @@ manager.addListener('dataReady', function (e) {
             });
 
     legend.append("rect")
-        .attr("x", widthScatter - 18)
+        .attr("x", widthScatter - 66)
         .attr("width", 2)
         .attr("height", 18)
         .style("fill", function (d) { return color[d] });
 
     legend.append("text")
-        .attr("x", widthScatter - 24)
+        .attr("x", 0)
         .attr("y", 9)
         .attr("dy", ".35em")
-        .style("text-anchor", "end")
+        .style("text-anchor", "start")
         .style("fill", "#ffffff")
         .text(function(d) { return d; });
+
+
+
+/*
+	// add legend   
+	var legend = svg.append("g")
+	  .attr("class", "legend")
+	  .attr("x", w)
+	  // .attr("y", 10)
+	  .attr("height", 50)
+	  .attr("width", 300)
+	  .attr("transform", "translate(" + (w - 200) + ", -50)");
+
+	legend.selectAll('g').data(dataset)
+      .enter()
+      .append('g')
+      .each(function(d, i) {
+        var g = d3.select(this);
+        g.append("rect")
+          .attr("x", i * 60)
+          .attr("y", 65)
+          .attr("width", 10)
+          .attr("height", 10)
+          .style("fill", color_hash[String(i)][1]);
+        
+       g.append("text")
+          .attr("x", i * 60 + 15)
+          .attr("y", 73)
+          .attr("height",30)
+          .attr("width",100)
+          .style("fill", color_hash[String(i)][1])
+          .text(color_hash[String(i)][0]);
+
+      });
+*/    
 
     
 });
