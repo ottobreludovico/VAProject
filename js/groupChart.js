@@ -116,17 +116,8 @@ function groupchart_getdata(){
 }
 
 manager.addListener('groupChanged', function (e){
-    var q=document.getElementById("my_dataviz");
-    var q1=document.getElementById("my_dataviz2");
-    if(manager.group!=undefined && manager.place!=undefined){
-        q.style.display="none";
-        q1.style.display="block";
-        svg3.selectAll("*").remove();
-        start2();
-    }else{
-        q.style.display="block";
-        q1.style.display="none";
-    }
+    svg3.selectAll("*").remove();
+    start2();
 }) 
 
 manager.addListener('yearChanged', function (e){

@@ -11,6 +11,7 @@ Manager = function () {
     this.dataScattered = [];
     this.dataplace=[];
     this.dataGroupYear=[];
+    this.dataGroup=[];
     this.groupsNames=[];
     this.places=[];
     this.group=undefined;
@@ -123,6 +124,10 @@ Manager.prototype.getDataFilteredByG = function () {
     return this.dataGroupYear;
 }
 
+Manager.prototype.getDataFilteredByGG = function () {
+    return this.dataGroup;
+}
+
 Manager.prototype.getDataFilteredByPlace = function () {
     return this.dataplace;
 }
@@ -146,11 +151,17 @@ Manager.prototype.triggerGroupFilterEvent = function (selectedGroup) {
     if(selectedGroup!="Tutti" && selectedGroup!="" && selectedGroup!=null){
         this.group=selectedGroup;
         this.dataGroupYear = [];
+        this.dataGroup=[];
         for (i = 0; i < this.dataYear.length; i++) {
             d = this.dataYear[i];    
             foundGroup = d.gname;
             if (selectedGroup == foundGroup ){
                 this.dataGroupYear.push(d);
+            }
+        }
+        for (i = 0; i < this.dataOriginal.length; i++) {   
+            if (selectedGroup == this.dataOriginal[i].gname ){
+                this.dataGroup.push(this.dataOriginal[i]);
             }
         }
         this._updateDataFromGroupYear();
