@@ -2,10 +2,11 @@ var x_Scatter = d3.scaleLinear().range([0, widthScatter]),
     y_Scatter = d3.scaleLinear().range([heightScatter, 0])
 
     var color = {
-        "nkill < 5.0":    "#ffffff",
-        "nkill < 20.0":    "#EF7215",
-        "nkill < 50.0":    "#B80F0A",
-        "nkill 50.0+":  "#8f00ff",  
+        "Asia":    "#fd1cec",
+        "Africa":    "#1df1fe",
+        "America":    "#ffffff",
+        "Oceania":  "#004bff",  
+        "Europe":  "#ffa900",
     };
 
 var xAxis = d3.axisBottom(x_Scatter);
@@ -59,7 +60,7 @@ manager.addListener('dataReady', function (e) {
             .style("stroke", "#000")
             .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
             .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
-            .style("fill", function(d) { return color[computeNkill(d.nkill)]; })
+            .style("fill", function(d) { return color[computeContinent(d.region_txt)]; })
           
 
     focus.append("g")
@@ -94,7 +95,7 @@ manager.addListener('dataReady', function (e) {
         .call(brushTot);    
 
     var legend = svgScatter.selectAll(".legend")
-            .data(["nkill 50.0+", "nkill < 50.0",  "nkill < 20.0", "nkill < 5.0"])
+            .data(["Oceania", "Africa",  "Asia", "Europe", "America"])
         .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function(d, i) { 
@@ -102,57 +103,20 @@ manager.addListener('dataReady', function (e) {
             });
 
     legend.append("rect")
-        .attr("x", widthScatter - 66)
+        .attr("x", widthScatter - 60)
         .attr("width", 2)
         .attr("height", 18)
         .style("fill", function (d) { return color[d] });
 
     legend.append("text")
-        .attr("x", 0)
+        .attr("x", widthScatter - 110)
         .attr("y", 9)
         .attr("dy", ".35em")
         .style("text-anchor", "start")
         .style("fill", "#ffffff")
         .text(function(d) { return d; });
-
-
-
-/*
-	// add legend   
-	var legend = svg.append("g")
-	  .attr("class", "legend")
-	  .attr("x", w)
-	  // .attr("y", 10)
-	  .attr("height", 50)
-	  .attr("width", 300)
-	  .attr("transform", "translate(" + (w - 200) + ", -50)");
-
-	legend.selectAll('g').data(dataset)
-      .enter()
-      .append('g')
-      .each(function(d, i) {
-        var g = d3.select(this);
-        g.append("rect")
-          .attr("x", i * 60)
-          .attr("y", 65)
-          .attr("width", 10)
-          .attr("height", 10)
-          .style("fill", color_hash[String(i)][1]);
-        
-       g.append("text")
-          .attr("x", i * 60 + 15)
-          .attr("y", 73)
-          .attr("height",30)
-          .attr("width",100)
-          .style("fill", color_hash[String(i)][1])
-          .text(color_hash[String(i)][0]);
-
-      });
-*/    
-
     
 });
-    /**/
 
 function updateScatter(){
     data = scatter_getData();
@@ -184,7 +148,7 @@ function updateScatter(){
         .attr("opacity",".3")
         .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
         .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
-        .style("fill", function(d) { return color[computeNkill(d.nkill)]; })
+        .style("fill", function(d) { return color[computeContinent(d.region_txt)]; })
         .style("stroke", "#000")
         .merge(dots);
 
@@ -196,7 +160,7 @@ function updateScatter(){
         .attr("stroke","#000")
         .attr("cx", function(d) { return x_Scatter(d["PCA_1"]); })
         .attr("cy", function(d) { return y_Scatter(d["PCA_2"]); })
-        .style("fill", function(d) { return color[computeNkill(d.nkill)]; })
+        .style("fill", function(d) { return color[computeContinent(d.region_txt)]; })
         .attr('class', function (d) {
             if (filteringByScatterplot(d)) return 'selected'
             else return '';
@@ -204,11 +168,12 @@ function updateScatter(){
     
 }
 
-function computeNkill(nkill){
-    if (nkill < 5.0) return "nkill < 5.0";
-    else if (nkill < 20.0) return "nkill < 20.0";
-    else if (nkill < 50.0) return "nkill < 50.0";
-    else return "nkill 50.0+";
+function computeContinent(region){
+    if (region == "Central Asia" || region == "South Asia" || region == "East Asia" || region == "Southeast Asia") return "Asia";
+    else if (region == "North America" || region == "South America" || region == "Central America & Caribbean") return "America";
+    else if (region == "Eastern Europe" || region == "Western Europe") return "Europe";
+    else if (region == "Australasia & Oceania") return "Oceania";
+    else return "Africa";
 }
 
 

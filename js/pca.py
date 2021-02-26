@@ -37,7 +37,54 @@ for el in data:
             j = el.index(field)
             data[i][j] = 0.0
 
+"""
+def mapWeapType(wT):
+    if wT == "Unknown":
+        return 13
+    elif wT == "Firearms":
+        return 5
+    elif wT == "Incendiary":
+        return 8
+    elif wT == "Explosives":
+        return 6
+    elif wT == "Vehicle":
+        return 10
+    elif wT == "Melee":
+        return 9
+    elif wT == "Chemical":
+    	return 2
+    elif wT == "Sabotage Equipment":
+    	return 11
+    elif wT == "Biological":
+    	return 1
+    elif wT == "Suicide":
+    	return 3
+   #16, 2, 3, 5, 13, 15, 7, 23, empty, other 
+    else:
+        return 4
 
+def mapAttackType(aT):
+    if aT == "Unknown":
+        return 9
+    elif aT == "Assassination":
+        return 1
+    elif aT == "Hostage Taking":
+        return 6
+    elif aT == "Hijacking":
+        return 4
+    elif aT == "Bombing/Explosion":
+        return 3
+    elif aT == "Facility/Infrastructure Attack":
+        return 7
+    elif aT == "Armed Assault":
+    	return 2
+    elif aT == "Unarmed Assault":
+    	return 8
+   #3, other 
+    else:
+        return 5
+
+"""
 def mapWeapType(wT):
     if wT == "Unknown":
         return 1
@@ -82,7 +129,51 @@ def mapAttackType(aT):
     	return 8
    #3, other 
     else:
-        return 0
+        return 9
+
+def mapTargType(tT):
+    if tT == "Unknown":
+        return 1
+    elif tT == "Private Citizens & Property":
+        return 2
+    elif tT == "Journalists & Media":
+        return 3
+    elif tT == "Government":
+        return 4
+    elif tT == "Airports & Aircraft":
+        return 5
+    elif tT == "Police":
+        return 6
+    elif tT == "Military":
+    	return 7
+    elif tT == "Business":
+    	return 8
+    elif tT == "Terrorist/Non-State Militia":
+    	return 9
+    elif tT == "Religious Figures/institutions":
+    	return 10
+    elif tT == "Violent Political Party":
+    	return 11
+    elif tT == "Tourists":
+    	return 12
+    elif tT == "Utilities":
+    	return 13
+    elif tT == "Maritme":
+    	return 14
+    elif tT == "Transportation":
+    	return 15
+    elif tT == "Educational Institution":
+    	return 16
+    elif tT == "Telecommunication":
+    	return 17
+    elif tT == "Food or Water Supply":
+    	return 18
+    else:
+        return 19
+
+    
+
+    
 
 
 
@@ -91,10 +182,10 @@ for el in data:
     data_for_pca.append(
         [float(mapWeapType(el[header.index('weaptype1_txt')])),
         float(mapAttackType(el[header.index('attacktype1_txt')])),
-        float(el[header.index('latitude')]), 
-        float(el[header.index('iyear')]),
-        float(el[header.index('longitude')]), 
-        float(el[header.index('nkill')]),]
+        float(el[header.index('region')]),
+        float(el[header.index('nkill')]),
+        float(mapTargType(el[header.index('targtype1_txt')])), ]
+
         )
 scaled_data_for_pca = StandardScaler().fit_transform(data_for_pca)
 pca = PCA(n_components=2)
