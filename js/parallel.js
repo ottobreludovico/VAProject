@@ -92,13 +92,52 @@ function brushParallel() {
     }
   }
   manager.notifyParallelBrushing();
-  foreground.style("display", function (d) {
+  if(manager.place==undefined){
+    console.log(manager.place);
+    foreground.style("display", function (d) {
       value = parallelFiltering(d);
       if (value) {
         return null;
       }
       return "none";
   });
+  }else{
+    foreground.style("stroke", function (d) {
+      value = parallelFiltering(d);
+      if (value) {
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+          else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+          else return "#b3b1b1";
+        }
+        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place) {return "#ffd500";}
+          else if (d.place == manager.secondPlace) return "#8f00ff";
+          else return "#b3b1b1";
+        }
+        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else return "#b3b1b1";
+        }else if(manager.group!=undefined && manager.place==undefined){
+          if (d.gname == manager.group) {return "#B80F0A";}
+          else return "#b3b1b1";
+        }else if(manager.group==undefined && manager.place!=undefined){
+          if (d.place == manager.place) {return "#ffd500";}
+          else if (d.place == manager.secondPlace) return "#8f00ff";
+          else return "#b3b1b1";
+        }else{
+          return "#B80F0A"
+        }
+      }
+      else{
+        return "white";
+      }
+   });
+  }
+  
 }
 
 function scalePointInverseC(pos) {
@@ -174,7 +213,6 @@ function parallel_getDataG(){
 function start(){
   if(manager.place==undefined && manager.group==undefined){
     data = parallel_getDataT();
-    console.log(data);
   }else if(manager.place==undefined && manager.group!=undefined){
     data = parallel_getDataG();
   }else{
@@ -182,23 +220,23 @@ function start(){
   }
   dimensions = [
     {
-      name: "region_txt",
+      name: "Region",
       key: "region_txt"
     },
     {
-      name: "nkill",
+      name: "Kills",
       key: "nkill"
     },
     {
-      name: "attacktype1_txt",
+      name: "Attack type",
       key: "attacktype1_txt"
     },
     {
-      name: "weaptype1_txt",
+      name: "Weap",
       key: "weaptype1_txt"
     },
     {
-      name: "targtype1_txt",
+      name: "Target",
       key: "targtype1_txt"
     }
            
@@ -400,34 +438,19 @@ manager.addListener('scatterplotBrushing', function (e) {
 
 manager.addListener('yearChanged', function (e) {
 	//cambio=false;
-  d3.select(".parallel_area").select("svg").remove();
-  svgParallel = d3.select(".parallel_area").append("svg")
-    .attr("width", width_parallel + margin_parallel.left + margin_parallel.right)
-    .attr("height", height_parallel + margin_parallel.top + margin_parallel.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin_parallel.left + "," + margin_parallel.top + ")");
+  svgParallel.selectAll("*").remove();
 	start();
 	
 });
 
 manager.addListener('groupChanged', function (e) {
-  d3.select(".parallel_area").select("svg").remove();
-  svgParallel = d3.select(".parallel_area").append("svg")
-  .attr("width", '100%')
-  .attr("height", '100%')
-  .append("g")
-  .attr("transform", "translate(" + margin_parallel.left + "," + margin_parallel.top + ")");
-  start()    
+  svgParallel.selectAll("*").remove();
+	start();  
 });
 
 function updateParallel(){
-  d3.select(".parallel_area").select("svg").remove();
-  svgParallel = d3.select(".parallel_area").append("svg")
-  .attr("width", '100%')
-  .attr("height", '100%')
-  .append("g")
-  .attr("transform", "translate(" + margin_parallel.left + "," + margin_parallel.top + ")");
-  start()
+  svgParallel.selectAll("*").remove();
+	start();
 }
 
 
@@ -438,15 +461,205 @@ manager.addListener('placeChanged', function (e) {
 
 
 function setColorByScatterplot(d) {
-  if (manager.filteringByScatterplot == undefined){ return "#B80F0A";}
-  if (manager.filteringByScatterplot(d)){
-
-    if (d.place == manager.place) {return "#ffd500";}
-    else if (d.place == manager.secondPlace) return "#8f00ff";
-    else {return "#008000"}
+  if (manager.filteringByScatterplot == undefined){ 
+    if(manager.filteringByParallel(d)){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A";
+      }
+    }else{
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }else{
+        return "#ffffff";
+      }
+    }
   }
-  else{
-    return "#B80F0A";
+  else if(manager.parallelFiltering){    
+        if(manager.filteringByParallel(d) && manager.filteringByScatterplot(d)){
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "green";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
+            else return "#b3b1b1";
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return "green";}
+            else if (d.place == manager.secondPlace) return "green";
+            else return "#b3b1b1";
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "green";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else return "#b3b1b1";
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "green";}
+            else return "#b3b1b1";
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return "green";}
+            else if (d.place == manager.secondPlace) return "green";
+            else return "#b3b1b1";
+          }else{
+            return "green";
+          }
+        }else{
+          if(manager.filteringByParallel(d)){
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+
+         } //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  }else{
+     if(manager.filteringByScatterplot(d)){
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "green";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+          else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
+          else return "#b3b1b1";
+        }
+        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place) {return "green";}
+          else if (d.place == manager.secondPlace) return "green";
+          else return "#b3b1b1";
+        }
+        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "green";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else return "#b3b1b1";
+        }else if(manager.group!=undefined && manager.place==undefined){
+          if (d.gname == manager.group) {return "green";}
+          else return "#b3b1b1";
+        }else if(manager.group==undefined && manager.place!=undefined){
+          if (d.place == manager.place) {return "green";}
+          else if (d.place == manager.secondPlace) return "green";
+          else return "#b3b1b1";
+        }else{
+          return "green";
+        } 
+        }else{   
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+            else return "#b3b1b1";
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else return "#b3b1b1";
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "#B80F0A";}
+            else return "#b3b1b1";
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }else{
+            return "#B80F0A";
+          }
+        }
   }
 }
 

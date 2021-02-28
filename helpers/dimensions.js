@@ -6,7 +6,7 @@ var marginBar = {top: 20, right: 25, bottom: 120, left: 40},
  widthBar = (document.getElementById("barChart").clientWidth - marginBar.left - marginBar.right),
  heightBar = (document.getElementById("barChart").clientHeight - marginBar.top - marginBar.bottom);
 
-var marginScatter = {top: 25, right: 20, bottom: 70, left: 40},
+var marginScatter = {top: 25, right: 60, bottom: 70, left: 40},
  widthScatter = (document.getElementById("scatter_area").clientWidth - marginScatter.left - marginScatter.right),
  heightScatter = (document.getElementById("scatter_area").clientHeight - marginScatter.top - marginScatter.bottom);
  

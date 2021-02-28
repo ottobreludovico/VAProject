@@ -21,7 +21,7 @@ var brushTot=d3.brush()
 var focus;
 
 var svgScatter = d3.select("#scatter_area").append("svg")
-    .attr("width", "99%")
+    .attr("width", "100%")
     .attr("height", "100%")
     .append("g")
     .attr("transform", "translate(" + marginScatter.left + "," + marginScatter.top + ")");
@@ -73,6 +73,7 @@ manager.addListener('dataReady', function (e) {
         .call(yAxis);
         
     svgScatter.append("text")
+        .attr("class", "pcatext")
         .attr("transform", "rotate(-90)")
         .attr("y", 30 - marginScatter.left)
         .attr("x",0 - (heightScatter / 2))
@@ -82,7 +83,8 @@ manager.addListener('dataReady', function (e) {
         .style("fill","#E8EDDF");  
 
                 
-    svgScatter.append("text")             
+    svgScatter.append("text")
+        .attr("class", "pcatext")             
         .attr("transform",
             "translate(" + ((widthScatter + marginScatter.right + marginScatter.left)/2) + " ," + 
                             (heightScatter + marginScatter.top + marginScatter.bottom - 30)+ ")")
@@ -118,8 +120,14 @@ manager.addListener('dataReady', function (e) {
     
 });
 
+var cond=false;
 function updateScatter(){
-    data = scatter_getData();
+    if(cond==true){
+        data = scatter_getDataC();
+        cond=false;
+    }else{
+        data = scatter_getData();
+    }
     var minX = d3.extent(data, function(d) { return +d["PCA_1"]; })[0] , maxX = d3.extent(data, function(d) { return +d["PCA_1"]; })[1];
     var minY = d3.extent(data, function(d) { return +d["PCA_2"]; })[0] , maxY = d3.extent(data, function(d) { return +d["PCA_2"]; })[1];
     x_Scatter.domain([minX - 1 ,maxX + 1]);
@@ -218,7 +226,16 @@ function scatter_getData(){
     return manager.getDataFilteredByParallel();
 }
 
-manager.addListener('yearChanged', function (e) {;
+function scatter_getDataC(){
+    return manager.getDataFilteredByPlace();
+}
+
+manager.addListener('yearChanged', function (e) {
+    updateScatter();
+});
+
+manager.addListener('placeChanged', function (e) {
+    cond=true;
     updateScatter();
 });
 

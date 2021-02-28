@@ -14,19 +14,21 @@ function group_getData(){
 }
 
 function group_getDataT(){
-return manager.getDataFilteredByYear();
+    return manager.getDataFilteredByParallel();
 }
 
 function group_getDataG(){
-return manager.getDataFilteredByG();
+    return manager.getDataFilteredByG();
 }
 
 
 function start2(){
     if(manager.place==undefined && manager.group==undefined){
         data =group_getDataT();
+    }else if(manager.place!=undefined && manager.group==undefined){
+        data =group_getData();
     }else{
-    data = group_getDataG();
+        data = group_getDataG();
     }
   fqcsg=computeFrequencyG(data);
   console.log(fqcsg);
@@ -129,3 +131,15 @@ manager.addListener('placeChanged', function (e){
     svg3.selectAll("*").remove();
     start2();
 }) 
+
+manager.addListener('dataReady', function (e){
+    svg3.selectAll("*").remove();
+    start2();
+}) 
+
+manager.addListener('parallelBrushing', function (e) {
+    if (manager.filteringByYear){
+        svg3.selectAll("*").remove();
+        start2();
+    }
+});

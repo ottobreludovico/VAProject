@@ -708,8 +708,6 @@ manager.addListener('yearChanged', function (e) {
 })  
 
 function updatePoint2(){
-	newdataM = map_getData();
-
 	circle=countriesGroup
 	.selectAll(".circleMap")
 	.style("fill", function(d){
@@ -738,40 +736,66 @@ function updatePoint2(){
         else if (d.place == manager.secondPlace) return "#8f00ff";
         else return "#b3b1b1";
       }else{
-        return "#B80F0A"
+        return "#B80F0A";
       }
     }else{
-      return "#ffffff"
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }else{
+        return "#ffffff";
+      }
     }
   })
   .style("opacity",function(d){
     if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
-          else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
-          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
-          else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
-          else return 0.2;
-        }
-        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place) {return 1.0;}
-          else if (d.place == manager.secondPlace) return 1.0;
-          else return 0.2;
-        }
-        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-          if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
-          else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
-          else return 0.2;
-        }else if(manager.group!=undefined && manager.place==undefined){
-          if (d.gname == manager.group) {return 1.0;}
-          else return 0.2;
-        }else if(manager.group==undefined && manager.place!=undefined){
-          if (d.place == manager.place) {return 1.0;}
-          else if (d.place == manager.secondPlace) return 1.0;
-          else return 0.2;
-        }else{
-          return 1.0
-        }
+      if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+      else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+      else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+      else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+      else return 0.2;
+    }
+    else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+      if (d.place == manager.place) {return 1.0;}
+      else if (d.place == manager.secondPlace) return 1.0;
+      else return 0.2;
+    }
+    else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+      if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+      else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+      else return 0.2;
+    }else if(manager.group!=undefined && manager.place==undefined){
+      if (d.gname == manager.group) {return 1.0;}
+      else return 0.2;
+    }else if(manager.group==undefined && manager.place!=undefined){
+      if (d.place == manager.place) {return 1.0;}
+      else if (d.place == manager.secondPlace) return 1.0;
+      else return 0.2;
+    }else{
+      return 1.0
+    }
   })
+  .style("stroke","#000")
   .on("mouseover", function(d, i) {
     tip.show(d);
   })
@@ -1040,18 +1064,10 @@ manager.addListener('groupChanged', function (e) {
 });
 
 manager.addListener('scatterplotBrushing', function (e) {
-	var dt = map_getData();
 	d3.selectAll(".circleMap")
-	.data(dt)
 	.transition()
 	.duration(130)
 	.style('fill', setColorMapByScatterplot)
-  .on("mouseover", function(d, i) {
-    tip.show(d);
-  })
-  .on("mouseout", function(d, i) {
-     tip.hide();
-  });
 });
 
 manager.addListener('parallelBrushing', function (e) { 
@@ -1061,7 +1077,6 @@ manager.addListener('parallelBrushing', function (e) {
 function setColorMapByGroup(d) {
   if (manager.filteringByGroup == undefined){ return "#b3b1b1";}
   if (manager.filteringByGroup(d)){
-
     return "#B80F0A";
   }
   else{
@@ -1070,14 +1085,205 @@ function setColorMapByGroup(d) {
 }
 
 function setColorMapByScatterplot(d) {
-  if (manager.filteringByScatterplot == undefined){ return "#B80F0A";}
-  if (manager.filteringByScatterplot(d)){
-    if (d.place == manager.place) {return "#ffd500";}
-    else if (d.place == manager.secondPlace) return "#8f00ff";
-    else {return "#008000"}
+  if (manager.filteringByScatterplot == undefined){ 
+    if(manager.filteringByParallel(d)){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A";
+      }
+    }else{
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }else{
+        return "#ffffff";
+      }
+    }
   }
-  else{
-    return "#B80F0A";
+  else if(manager.parallelFiltering){    
+        if(manager.filteringByParallel(d) && manager.filteringByScatterplot(d)){
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "green";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
+            else return "#b3b1b1";
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return "green";}
+            else if (d.place == manager.secondPlace) return "green";
+            else return "#b3b1b1";
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "green";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else return "#b3b1b1";
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "green";}
+            else return "#b3b1b1";
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return "green";}
+            else if (d.place == manager.secondPlace) return "green";
+            else return "#b3b1b1";
+          }else{
+            return "green";
+          }
+        }else{
+          if(manager.filteringByParallel(d)){
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+
+         } //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  }else{
+     if(manager.filteringByScatterplot(d)){
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "green";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+          else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
+          else return "#b3b1b1";
+        }
+        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place) {return "green";}
+          else if (d.place == manager.secondPlace) return "green";
+          else return "#b3b1b1";
+        }
+        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "green";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else return "#b3b1b1";
+        }else if(manager.group!=undefined && manager.place==undefined){
+          if (d.gname == manager.group) {return "green";}
+          else return "#b3b1b1";
+        }else if(manager.group==undefined && manager.place!=undefined){
+          if (d.place == manager.place) {return "green";}
+          else if (d.place == manager.secondPlace) return "green";
+          else return "#b3b1b1";
+        }else{
+          return "green";
+        } 
+        }else{   
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+            else return "#b3b1b1";
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else return "#b3b1b1";
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "#B80F0A";}
+            else return "#b3b1b1";
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }else{
+            return "#B80F0A";
+          }
+        }
   }
 }
 
