@@ -101,19 +101,20 @@ manager.addListener('dataReady', function (e) {
         .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function(d, i) { 
-                return "translate(50," + i * 20 + ")"; 
+                return "translate(" + i * 80 + ")"; 
             });
 
     legend.append("rect")
-        .attr("x", widthScatter - 60)
-        .attr("width", 2)
-        .attr("height", 18)
+        .attr("x", 60)
+        .attr("width", 6)
+        .attr("height", 13)
         .style("fill", function (d) { return color[d] });
 
     legend.append("text")
-        .attr("x", widthScatter - 110)
-        .attr("y", 9)
+        .attr("x", 20)
+        .attr("y", 5)
         .attr("dy", ".35em")
+        .style("class", "l")
         .style("text-anchor", "start")
         .style("fill", "#ffffff")
         .text(function(d) { return d; });

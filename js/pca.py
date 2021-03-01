@@ -37,54 +37,6 @@ for el in data:
             j = el.index(field)
             data[i][j] = 0.0
 
-"""
-def mapWeapType(wT):
-    if wT == "Unknown":
-        return 13
-    elif wT == "Firearms":
-        return 5
-    elif wT == "Incendiary":
-        return 8
-    elif wT == "Explosives":
-        return 6
-    elif wT == "Vehicle":
-        return 10
-    elif wT == "Melee":
-        return 9
-    elif wT == "Chemical":
-    	return 2
-    elif wT == "Sabotage Equipment":
-    	return 11
-    elif wT == "Biological":
-    	return 1
-    elif wT == "Suicide":
-    	return 3
-   #16, 2, 3, 5, 13, 15, 7, 23, empty, other 
-    else:
-        return 4
-
-def mapAttackType(aT):
-    if aT == "Unknown":
-        return 9
-    elif aT == "Assassination":
-        return 1
-    elif aT == "Hostage Taking":
-        return 6
-    elif aT == "Hijacking":
-        return 4
-    elif aT == "Bombing/Explosion":
-        return 3
-    elif aT == "Facility/Infrastructure Attack":
-        return 7
-    elif aT == "Armed Assault":
-    	return 2
-    elif aT == "Unarmed Assault":
-    	return 8
-   #3, other 
-    else:
-        return 5
-
-"""
 def mapWeapType(wT):
     if wT == "Unknown":
         return 1
@@ -170,12 +122,6 @@ def mapTargType(tT):
     	return 18
     else:
         return 19
-
-    
-
-    
-
-
 
 data_for_pca = []
 for el in data:

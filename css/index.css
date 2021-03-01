@@ -507,3 +507,7 @@ body {
 .pcatext{
   font-size: 12px;
 }
+
+.l{
+  float: right;
+}
