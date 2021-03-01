@@ -331,6 +331,7 @@ svgMap{
 
 body {
     overflow-x: hidden;
+    overflow-y: hidden;
   }
   
   #wrapper {
@@ -510,4 +511,30 @@ body {
 
 .l{
   float: right;
+}
+
+.tooltip-inner > .y{
+  color: #ffd500;
+}
+
+.tooltip-inner > .v{
+  color: #8f00ff;
+}
+
+.tooltip-inner > .r{
+  color:#B80F0A;
+}
+
+.tooltip-inner > .g{
+  color:green;
+}
+
+.tooltip-inner{
+  margin-bottom: 10px;
+  float:none;
+}
+
+.info{
+  background-color: #242423;
+  color:white;
 }

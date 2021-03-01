@@ -91,3 +91,16 @@ manager.triggerGroupFilterEvent(selectedGroup2);
 .selct1 > .dropdown-menu{
   font-size: 14px;
 }
+
+
+
+<button
+        type="button"
+        class="btn btn-secondary"
+        data-mdb-toggle="tooltip"
+        data-mdb-html="true"
+        title="<span class='y'>First place</span><br/>
+        <span class='v'>Second place</span><br/>
+        <span class='r'>Terroristic Group</span>">
+        <i class="fas fa-info"></i>
+    </button>
