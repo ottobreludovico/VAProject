@@ -8,6 +8,7 @@ var svg3 = d3.select("#my_dataviz2")
 // Parse the Data
 var data=[];
 var fqcsg=[];
+var p=false;
 
 function group_getData(){
     return manager.getDataFilteredByPlace();
@@ -21,9 +22,17 @@ function group_getDataG(){
     return manager.getDataFilteredByG();
 }
 
+function group_getDataP(){
+    return manager.getDataFilteredByParallel();
+}
+
 
 function start2(){
-    if(manager.place==undefined && manager.group==undefined){
+    if(p==true && manager.parallelFiltering==true){
+        data = group_getDataP();
+        p=false;
+    }
+    else if(manager.place==undefined && manager.group==undefined){
         data =group_getDataT();
     }else if(manager.place!=undefined && manager.group==undefined){
         data =group_getData();
@@ -140,6 +149,7 @@ manager.addListener('dataReady', function (e){
 manager.addListener('parallelBrushing', function (e) {
     if (manager.filteringByYear){
         svg3.selectAll("*").remove();
+        p=true;
         start2();
     }
 });

@@ -42,15 +42,42 @@
             <div class="container-fluid">
                 <!--<a href="#menu-toggle" class="btn btn-secondary float-right" id="menu-toggle">Toggle Menu</a>-->
                 <div class = "row" style="">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <label style="font-size: 32px;">Global Terrorism</label>
                     </div>
-        
+                    <div class="col-md-3 bootstrap-select-wrapper" style="float: left;">
+                        <label style="font-size: 16px;">1 Select</label>
+                        <select name="s1" title="Scegli una opzione" class="bg-dark text-white selct3">
+                            <optgroup label="Continent">
+                                <option id="continent1" value="continent1">No place selected</option>
+                              </optgroup>
+                              <optgroup label="Region">
+                                <option id="region1" value="region1">No place selected</option>
+                              </optgroup>
+                              <optgroup label="Nation">
+                                <option id="nation1" value="nation1">No place selected</option>
+                              </optgroup>
+                        </select>
+                        <label style="font-size: 16px; margin-left: 15px;">2 Select</label>
+                        <select name="s2" title="Scegli una opzione" class="bg-dark text-white selct3">
+                            <optgroup label="Continent">
+                                <option id="continent2" value="continent2">No place selected</option>
+                              </optgroup>
+                              <optgroup label="Region">
+                                <option id="region2" value="region2">No place selected</option>
+                              </optgroup>
+                              <optgroup label="Nation">
+                                <option id="nation2" value="nation2">No place selected</option>
+                              </optgroup>
+                        </select>
+                      </div>
+         
                     <div class="col-md-1 filters">
                         <label id = "labelCompare" for="compareCheck"> Compare</label>
                         <input type="checkbox" id="compareCheck" name="compare" value="Compare" onclick="nulla()">
                     </div>
-                    <div class="col-md-5 filters" id="selector" >
+                
+                    <div class="col-md-4 filters" id="selector" >
                         <!--<select name="selectG" id="ludo" class="form-select bg-dark text-white selct"></select>
                         -->
                         <label style="font-size: 16px;">Select Groups</label>

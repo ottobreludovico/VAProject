@@ -90,7 +90,7 @@ svgN
     .attr("x2", function(d){return(xN(d.key))})
     .attr("y1", function(d){return(yN(d.value.min))})
     .attr("y2", function(d){return(yN(d.value.max))})
-    .attr("stroke", "black")
+    .attr("stroke", "white")
     .style("width", 40)
 
 // rectangle for the main box
@@ -104,7 +104,7 @@ svgN
       .attr("y", function(d){return(yN(d.value.q3))})
       .attr("height", function(d){return(yN(d.value.q1)-yN(d.value.q3))})
       .attr("width", boxWidthh )
-      .attr("stroke", "black")
+      .attr("stroke", "white")
       .style("fill",  function(d){
         if(d.key==manager.place){
           return "#ffd500";
@@ -133,7 +133,7 @@ svgN
   return(xN(d.key)+boxWidthh/2)})
     .attr("y1", function(d){return(yN(d.value.median))})
     .attr("y2", function(d){return(yN(d.value.median))})
-    .attr("stroke", "black")
+    .attr("stroke", "white")
     .style("width", 80)
 
     svgN
@@ -145,7 +145,7 @@ svgN
     .attr("x2", center2a)
     .attr("y1", function(d){ return(yN(d))} )
     .attr("y2", function(d){ return(yN(d))} )
-    .attr("stroke", "black")
+    .attr("stroke", "white")
 
     if (manager.secondPlace!=undefined){
       svgN
@@ -157,7 +157,7 @@ svgN
     .attr("x2", center2b)
     .attr("y1", function(d){ return(yN(d))} )
     .attr("y2", function(d){ return(yN(d))} )
-    .attr("stroke", "black")
+    .attr("stroke", "white")
     }
     
 };

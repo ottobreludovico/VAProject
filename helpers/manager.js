@@ -221,10 +221,21 @@ Manager.prototype.triggerYearFilterEvent = function (selectedYear) {
 
 Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYear) {
     //if(this.group==undefined){
+        var sel1 = document.querySelector("select[name='s1']");
+        var sel2 = document.querySelector("select[name='s2']");
+        var c1=document.getElementById("continent1");
+        var r1=document.getElementById("region1");
+        var n1=document.getElementById("nation1");
+        var c2=document.getElementById("continent2");
+        var r2=document.getElementById("region2");
+        var n2=document.getElementById("nation2");
         this.parallelFiltering = false;
         if (this.compareMode == false){
             this.place = selectedPlace;
-            //place1Div.innerHTML = this.place;
+            n1.innerHTML = this.place;
+            r1.innerHTML = diz[this.place][0];
+            c1.innerHTML = diz[this.place][1];
+            sel1.value = "nation1";
             this.dataplace =[];
             this.dataMap = [];
             this.dataplaceludo =[];
@@ -247,7 +258,10 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
         else{
             if (this.place == undefined){
                 this.place = selectedPlace;
-                //place1Div.innerHTML = this.place;
+                n1.innerHTML = this.place;
+                sel1.value = "nation1";
+                r1.innerHTML = diz[this.place][0];
+                c1.innerHTML = diz[this.place][1];
                 this.dataplace =[];
                 this.dataMap = [];
                 this.dataplaceludo =[];
@@ -270,6 +284,10 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
             else if (this.secondPlace == undefined){
                 this.secondPlace = selectedPlace;
                 //place2Div.innerHTML = this.secondPlace;
+                n2.innerHTML = this.secondPlace;
+                sel2.value = "nation2";
+                r2.innerHTML = diz[this.secondPlace][0];
+                c2.innerHTML = diz[this.secondPlace][1];
                 this.dataMap = [];
                 for (i = 0; i < this.dataOriginal.length; i++) {
                     d = this.dataOriginal[i];
@@ -300,6 +318,10 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                     }
                 }
                 this.secondPlace = selectedPlace;
+                n2.innerHTML = this.secondPlace;
+                sel2.value = "nation2";
+                r2.innerHTML = diz[this.secondPlace][0];
+                c2.innerHTML = diz[this.secondPlace][1];
                 //place2Div.innerHTML = this.secondPlace;
                 for (i = 0; i < this.dataOriginal.length; i++) {
                     d = this.dataOriginal[i];

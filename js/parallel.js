@@ -92,8 +92,7 @@ function brushParallel() {
     }
   }
   manager.notifyParallelBrushing();
-  if(manager.place==undefined){
-    console.log(manager.place);
+  if(manager.place==undefined && manager.group==undefined){
     foreground.style("display", function (d) {
       value = parallelFiltering(d);
       if (value) {
@@ -247,14 +246,13 @@ function start(){
     j = dimensions[i].key;
     names.push(dimensions[i].name);
     if (j == "region_txt") {
-      places = [" "];
+      places = [];
       data.forEach(element => {
         if (!places.includes(element[j])) {
           places.push(element[j])
         }
       });
       places.sort();
-      places.push("  ");
     
       y[j] = d3.scalePoint()
         .domain(places)
@@ -268,39 +266,36 @@ function start(){
       y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
       
     }else if (j == "attacktype1_txt"){
-      types = [" "];
+      types = [];
       data.forEach(element => {
         if (!types.includes(element[j])) {
           types.push(element[j])
         }
       });
-      types.push("  ");
 
       y[j] = d3.scalePoint()
         .domain(types)
         .range([0, height_parallel]);
       
     }else if (j == "weaptype1_txt"){
-      types2 = [" "];
+      types2 = [];
       data.forEach(element => {
         if (!types2.includes(element[j])) {
           types2.push(element[j])
         }
       });
-      types2.push("  ");
 
       y[j] = d3.scalePoint()
         .domain(types2)
         .range([0, height_parallel]);
       
     }else if (j == "targtype1_txt"){
-      types3 = [" "];
+      types3 = [];
       data.forEach(element => {
         if (!types3.includes(element[j])) {
           types3.push(element[j])
         }
       });
-      types3.push("  ");
 
       y[j] = d3.scalePoint()
         .domain(types3)

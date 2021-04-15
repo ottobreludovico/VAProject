@@ -505,6 +505,17 @@ body {
   color: #e8eddf
 }
 
+.selct3 {
+  display: inline-block;
+  width: 35%;
+  height: 40px;
+  font-size: 14px;
+  border: 2px solid #2e4352; 
+  border-radius: 25px;
+  background-color: #2e4352;
+  color: #e8eddf
+}
+
 .pcatext{
   font-size: 12px;
 }
