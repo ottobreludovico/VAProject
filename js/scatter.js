@@ -26,6 +26,7 @@ var svgScatter = d3.select("#scatter_area").append("svg")
     .append("g")
     .attr("transform", "translate(" + marginScatter.left + "," + marginScatter.top + ")");
 
+var data=[];
 manager.addListener('dataReady', function (e) {
 
     data = scatter_getData();
@@ -214,7 +215,7 @@ manager.filteringByScatterplot = filteringByScatterplot;
 
 function selected(){
     scatterplot_brushing_last = d3.event.selection;
-    focus.selectAll("circle").data(scatter_getData).classed("selected", function (d) {
+    focus.selectAll("circle").data(data).classed("selected", function (d) {
         if (filteringByScatterplot(d)){
             return true;
         }

@@ -113,10 +113,8 @@ manager.addListener('groupChanged', function (e) {
 
 function updateLine(){
     var dataL = groupline_getData();
-    console.log(dataL);
     // Now I can use this dataset:
       var fqcsL = computefrequencyL(dataL);
-      console.log(fqcsL);
       // Add xL axis --> it is a date format
       var xL = d3.scalePoint()
         .domain(fqcsL.map(function(d) { return +d[0]; }))

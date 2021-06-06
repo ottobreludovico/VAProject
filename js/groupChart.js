@@ -9,9 +9,14 @@ var svg3 = d3.select("#my_dataviz2")
 var data=[];
 var fqcsg=[];
 var p=false;
-
+var aux=false;
+var aux2=false;
 function group_getData(){
     return manager.getDataFilteredByPlace();
+}
+
+function group_getDataAll(){
+    return manager.getDataFilteredByYear();
 }
 
 function group_getDataT(){
@@ -28,18 +33,25 @@ function group_getDataP(){
 
 
 function start2(){
+    var fqcsg;
     if(p==true && manager.parallelFiltering==true){
         data = group_getDataP();
+        fqcsg=computeFrequencyG(data);
         p=false;
     }
     else if(manager.place==undefined && manager.group==undefined){
         data =group_getDataT();
+        fqcsg=computeFrequencyG(data);
     }else if(manager.place!=undefined && manager.group==undefined){
-        data =group_getData();
+        //data =group_getData();
+        data =group_getDataAll();
+        fqcsg=computeFrequencyAux2(data);
     }else{
-        data = group_getDataG();
+        //data = group_getDataG();
+        data =group_getDataAll();
+        fqcsg=computeFrequencyAux(data);
     }
-  fqcsg=computeFrequencyG(data);
+
   console.log(fqcsg);
   // Add X axis
   var x = d3.scaleLinear()
@@ -121,6 +133,623 @@ function computeFrequencyG(data){
 
     return items;
 }
+
+function computeFrequencyAux(data){
+    if(NAT1==true && NAT2==true){
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(data[i].place==manager.place && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }else if(data[i].place==manager.secondPlace && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(NAT1==true && REG2==true){
+        console.log("nr");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+          target = data[i].targtype1_txt;
+          if(data[i].place==manager.place && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }else if(diz[data[i].place][0]==manager.reg2 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(NAT1==true && CON2==true){
+        console.log("nc");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+          target = data[i].targtype1_txt;
+          if(data[i].place==manager.place && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }else if(diz[data[i].place][1]==manager.con2 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+           
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(REG1==true && NAT2==true){
+        console.log("rn");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+          target = data[i].targtype1_txt;
+          if(diz[data[i].place][0]==manager.reg1 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(data[i].place==manager.secondPlace && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(REG1==true && REG2==true){
+        console.log("rr");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][0]==manager.reg1 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][0]==manager.reg2 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }       
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(REG1==true && CON2==true){
+        console.log("rc");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][0]==manager.reg1 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][1]==manager.con2 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+            
+          }     
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(CON1==true && NAT2==true){
+        console.log("cn");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][1]==manager.con1 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(data[i].place==manager.secondPlace && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+           
+          }
+           
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(CON1==true && REG2==true){
+        console.log("cr");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][1]==manager.con1 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][0]==manager.reg2 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+           
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(CON1==true && CON2==true){
+        console.log("cc");
+        frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][1]==manager.con1 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][1]==manager.con2 && data[i].gname==manager.group){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }      
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }
+
+}
+
+function computeFrequencyAux2(data){
+    if(NAT1==true && NAT2==true){
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+            if(data[i].place==manager.place){
+                if (frequency[target] != undefined){
+                    frequency[target] += 1;  
+                }
+                else{
+                    frequency[target] = 1;
+                }
+            }else if(data[i].place==manager.secondPlace){
+                if (frequency[target] != undefined){
+                    frequency[target] += 1;  
+                }
+                else{
+                    frequency[target] = 1;
+                }
+            }
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(NAT1==true && REG2==true){
+        console.log("nr");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+          target = data[i].targtype1_txt;
+          if(data[i].place==manager.place){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }else if(diz[data[i].place][0]==manager.reg2){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(NAT1==true && CON2==true){
+        console.log("nc");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+          target = data[i].targtype1_txt;
+          if(data[i].place==manager.place){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+          }else if(diz[data[i].place][1]==manager.con2){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+           
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(REG1==true && NAT2==true){
+        console.log("rn");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+          target = data[i].targtype1_txt;
+          if(diz[data[i].place][0]==manager.reg1){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(data[i].place==manager.secondPlace){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(REG1==true && REG2==true){
+        console.log("rr");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][0]==manager.reg1){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][0]==manager.reg2){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }       
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(REG1==true && CON2==true){
+        console.log("rc");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][0]==manager.reg1){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][1]==manager.con2){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+            
+          }     
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(CON1==true && NAT2==true){
+        console.log("cn");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][1]==manager.con1){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(data[i].place==manager.secondPlace){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+           
+          }
+           
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(CON1==true && REG2==true){
+        console.log("cr");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][1]==manager.con1){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][0]==manager.reg2){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+           
+          }
+            
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }else if(CON1==true && CON2==true){
+        console.log("cc");
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+          if(diz[data[i].place][1]==manager.con1){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }else if(diz[data[i].place][1]==manager.con2){
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+            
+          }      
+        }
+        
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+      }
+
+}
+
 
 function groupchart_getdata(){
     return manager.getDataFilteredByG();

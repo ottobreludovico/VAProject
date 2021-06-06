@@ -104,32 +104,7 @@ function brushParallel() {
     foreground.style("stroke", function (d) {
       value = parallelFiltering(d);
       if (value) {
-        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
-          else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
-          else return "#b3b1b1";
-        }
-        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place) {return "#ffd500";}
-          else if (d.place == manager.secondPlace) return "#8f00ff";
-          else return "#b3b1b1";
-        }
-        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-          if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-          else return "#b3b1b1";
-        }else if(manager.group!=undefined && manager.place==undefined){
-          if (d.gname == manager.group) {return "#B80F0A";}
-          else return "#b3b1b1";
-        }else if(manager.group==undefined && manager.place!=undefined){
-          if (d.place == manager.place) {return "#ffd500";}
-          else if (d.place == manager.secondPlace) return "#8f00ff";
-          else return "#b3b1b1";
-        }else{
-          return "#B80F0A"
-        }
+        return ccolor(d);
       }
       else{
         return "white";
@@ -209,11 +184,25 @@ function parallel_getDataG(){
   return manager.getDataFilteredByG();
 }
 
+function parallel_getDataR(){
+  return manager.getDataByRegion();
+}
+
+function parallel_getDataC(){
+  return manager.getDataByContinent();
+}
+
+
+
 function start(){
   if(manager.place==undefined && manager.group==undefined){
     data = parallel_getDataT();
   }else if(manager.place==undefined && manager.group!=undefined){
     data = parallel_getDataG();
+  }else if(CON1 || CON2){
+    data = parallel_getDataC();
+  }else if(REG1 || REG2){
+    data = parallel_getDataR();
   }else{
     data = parallel_getData();
   }
@@ -241,72 +230,73 @@ function start(){
            
     ];
 
-
-  for (i in dimensions) {
-    j = dimensions[i].key;
-    names.push(dimensions[i].name);
-    if (j == "region_txt") {
-      places = [];
-      data.forEach(element => {
-        if (!places.includes(element[j])) {
-          places.push(element[j])
-        }
-      });
-      places.sort();
-    
-      y[j] = d3.scalePoint()
-        .domain(places)
-        .range([0, height_parallel]);
-        
-    }
-    else if (j == "nkill"){
-      var low = d3.extent(data, function(d) { return +d.nkill; })[0];
-      var high = d3.extent(data, function(d) { return +d.nkill; })[1];
-
-      y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
-      
-    }else if (j == "attacktype1_txt"){
-      types = [];
-      data.forEach(element => {
-        if (!types.includes(element[j])) {
-          types.push(element[j])
-        }
-      });
-
-      y[j] = d3.scalePoint()
-        .domain(types)
-        .range([0, height_parallel]);
-      
-    }else if (j == "weaptype1_txt"){
-      types2 = [];
-      data.forEach(element => {
-        if (!types2.includes(element[j])) {
-          types2.push(element[j])
-        }
-      });
-
-      y[j] = d3.scalePoint()
-        .domain(types2)
-        .range([0, height_parallel]);
-      
-    }else if (j == "targtype1_txt"){
-      types3 = [];
-      data.forEach(element => {
-        if (!types3.includes(element[j])) {
-          types3.push(element[j])
-        }
-      });
-
-      y[j] = d3.scalePoint()
-        .domain(types3)
-        .range([0, height_parallel]);
-      
-    }
   
-   x = d3.scalePoint()
-      .range([0, width_parallel])
-      .padding(1)
-      .domain(names);
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            places.push(element[j])
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+    
+     x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+      
   }
 
     
@@ -330,55 +320,10 @@ function start(){
     .attr("d", draw)
     .attr('class', 'path_foreground path_normal')
     .style("stroke-opacity", function(d){
-      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return 1;}
-        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
-        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.3;}
-        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1;
-        else return 0.3;
-      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return 1;}
-        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
-        else return 0.3;
-      }else{
-        return 0.6;
-      }
+        return 0.3;
     })
     .style("stroke", function(d){
-      /*if(manager.compareMode){
-        if (d.place == manager.place) {return "#ffd500";}
-        else if (d.place == manager.secondPlace) return "#8f00ff";
-        else return "#B80F0A";
-      }
-      else if (d.place == manager.secondPlace) return "#8f00ff";
-      else return "#B80F0A";*/
-
-      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
-        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
-        else return "#b3b1b1";
-      }
-      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place) {return "#ffd500";}
-        else if (d.place == manager.secondPlace) return "#8f00ff";
-        else return "#b3b1b1";
-      }
-      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-        else return "#b3b1b1";
-      }else if(manager.group!=undefined && manager.place==undefined){
-        if (d.gname == manager.group) {return "#B80F0A";}
-        else return "#b3b1b1";
-      }else if(manager.group==undefined && manager.place!=undefined){
-        if (d.place == manager.place) {return "#ffd500";}
-        else if (d.place == manager.secondPlace) return "#8f00ff";
-        else return "#b3b1b1";
-      }else{
-        return "#B80F0A"
-      }
+      return ccolor(d);
     })
     .style("stroke-width", 1.0);
     
@@ -418,29 +363,825 @@ function start(){
   manager.filteringByParallel = parallelFiltering;  
 }
 
+
+
+function upPa(){
+  if(manager.place==undefined && manager.group==undefined){
+    data = parallel_getDataT();
+  }else if(manager.place==undefined && manager.group!=undefined){
+    data = parallel_getDataG();
+  }else if(CON1 || CON2){
+    data = parallel_getDataC();
+  }else if(REG1 || REG2){
+    data = parallel_getDataR();
+  }else{
+    data = parallel_getData();
+  }
+  dimensions = [
+    {
+      name: "Region",
+      key: "region_txt"
+    },
+    {
+      name: "Kills",
+      key: "nkill"
+    },
+    {
+      name: "Attack type",
+      key: "attacktype1_txt"
+    },
+    {
+      name: "Weap",
+      key: "weaptype1_txt"
+    },
+    {
+      name: "Target",
+      key: "targtype1_txt"
+    }
+           
+    ];
+
+  if(NAT1==true && NAT2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+              places.push(element[j])
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(NAT1==true && REG2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          places.push(element[j])
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(NAT1==true && CON2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            if(element["place"]==manager.place || diz[element["place"]][1]==manager.con2){
+              places.push(element[j])
+            }
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(REG1==true && NAT2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            places.push(element[j])
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(REG1==true && REG2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            places.push(element[j])
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(REG1==true && CON2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            if(diz[element["place"]][0]==manager.reg1 || diz[element["place"]][1]==manager.con2){
+              places.push(element[j])
+            }
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(CON1==true && NAT2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            if(element["place"]==manager.secondPlace || diz[element["place"]][1]==manager.con1){
+              places.push(element[j])
+            }
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(CON1==true && REG2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            if(diz[element["place"]][0]==manager.reg2 || diz[element["place"]][1]==manager.con1){
+              places.push(element[j])
+            }
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+  }
+  }else if(CON1==true && CON2==true){
+    for (i in dimensions) {
+      j = dimensions[i].key;
+      names.push(dimensions[i].name);
+      if (j == "region_txt") {
+        places = [];
+        data.forEach(element => {
+          if (!places.includes(element[j])) {
+            if(diz[element["place"]][1]==manager.con1 || diz[element["place"]][1]==manager.con2){
+              places.push(element[j])
+            }
+          }
+        });
+        places.sort();
+      
+        y[j] = d3.scalePoint()
+          .domain(places)
+          .range([0, height_parallel]);
+          
+      }
+      else if (j == "nkill"){
+        var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+        var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+  
+        y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+        
+      }else if (j == "attacktype1_txt"){
+        types = [];
+        data.forEach(element => {
+          if (!types.includes(element[j])) {
+            types.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types)
+          .range([0, height_parallel]);
+        
+      }else if (j == "weaptype1_txt"){
+        types2 = [];
+        data.forEach(element => {
+          if (!types2.includes(element[j])) {
+            types2.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types2)
+          .range([0, height_parallel]);
+        
+      }else if (j == "targtype1_txt"){
+        types3 = [];
+        data.forEach(element => {
+          if (!types3.includes(element[j])) {
+            types3.push(element[j])
+          }
+        });
+  
+        y[j] = d3.scalePoint()
+          .domain(types3)
+          .range([0, height_parallel]);
+        
+      }
+      x = d3.scalePoint()
+      .range([0, width_parallel])
+      .padding(1)
+      .domain(names);
+    }
+
+  }
+
+  extents = dimensions.map(function (p) { return [0, 0]; });
+
+  background = svgParallel.append("g")
+    .attr("class", "background")
+    .selectAll("path")
+    .data(data)
+    .enter().append("path")
+    .attr("d", draw)
+    .attr("class", "path_background");
+
+
+  foreground = svgParallel.append("g")
+    .attr("class", "foreground")
+    .selectAll("path")
+    .data(data)
+    .enter()
+    .append("path")
+    .attr("d", draw)
+    .attr('class', 'path_foreground path_normal')
+    .style("stroke-opacity", function(d){
+        return 0.3;
+    })
+    .style("stroke", function(d){
+      return ccolor(d);
+    })
+    .style("stroke-width", 1.0)
+    .style("display",function(d){
+      if(manager.group==undefined){
+        if(NAT1==true && NAT2==true){
+          if(d.place == manager.place) {return null;}
+          else if(d.place == manager.secondPlace) {return null;}
+          else return "none";
+        }else if(NAT1==true && REG2==true){
+          if(d.place == manager.place) {return null;}
+          else if(diz[d.place][0] == manager.reg2) {return null;}
+          else return "none";
+        }else if(NAT1==true && CON2==true){
+          if(d.place == manager.place) {return null;}
+          else if(diz[d.place][1] == manager.con2) {return null;}
+          else return "none";
+        }else if(REG1==true && NAT2==true){
+          if(diz[d.place][0] == manager.reg1) {return null;}
+          else if(d.place == manager.secondPlace) {return null;}
+          else return "none";
+        }else if(REG1==true && REG2==true){
+          if(diz[d.place][0] == manager.reg1) {return null;}
+          else if(diz[d.place][0] == manager.reg2) {return null;}
+          else return "none";
+        }else if(REG1==true && CON2==true){
+          if(diz[d.place][0] == manager.reg1) {return null;}
+          else if(diz[d.place][1] == manager.con2) {return null;}
+          else return "none";
+        }else if(CON1==true && NAT2==true){
+          if(diz[d.place][1] == manager.con1) {return null;}
+          else if(d.place == manager.secondPlace) {return null;}
+          else return "none";
+        }else if(CON1==true && REG2==true){
+          if(diz[d.place][1] == manager.con1) {return null;}
+          else if(diz[d.place][0] == manager.reg2) {return null;}
+          else return "none";
+        }else if(CON1==true && CON2==true){
+          if(diz[d.place][1] == manager.con1) {return null;}
+          else if(diz[d.place][1] == manager.con2) {return null;}
+          else return "none";
+        }
+      }else{
+        if(NAT1==true && NAT2==true){
+          if(d.gname == manager.group){return null;}
+          else if(d.place == manager.place) {return null;}
+          else if(d.place == manager.secondPlace) {return null;}
+          else return "none";
+        }else if(NAT1==true && REG2==true){
+          if(d.gname == manager.group){return null;}
+          else if(d.place == manager.place) {return null;}
+          else if(diz[d.place][0] == manager.reg2) {return null;}
+          else return "none";
+        }else if(NAT1==true && CON2==true){
+          if(d.gname == manager.group){return null;}
+          else if(d.place == manager.place) {return null;}
+          else if(diz[d.place][1] == manager.con2) {return null;}
+          else return "none";
+        }else if(REG1==true && NAT2==true){
+          if(d.gname == manager.group){return null;}
+          else if(diz[d.place][0] == manager.reg1) {return null;}
+          else if(d.place == manager.secondPlace) {return null;}
+          else return "none";
+        }else if(REG1==true && REG2==true){
+          if(d.gname == manager.group){return null;}
+          else if(diz[d.place][0] == manager.reg1) {return null;}
+          else if(diz[d.place][0] == manager.reg2) {return null;}
+          else return "none";
+        }else if(REG1==true && CON2==true){
+          if(d.gname == manager.group){return null;}
+          else if(diz[d.place][0] == manager.reg1) {return null;}
+          else if(diz[d.place][1] == manager.con2) {return null;}
+          else return "none";
+        }else if(CON1==true && NAT2==true){
+          if(d.gname == manager.group){return null;}
+          else if(diz[d.place][1] == manager.con1) {return null;}
+          else if(d.place == manager.secondPlace) {return null;}
+          else return "none";
+        }else if(CON1==true && REG2==true){
+          if(d.gname == manager.group){return null;}
+          else if(diz[d.place][1] == manager.con1) {return null;}
+          else if(diz[d.place][0] == manager.reg2) {return null;}
+          else return "none";
+        }else if(CON1==true && CON2==true){
+          if(d.gname == manager.group){return null;}
+          else if(diz[d.place][1] == manager.con1) {return null;}
+          else if(diz[d.place][1] == manager.con2) {return null;}
+          else return "none";
+        }
+      }
+      
+    });
+    
+
+    svgParallel.selectAll('.path_highlighted').raise();
+
+    var gP = svgParallel.selectAll("axis")
+        .data(dimensions)
+        .enter().append("g")
+        .attr("class", "axis")
+        .attr("transform", function (d) { return "translate(" + x(d.name) + ")"; })
+        .style("fill","#E8EDDF");
+
+
+    gP.append("g")
+      .attr("class", "axis")
+      .each(function (p) { d3.select(this).call(d3.axisLeft().scale(y[p.key])); })
+      .append("text")
+      .style("fill", "#E8EDDF")
+      .style("text-anchor", "middle")
+      .attr("y", -9)
+      .text(function (p) { return p.name; });
+        
+        
+    gP.append("g")
+    .attr("class", "brushParallel")
+    .each(function (p) {
+      d3.select(this).call(y[p.key].brush = d3.brushY().extent([[-8, 0], [8, height_parallel]]).
+        on("start", brushstart).
+        on("brush", brushParallel)).
+        on("click", cancelSelection)
+    })
+    .selectAll("rect")
+    .attr("x", -8)
+    .attr("width", 16);
+        
+    manager.filteringByParallel = parallelFiltering;  
+}
+
+
 manager.addListener('dataReady', function (e) {
   	start();
 });
 
+/*
 manager.addListener('scatterplotBrushing', function (e) {
   svgParallel.selectAll('.path_foreground')
   .style("stroke", setColorByScatterplot)
   .attr("class", setClass)
   .style("opacity", setOpacityByScatterplot);
   svgParallel.selectAll('.path_highlighted').raise();
-});
+});*/
 
 
 manager.addListener('yearChanged', function (e) {
 	//cambio=false;
   svgParallel.selectAll("*").remove();
 	start();
-	
 });
 
 manager.addListener('groupChanged', function (e) {
   svgParallel.selectAll("*").remove();
-	start();  
+	upPa();  
 });
 
 function updateParallel(){
@@ -449,218 +1190,25 @@ function updateParallel(){
 }
 
 
+function updateParallel2(){
+  svgParallel.selectAll("*").remove();
+	upPa();
+}
+
 manager.addListener('placeChanged', function (e) {
 	  //cambio=true;
-	  updateParallel();
-});
-
-
-function setColorByScatterplot(d) {
-  if (manager.filteringByScatterplot == undefined){ 
-    if(manager.filteringByParallel(d)){
-      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
-        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
-        else return "#b3b1b1";
-      }
-      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place) {return "#ffd500";}
-        else if (d.place == manager.secondPlace) return "#8f00ff";
-        else return "#b3b1b1";
-      }
-      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-        else return "#b3b1b1";
-      }else if(manager.group!=undefined && manager.place==undefined){
-        if (d.gname == manager.group) {return "#B80F0A";}
-        else return "#b3b1b1";
-      }else if(manager.group==undefined && manager.place!=undefined){
-        if (d.place == manager.place) {return "#ffd500";}
-        else if (d.place == manager.secondPlace) return "#8f00ff";
-        else return "#b3b1b1";
-      }else{
-        return "#B80F0A";
-      }
+    svgParallel.selectAll("*").remove();
+    if(manager.place==undefined){
+      start();
     }else{
-      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
-        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
-        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
-        else return "#b3b1b1";
-      }
-      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place) {return "#ffffff";}
-        else if (d.place == manager.secondPlace) return "#ffffff";
-        else return "#b3b1b1";
-      }
-      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
-        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
-        else return "#b3b1b1";
-      }else if(manager.group!=undefined && manager.place==undefined){
-        if (d.gname == manager.group) {return "#ffffff";}
-        else return "#b3b1b1";
-      }else if(manager.group==undefined && manager.place!=undefined){
-        if (d.place == manager.place) {return "#ffffff";}
-        else if (d.place == manager.secondPlace) return "#ffffff";
-        else return "#b3b1b1";
-      }else{
-        return "#ffffff";
-      }
+      upPa();
     }
-  }
-  else if(manager.parallelFiltering){    
-        if(manager.filteringByParallel(d) && manager.filteringByScatterplot(d)){
-          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-            if (d.place == manager.place && d.gname==manager.group) {return "green";}
-            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
-            else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
-            else return "#b3b1b1";
-          }
-          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-            if (d.place == manager.place) {return "green";}
-            else if (d.place == manager.secondPlace) return "green";
-            else return "#b3b1b1";
-          }
-          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-            if (d.place == manager.place && d.gname==manager.group) {return "green";}
-            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-            else return "#b3b1b1";
-          }else if(manager.group!=undefined && manager.place==undefined){
-            if (d.gname == manager.group) {return "green";}
-            else return "#b3b1b1";
-          }else if(manager.group==undefined && manager.place!=undefined){
-            if (d.place == manager.place) {return "green";}
-            else if (d.place == manager.secondPlace) return "green";
-            else return "#b3b1b1";
-          }else{
-            return "green";
-          }
-        }else{
-          if(manager.filteringByParallel(d)){
-            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
-              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
-              else return "#b3b1b1";
-            }
-            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-              if (d.place == manager.place) {return "#ffd500";}
-              else if (d.place == manager.secondPlace) return "#8f00ff";
-              else return "#b3b1b1";
-            }
-            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-              else return "#b3b1b1";
-            }else if(manager.group!=undefined && manager.place==undefined){
-              if (d.gname == manager.group) {return "#B80F0A";}
-              else return "#b3b1b1";
-            }else if(manager.group==undefined && manager.place!=undefined){
-              if (d.place == manager.place) {return "#ffd500";}
-              else if (d.place == manager.secondPlace) return "#8f00ff";
-              else return "#b3b1b1";
-            }else{
-              return "#B80F0A";
-            }
-          }else{
-            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
-              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
-              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
-              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
-              else return "#b3b1b1";
-            }
-            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-              if (d.place == manager.place) {return "#ffffff";}
-              else if (d.place == manager.secondPlace) return "#ffffff";
-              else return "#b3b1b1";
-            }
-            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
-              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
-              else return "#b3b1b1";
-            }else if(manager.group!=undefined && manager.place==undefined){
-              if (d.gname == manager.group) {return "#ffffff";}
-              else return "#b3b1b1";
-            }else if(manager.group==undefined && manager.place!=undefined){
-              if (d.place == manager.place) {return "#ffffff";}
-              else if (d.place == manager.secondPlace) return "#ffffff";
-              else return "#b3b1b1";
-            }else{
-              return "#ffffff";
-            }
-          }
-
-         } //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  }else{
-     if(manager.filteringByScatterplot(d)){
-        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place && d.gname==manager.group) {return "green";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
-          else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
-          else return "#b3b1b1";
-        }
-        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place) {return "green";}
-          else if (d.place == manager.secondPlace) return "green";
-          else return "#b3b1b1";
-        }
-        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-          if (d.place == manager.place && d.gname==manager.group) {return "green";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-          else return "#b3b1b1";
-        }else if(manager.group!=undefined && manager.place==undefined){
-          if (d.gname == manager.group) {return "green";}
-          else return "#b3b1b1";
-        }else if(manager.group==undefined && manager.place!=undefined){
-          if (d.place == manager.place) {return "green";}
-          else if (d.place == manager.secondPlace) return "green";
-          else return "#b3b1b1";
-        }else{
-          return "green";
-        } 
-        }else{   
-          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
-            else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
-            else return "#b3b1b1";
-          }
-          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-            if (d.place == manager.place) {return "#ffd500";}
-            else if (d.place == manager.secondPlace) return "#8f00ff";
-            else return "#b3b1b1";
-          }
-          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
-            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
-            else return "#b3b1b1";
-          }else if(manager.group!=undefined && manager.place==undefined){
-            if (d.gname == manager.group) {return "#B80F0A";}
-            else return "#b3b1b1";
-          }else if(manager.group==undefined && manager.place!=undefined){
-            if (d.place == manager.place) {return "#ffd500";}
-            else if (d.place == manager.secondPlace) return "#8f00ff";
-            else return "#b3b1b1";
-          }else{
-            return "#B80F0A";
-          }
-        }
-  }
-}
+});
+  
 
 function setOpacityByScatterplot(d){
   if (manager.filteringByScatterplot == undefined) return 1;
-  value = manager.filteringByScatterplot(d);
+    value = manager.filteringByScatterplot(d);
   if (value) {
     return 1
   }

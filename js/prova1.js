@@ -19,9 +19,7 @@ var svg1 = d3.select("#prova2")
 
 manager.addListener('dataReady', function (e) {
     dataa = prova1_getdata();
-    console.log(dataa);
     var fq=computeFrequency3(dataa);
-    console.log(fq);
     // X scale: common for 2 data series
     var x = d3.scaleBand()
         .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle

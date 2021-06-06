@@ -110,7 +110,10 @@ svgN
           return "#ffd500";
         }else{
           return "#8f00ff";
-        }});
+        }})
+  .on("click",function(d,i){
+    underline(d);
+  });
 
 // Show the median
 svgN

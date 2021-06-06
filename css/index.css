@@ -61,6 +61,17 @@ html,body {
   border-radius: 25px;
 }
 
+#showDiv3 label {
+  left: 5%;
+  padding: 4px;
+  height: 30px;
+  background-color: #212529;
+  font-family: sans-serif, Arial;
+  font-size: 12px;
+  border: 2px solid #2e4352;
+  border-radius: 25px;
+}
+
 #showDiv label:hover {
   background-color: #404b53;
   color: white;
@@ -81,6 +92,16 @@ html,body {
   color: white;
 }
 
+#showDiv3 label:hover {
+  background-color: #404b53;
+  color: white;
+}
+
+#showDiv3 input[type="checkbox"]:checked + label {
+  background-color: #2e4352;
+  color: white;
+}
+
 .bar {
     fill: #2e4352;
 }
@@ -92,6 +113,12 @@ html,body {
 }
 
 #showDiv2{  
+  margin-top: 10px;
+  margin-right: 10px;
+  float: right;
+}
+
+#showDiv3{  
   margin-top: 10px;
   margin-right: 10px;
   float: right;
@@ -164,10 +191,13 @@ html,body {
     height: 100%;
     display: block;
 }
-      
-svgMap rect{
-    fill: #851717;   /* map background colour */
 
+#map-holder svg{
+  z-index: 1;
+}
+      
+#map-holder rect{
+    fill: #242423;   /* map background colour */
 }
 
 svgMap{
@@ -176,12 +206,12 @@ svgMap{
 }
 
 .country{
-    fill: #3d3c3c;   /* country colour */
+    fill: #8a8a8a;   /* country colour */
     stroke: #ffffff; /* country border colour */
     stroke-width: 1; /* country border width */
 }
 .country-on{
-    fill: #b3b1b1;   /* highlight colour for selected country */
+    fill: #b4b5bf;   /* highlight colour for selected country */
 }
 .countryLabel{
     display: none;   /* hide all country labels by default */
@@ -270,6 +300,10 @@ svgMap{
   visibility: hidden;
 }
 
+#showValues3{
+  visibility: hidden;
+}
+
 .selct {
     display: inline-block;
     width: 40%;
@@ -284,6 +318,7 @@ svgMap{
   color:#FFFAFF; 
   border: 2px solid #242423; 
   border-radius: 25px;
+  border-color: #ff0000 !important;
 }
 
 .selct1 > .dropdown-menu{
@@ -548,4 +583,48 @@ body {
 .info{
   background-color: #242423;
   color:white;
+}
+
+.ticks {
+  font: 10px sans-serif;
+}
+
+.track,
+.track-inset,
+.track-overlay {
+  stroke-linecap: round;
+}
+
+.track {
+  stroke: #000;
+  stroke-opacity: 0.3;
+  stroke-width: 10px;
+}
+
+.track-inset {
+  stroke: #ddd;
+  stroke-width: 8px;
+}
+
+.track-overlay {
+  pointer-events: stroke;
+  stroke-width: 50px;
+  stroke: transparent;
+  cursor: crosshair;
+}
+
+.handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: 0.5;
+  stroke-width: 1.25px;
+}
+
+
+#s1{
+  border-color: #ffff00;
+}
+
+#s2{
+  border-color: #00ffd0;
 }

@@ -131,20 +131,29 @@ manager.addListener('yearChanged', function (e) {
 
 function updateK(){
   var m=false;
-  var data;
-  if(manager.place==undefined){
+  if(manager.place!=undefined && (CON1==true || CON2==true)){
     data = k_getData();
+    m=true;
+  }
+  else if(manager.place!=undefined && (REG2==true || REG1==true) && !(CON1 || CON2)){
+    data = k_getData();
+    m=true;
+  }
+  else if(manager.place==undefined){
+    data = k_getData();
+
   }else{
     data = k_getDataP();
     m=true;
   }
-  var ll=divideData(data);
+  var ll=divideData2(data);
+  console.log(ll);
   if(ll.length==2){
     data=[];
     data=ll[0][1];
     data2=ll[1][1]
 
-    if(data[0].place==manager.place){
+    if((data[0].place==manager.place && NAT1) || (diz[data[0].place][0]==manager.reg1 && REG1) || (diz[data[0].place][1]==manager.con1 && CON1)){
       var fqcsK2 = computeFrequencyK2(data);
       var fqcsK3 = computeFrequencyK2(data2);
     }else{
@@ -172,7 +181,7 @@ function updateK(){
     .attr("dx", ".71em");
 
     // maxK value observed:
-    max = d3.max(fqcsK2.map(function(d) { return +d[1]; }))
+    maxK = d3.max(fqcsK2.map(function(d) { return +d[1]; }))
     maxK2 = d3.max(fqcsK3.map(function(d) { return +d[1]; }))
 
     if(maxK2>maxK){

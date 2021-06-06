@@ -104,3 +104,4125 @@ manager.triggerGroupFilterEvent(selectedGroup2);
         <span class='r'>Terroristic Group</span>">
         <i class="fas fa-info"></i>
     </button>
+
+
+
+
+    console.log("aoooooo");
+    console.log(nrc.value);
+    if(nrc.value=="Region2"){
+        var fp=manager.place;
+        var region=diz[manager.place][0];
+        var frequency = {};
+        var items=[]
+        sum=0;
+        for (i = 0; i < data.length; i++) {
+            var aux;
+            if(data[i].place==fp){
+                aux=data[i].place;
+            }if(data[i].place!=fp && data[i].region==region){
+                aux=data[i].region;
+            }
+            if (frequency[aux] != undefined){
+                if(data[i].gname==manager.group){
+                    frequency[aux][0][0] += parseInt(data[i].nkill);
+                }else{
+                    frequency[aux][1][0] += parseInt(data[i].nkill);
+                }   
+                sum+=parseInt(data[i].nkill)
+            }
+            else{
+                if(data[i].gname==manager.group){
+                    if(data[i].place==fp){
+                        frequency[fp] = [[parseInt(data[i].nkill),"#B80F0A",data[i].place],[0,"#ffd500",data[i].place]];
+                    }if(data[i].place!=fp && data[i].region==region){
+                        frequency[region] = [[parseInt(data[i].nkill),"#B80F0A",data[i].region],[0,"#ffd500",data[i].region]];
+                    }else{
+                        frequency[aux] = [[parseInt(data[i].nkill),"#B80F0A",aux],[0,"#8f00ff",aux]];
+                    }        
+                }else{
+                    if(data[i].place==fp){
+                        frequency[fp] = [[0,"#B80F0A",data[i].place],[parseInt(data[i].nkill),"#ffd500",data[i].place]];
+                    }if(data[i].place!=fp && data[i].region==region){
+                        frequency[region] = [[parseInt(data[i].nkill),"#B80F0A",data[i].region],[0,"#ffd500",data[i].region]];
+                    }else{
+                        frequency[aux] = [[0,"#B80F0A",data[i].aux],[parseInt(data[i].aux),"#8f00ff",data[i].aux]];
+                    }        
+                }   
+                sum+=parseInt(data[i].nkill)
+            }
+        }
+    }else{
+
+
+      Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYear) {
+    //if(this.group==undefined){
+        this.parallelFiltering = false;
+        var con=diz[selectedPlace][1];
+        var reg=diz[selectedPlace][0];
+        if (this.compareMode == false){
+            this.place = selectedPlace;
+            this.dataContinent =[];
+            this.dataplace =[];
+            this.dataRegion =[];
+            this.dataMap = [];
+            this.dataplaceludo =[];
+            for (i = 0; i < this.dataOriginal.length; i++) {
+                d = this.dataOriginal[i];
+                foundplace = d.place;
+                foundYear = d.iyear;
+                foundRegion = d.region_txt;
+                if(con==diz[foundplace][1] && selectedYear == foundYear){
+                    this.dataContinent.push(d);
+                    if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                        this.dataRegion.push(d);
+                    }
+                }
+                if (selectedPlace == foundplace){
+                    this.dataplaceludo.push(d);
+                }
+                if (selectedPlace == foundplace && selectedYear == foundYear){
+                    this.dataplace.push(d);
+                }
+                else if (selectedYear == foundYear)
+                    this.dataMap.push(d);
+            }
+            this._updateDataFromPlace();
+            this.notifyPlaceChanged();
+        }
+        else{
+            if (this.place == undefined){
+                this.place = selectedPlace;
+                this.dataContinent =[];
+                this.dataplace =[];
+                this.dataRegion = [];
+                this.dataMap = [];
+                this.dataplaceludo =[];
+                for (i = 0; i < this.dataOriginal.length; i++) {
+                    d = this.dataOriginal[i];
+                    foundplace = d.place
+                    foundYear = d.iyear
+                    if(con==diz[foundplace][1] && selectedYear == foundYear){
+                        this.dataContinent.push(d);
+                        if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                            this.dataRegion.push(d);
+                        }
+                    }
+                    if (selectedPlace == foundplace){
+                        this.dataplaceludo.push(d);
+                    }
+                    if (selectedPlace == foundplace && selectedYear == foundYear){
+                        this.dataplace.push(d);
+                    }
+                    else if (selectedYear == foundYear)
+                        this.dataMap.push(d);
+                }
+                this._updateDataFromPlace();
+                this.notifyPlaceChanged();
+            }
+            else if (this.secondPlace == undefined){
+                this.secondPlace = selectedPlace;
+                //place2Div.innerHTML = this.secondPlace;
+            
+                this.dataMap = [];
+                for (i = 0; i < this.dataOriginal.length; i++) {
+                    d = this.dataOriginal[i];
+                    foundplace = d.place
+                    foundYear = d.iyear
+                    if(con==diz[foundplace][1] && selectedYear == foundYear){
+                        this.dataContinent.push(d);
+                        if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                            this.dataRegion.push(d);
+                        }
+                    }
+                    if (selectedPlace == foundplace){
+                        this.dataplaceludo.push(d);
+                    }
+                    if (selectedPlace == foundplace && selectedYear == foundYear){
+                        this.dataplace.push(d);
+                    }
+                    else if (selectedYear == foundYear && foundplace != this.place)
+                        this.dataMap.push(d);
+                }
+                this._updateDataFromPlace();
+                this.notifyPlaceChanged();
+            }
+            else{
+                this.dataMap = []
+                for (var i = this.dataContinent.length - 1; i >= 0; i-- ){
+                    if(diz[dataContinent[i].place][1]==con){
+                        this.dataContinent.splice(i,1);
+                    }
+                }
+                for (var i = this.dataRegion.length - 1; i >= 0; i-- ){
+                    if(diz[dataRegion[i].place][0]==reg){
+                        this.dataRegion.splice(i,1);
+                    }
+                }
+                for (var i = this.dataplace.length - 1; i >= 0; i-- ){
+                    if (this.dataplace[i].place == this.secondPlace) {
+                        this.dataplace.splice(i,1);
+                    }
+                }
+                for (var i = this.dataplaceludo.length - 1; i >= 0; i-- ){
+                    if (this.dataplaceludo[i].place == this.secondPlace) {
+                        this.dataplaceludo.splice(i,1);
+                    }
+                }
+                this.secondPlace = selectedPlace;
+              
+                //place2Div.innerHTML = this.secondPlace;
+                for (i = 0; i < this.dataOriginal.length; i++) {
+                    d = this.dataOriginal[i];
+                    foundplace = d.place
+                    foundYear = d.iyear
+                    if(con==diz[foundplace][1] && selectedYear == foundYear){
+                        this.dataContinent.push(d);
+                        if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                            this.dataRegion.push(d);
+                        }
+                    }
+                    if (selectedPlace == foundplace){
+                        this.dataplaceludo.push(d); //compare mode
+                    }
+                    if (selectedPlace == foundplace && selectedYear == foundYear){
+                        this.dataplace.push(d);
+                    }
+                    else if (selectedYear == foundYear && foundplace != this.place)
+                        this.dataMap.push(d);
+                }
+                this._updateDataFromPlace();
+                this.notifyPlaceChanged();
+            }
+        }
+    /*}else{
+        this.parallelFiltering = false;
+        this.place = selectedPlace;
+        //place1Div.innerHTML = this.place;
+        this.dataplace =[];
+        this.dataMap = []
+        for (i = 0; i < this.dataOriginal.length; i++) {
+            d = this.dataOriginal[i];
+            foundgroup = d.gname
+            foundYear = d.iyear
+            foundplace = d.place;
+            if (this.group == foundgroup){
+                this.dataplaceludo.push(d);
+            }
+            if (selectedPlace==foundplace){
+                this.dataplace.push(d);
+            }
+            else if (selectedYear == foundYear)
+                this.dataMap.push(d);
+        }
+        this._updateDataFromPlace();
+        this.notifyPlaceChanged();
+    }*/
+}
+
+
+    if(REG1==true && NAT2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }else if(REG1==true && REG2==true){
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                    else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+                    else return "#b3b1b1";
+                    }
+                    else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                    else return "#b3b1b1";
+                    }
+                    else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                    if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                    else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                    else return "#b3b1b1";
+                    }else if(manager.group!=undefined && manager.place==undefined){
+                    if (d.gname == manager.group) {return "#B80F0A";}
+                    else return "#b3b1b1";
+                    }else if(manager.group==undefined && manager.place!=undefined){
+                    if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                    else return "#b3b1b1";
+                    }else{
+                    return "#B80F0A";
+                    }
+                }else{
+                    if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ffffff";}
+                    else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffffff";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#ffffff";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#ffffff";
+                    else return "#b3b1b1";
+                    }
+                    else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (diz[d.place][0] == diz[manager.place][0]) {return "#ffffff";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#ffffff";
+                    else return "#b3b1b1";
+                    }
+                    else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                    if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ffffff";}
+                    else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffffff";}
+                    else return "#b3b1b1";
+                    }else if(manager.group!=undefined && manager.place==undefined){
+                    if (d.gname == manager.group) {return "#ffffff";}
+                    else return "#b3b1b1";
+                    }else if(manager.group==undefined && manager.place!=undefined){
+                    if (diz[d.place][0] == diz[manager.place][0]) {return "#ffffff";}
+                    else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#ffffff";
+                    else return "#b3b1b1";
+                    }else{
+                    return "#ffffff";
+                    }
+                }
+    }else if(REG1==true && CON2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }else if(NAT1==true && NAT2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }else if(NAT1==true && REG2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }else if(NAT1==true && CON2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }else if(CON1==true && NAT2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }else if(CON1==true && REG2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffffff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }else if(CON1==true && CON2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffffff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if(REG1==true && NAT2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+    }else if(REG1==true && REG2==true){
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+            else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+            else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+            else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+            else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+            else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+            else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+            else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+            else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "#B80F0A";}
+            else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+            if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+            else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+            else return "#b3b1b1";
+            }else{
+            return "#B80F0A";
+            }
+    }else if(REG1==true && CON2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+    }else if(NAT1==true && NAT2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+    }else if(NAT1==true && REG2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+    }else if(NAT1==true && CON2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+    }else if(CON1==true && NAT2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+    }else if(CON1==true && REG2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          
+    }else if(CON1==true && CON2==true){
+         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+              else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+              else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+    }
+
+
+
+
+
+
+diz={
+"Azerbaijan":["Central Asia", "Asia"], "Kazakhstan":["Central Asia", "Asia"], "Georgia":["Central Asia", "Asia"], "Armenia":["Central Asia", "Asia"], "Tajikistan":["Central Asia", "Asia"], "Uzbekistan":["Central Asia", "Asia"], "Kyrgyzstan":["Central Asia", "Asia"], "Turkmenistan":["Central Asia", "Asia"], 
+"India":["South Asia", "Asia"], "Pakistan":["South Asia", "Asia"], "Sri Lanka":["South Asia", "Asia"], "Afghanistan":["South Asia", "Asia"], "Bangladesh":["South Asia", "Asia"], "Nepal":["South Asia", "Asia"], "Maldives":["South Asia", "Asia"], "Bhutan":["South Asia", "Asia"], 
+"Korea":["East Asia", "Asia"], "Japan":["East Asia", "Asia"], "China":["East Asia", "Asia"], "Taiwan":["East Asia", "Asia"], "Hong Kong":["East Asia", "Asia"], "Dem. Rep. Korea":["East Asia", "Asia"], "Macau":["East Asia", "Asia"], 
+"Philippines":["Southeast Asia", "Asia"], "Cambodia":["Southeast Asia", "Asia"], "South Vietnam":["Southeast Asia", "Asia"], "Thailand":["Southeast Asia", "Asia"], "Indonesia":["Southeast Asia", "Asia"], "Malaysia":["Southeast Asia", "Asia"], "Myanmar":["Southeast Asia", "Asia"], "Laos":["Southeast Asia", "Asia"], "Singapore":["Southeast Asia", "Asia"], "Vietnam":["Southeast Asia", "Asia"], "East Timor":["Southeast Asia", "Asia"], 
+"United States":["North America", "America"], "Canada":["North America", "America"], "Mexico":["North America", "America"], 
+"Paraguay":["South America", "America"], "Argentina":["South America", "America"], "Brazil":["South America", "America"], "Uruguay":["South America", "America"], "Colombia":["South America", "America"], "Paraguay":["South America", "America"], "Ecuador":["South America", "America"], "Venezuela":["South America", "America"], "Guyana":["South America", "America"], "Peru":["South America", "America"], "Chile":["South America", "America"], "Bolivia":["South America", "America"], "French Guiana":["South America", "America"], "Suriname":["South America", "America"], 
+"Dominican Republic":["Central America & Caribbean", "America"], "Guatemala":["Central America & Caribbean", "America"], "El Salvador":["Central America & Caribbean", "America"], "Nicaragua":["Central America & Caribbean", "America"], "Barbados":["Central America & Caribbean", "America"], "Dominican Republic":["Central America & Caribbean", "America"], "Jamaica":["Central America & Caribbean", "America"], "Costa Rica":["Central America & Caribbean", "America"], "Panama":["Central America & Caribbean", "America"], "Honduras":["Central America & Caribbean", "America"], "Grenada":["Central America & Caribbean", "America"], "Guadeloupe":["Central America & Caribbean", "America"], "Dominica":["Central America & Caribbean", "America"], "Haiti":["Central America & Caribbean", "America"], "Cuba":["Central America & Caribbean", "America"], "Belize":["Central America & Caribbean", "America"], "Trinidad and Tobago":["Central America & Caribbean", "America"], "Bahamas":["Central America & Caribbean", "America"], "St. Lucia":["Central America & Caribbean", "America"],
+"East Germany ":["Eastern Europe", "Europe"], "Yugoslavia":["Eastern Europe", "Europe"], "Soviet Union":["Eastern Europe", "Europe"], "Bulgaria":["Eastern Europe", "Europe"], "Romania":["Eastern Europe", "Europe"], "Poland":["Eastern Europe", "Europe"], "Croatia":["Eastern Europe", "Europe"], "Slovakia":["Eastern Europe", "Europe"], "Russia":["Eastern Europe", "Asia"], "Albania":["Eastern Europe", "Europe"], "Ukraine":["Eastern Europe", "Europe"], "Bosnia and Herz.":["Eastern Europe", "Europe"], "Moldova":["Eastern Europe", "Europe"], "Latvia":["Eastern Europe", "Europe"], "Slovenia":["Eastern Europe", "Europe"], "Czech Rep.":["Eastern Europe", "Europe"], "Macedonia":["Eastern Europe", "Europe"], "Estonia":["Eastern Europe", "Europe"], "Lithuania":["Eastern Europe", "Europe"], "Hungary":["Eastern Europe", "Europe"], "Belarus":["Eastern Europe", "Europe"], "Kosovo":["Eastern Europe", "Europe"], "Montenegro":["Eastern Europe", "Europe"], "Serbia-Montenegro":["Eastern Europe", "Europe"], "Serbia":["Eastern Europe", "Europe"], 
+"West Germany ":["Western Europe", "Europe"], "Switzerland":["Western Europe", "Europe"], "Ireland":["Western Europe", "Europe"], "United Kingdom":["Western Europe", "Europe"], "Greece":["Western Europe", "Europe"], "Netherlands":["Western Europe", "Europe"], "Sweden":["Western Europe", "Europe"], "Italy":["Western Europe", "Europe"], "Austria":["Western Europe", "Europe"], "Spain":["Western Europe", "Europe"], "France":["Western Europe", "Europe"], "Cyprus":["Western Europe", "Europe"], "Portugal":["Western Europe", "Europe"], "Belgium":["Western Europe", "Europe"], "Denmark":["Western Europe", "Europe"], "Malta":["Western Europe", "Europe"], "Norway":["Western Europe", "Europe"], "Germany":["Western Europe", "Europe"], "Finland":["Western Europe", "Europe"],
+"Australia":["Australasia & Oceania","Oceania"], "New Zealand":["Australasia & Oceania","Oceania"], "New Caledonia":["Australasia & Oceania","Oceania"], "Papua New Guinea":["Australasia & Oceania","Oceania"], "Fiji":["Australasia & Oceania","Oceania"], "Solomon Islands":["Australasia & Oceania","Oceania"],
+"Zambia":["Sub-Saharan Africa","Africa"], "Botswana":["Sub-Saharan Africa","Africa"], "Ethiopia":["Sub-Saharan Africa","Africa"], "Kenya":["Sub-Saharan Africa","Africa"], "Namibia":["Sub-Saharan Africa","Africa"], "Nigeria":["Sub-Saharan Africa","Africa"], "South Africa":["Sub-Saharan Africa","Africa"], "Zaire":["Sub-Saharan Africa","Africa"], "Mauritania":["Sub-Saharan Africa","Africa"], "Djibouti":["Sub-Saharan Africa","Africa"], "Rhodesia":["Sub-Saharan Africa","Africa"], "Mozambique":["Sub-Saharan Africa","Africa"], "Angola":["Sub-Saharan Africa","Africa"], "Tanzania":["Sub-Saharan Africa","Africa"], "Gabon":["Sub-Saharan Africa","Africa"], "Uganda":["Sub-Saharan Africa","Africa"], "Somalia":["Sub-Saharan Africa","Africa"], "Zimbabwe":["Sub-Saharan Africa","Africa"], "Guinea":["Sub-Saharan Africa","Africa"], "Sudan":["Sub-Saharan Africa","Africa"], "Central African Republic":["Sub-Saharan Africa","Africa"], "People's Republic of the Congo":["Sub-Saharan Africa","Africa"], "Lesotho":["Sub-Saharan Africa","Africa"], "Burkina Faso":["Sub-Saharan Africa","Africa"], "Swaziland":["Sub-Saharan Africa","Africa"], "Niger":["Sub-Saharan Africa","Africa"], "Togo":["Sub-Saharan Africa","Africa"], "Senegal":["Sub-Saharan Africa","Africa"], "Liberia":["Sub-Saharan Africa","Africa"], "Mali":["Sub-Saharan Africa","Africa"], "Sierra Leone":["Sub-Saharan Africa","Africa"], "Cameroon":["Sub-Saharan Africa","Africa"], "Chad":["Sub-Saharan Africa","Africa"], "Madagascar":["Sub-Saharan Africa","Africa"], "Burundi":["Sub-Saharan Africa","Africa"], "Rwanda":["Sub-Saharan Africa","Africa"], "Ivory Coast":["Sub-Saharan Africa","Africa"], "Malawi":["Sub-Saharan Africa","Africa"], "Comoros":["Sub-Saharan Africa","Africa"], "Republic of the Congo":["Sub-Saharan Africa","Africa"], "Ghana":["Sub-Saharan Africa","Africa"], "Gambia":["Sub-Saharan Africa","Africa"], "Eritrea":["Sub-Saharan Africa","Africa"], "Dem. Rep. Congo":["Sub-Saharan Africa","Africa"], "Guinea-Bissau":["Sub-Saharan Africa","Africa"],  "Equatorial Guinea":["Sub-Saharan Africa","Africa"], "South Sudan":["Sub-Saharan Africa","Africa"],
+"Iran":["Middle East & North Africa","Asia"], "Turkey":["Middle East & North Africa","Asia"], "Israel":["Middle East & North Africa","Asia"], "Egypt":["Middle East & North Africa","Africa"], "West Bank and Gaza Strip":["Middle East & North Africa","Asia"], "Jordan":["Middle East & North Africa","Asia"], "Lebanon":["Middle East & North Africa","Asia"], "Syria":["Middle East & North Africa","Asia"], "United Arab Emirates":["Middle East & North Africa","Asia"], "Iraq":["Middle East & North Africa","Asia"], "Kuwait":["Middle East & North Africa","Asia"], "North Yemen":["Middle East & North Africa","Asia"], "Morocco":["Middle East & North Africa","Africa"], "Saudi Arabia":["Middle East & North Africa","Asia"], "Tunisia":["Middle East & North Africa","Africa"], "Qatar":["Middle East & North Africa","Asia"], "Libya":["Middle East & North Africa","Africa"], "Algeria":["Middle East & North Africa","Africa"], "Yemen":["Middle East & North Africa","Asia"], "Bahrain":["Middle East & North Africa","Asia"], "International":["Middle East & North Africa","Asia"] 
+}
+
+
+
+
+
+
+if(NAT1==true && NAT2==true){
+  
+}else if(NAT1==true && REG2==true){
+  
+}else if(NAT1==true && CON2==true){
+  
+}else if(REG1==true && NAT2==true){
+  
+}else if(REG1==true && REG2==true){
+  
+}else if(REG1==true && CON2==true){
+  
+}else if(CON1==true && NAT2==true){
+  
+}else if(CON1==true && REG2==true){
+  
+}else if(CON1==true && CON2==true){
+  
+}
+
+
+
+
+
+
+
+
+if(NAT1==true && NAT2==true){
+   d3.selectAll(".country").classed("country-on", function(d){
+                if(d.properties.name == manager.place) return true;
+                if(d.properties.name == manager.secondPlace) return true;
+                return false;
+              });
+}else if(NAT1==true && REG2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(d.properties.name == manager.place) return true;
+                if(diz[d.properties.name][0] == diz[manager.secondPlace][0]) return true;
+                return false;
+              });  
+}else if(NAT1==true && CON2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(d.properties.name == manager.place) return true;
+                if(diz[d.properties.name][1] == diz[manager.secondPlace][1]) return true;
+                return false;
+              });    
+}else if(REG1==true && NAT2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(diz[d.properties.name][0] == diz[manager.place][0]) return true;
+                if(d.properties.name == manager.secondPlace) return true;
+                return false;
+              });    
+}else if(REG1==true && REG2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(diz[d.properties.name][0] == diz[manager.place][0]) return true;
+                if(diz[d.properties.name][0] == diz[manager.secondPlace][0]) return true;
+              });    
+}else if(REG1==true && CON2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(diz[d.properties.name][0] == diz[manager.place][0]) return true;
+                if(diz[d.properties.name][1] == diz[manager.secondPlace][1]) return true;
+                return false;
+              });    
+}else if(CON1==true && NAT2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(diz[d.properties.name][1] == diz[manager.place][1]) return true;
+                if(d.properties.name == manager.secondPlace) return true;
+                return false;
+              });    
+}else if(CON1==true && REG2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(diz[d.properties.name][1] == diz[manager.place][1]) return true;
+                if(diz[d.properties.name][0] == diz[manager.secondPlace][0]) return true;
+                return false;
+              });    
+}else if(CON1==true && CON2==true){
+  d3.selectAll(".country").classed("country-on", function(d){
+                if(diz[d.properties.name][1] == diz[manager.place][1]) return true;
+                if(diz[d.properties.name][1] == diz[manager.secondPlace][1]) return true;
+                return false;
+              });    
+}
+
+
+
+
+
+
+
+"Aruba":["Latin America & Caribbean","America"],
+"Antigua and Barb.":["Latin America & Caribbean","America"],
+"Anguilla":["Latin America & Caribbean","America"],
+"St-Barthélemy":["Latin America & Caribbean","America"],
+"Bahamas":["Latin America & Caribbean","America"],
+"Bermuda":["North America","America"],
+"Belize":["Latin America & Caribbean","America"],
+"Costa Rica":["Latin America & Caribbean","America"],
+"Barbados":["Latin America & Caribbean","America"],
+"Cuba":["Latin America & Caribbean","America"],
+"Curaçao":["Latin America & Caribbean","America"],
+"Cayman Is.":["Latin America & Caribbean","America"],
+"Dominica":["Latin America & Caribbean","America"],
+"Dominican Rep.":["Latin America & Caribbean","America"],
+"Grenada":["Latin America & Caribbean","America"],
+"Guatemala":["Latin America & Caribbean","America"],
+"Honduras":["Latin America & Caribbean","America"],
+"Canada":["North America","America"],
+"Greenland":["Europe & Central Asia","America"],
+"Haiti":["Latin America & Caribbean","America"],
+"Jamaica":["Latin America & Caribbean","America"],
+"St. Kitts and Nevis":["Latin America & Caribbean","America"],
+"Saint Lucia":["Latin America & Caribbean","America"],
+"St-Martin":["Latin America & Caribbean","America"],
+"Nicaragua":["Latin America & Caribbean","America"],
+"Montserrat":["Latin America & Caribbean","America"],
+"Panama":["Latin America & Caribbean","America"],
+"Puerto Rico":["Latin America & Caribbean","America"],
+"Mexico":["Latin America & Caribbean","America"],
+"St. Pierre and Miquelon":["North America","America"],
+"El Salvador":["Latin America & Caribbean","America"],
+"Sint Maarten":["Latin America & Caribbean","America"],
+"Turks and Caicos Is.":["Latin America & Caribbean","America"],
+"Trinidad and Tobago":["Latin America & Caribbean","America"],
+"St. Vin. and Gren.":["Latin America & Caribbean","America"],
+"British Virgin Is.":["Latin America & Caribbean","America"],
+"U.S. Virgin Is.":["Latin America & Caribbean","America"],
+"Argentina":["Latin America & Caribbean","America"],
+"Bolivia":["Latin America & Caribbean","America"],
+"United States":["North America","America"],
+"Colombia":["Latin America & Caribbean","America"],
+"Brazil":["Latin America & Caribbean","America"],
+"Ecuador":["Latin America & Caribbean","America"],
+"Falkland Is.":["Latin America & Caribbean","America"],
+"Chile":["Latin America & Caribbean","America"],
+"Guyana":["Latin America & Caribbean","America"],
+"Peru":["Latin America & Caribbean","America"],
+"Suriname":["Latin America & Caribbean","America"],
+"Uruguay":["Latin America & Caribbean","America"],
+"Paraguay":["Latin America & Caribbean","America"],
+"United Arab Emirates":["Middle East & North Africa","Asia"],
+"Venezuela":["Latin America & Caribbean","America"],
+"Afghanistan":["South Asia","Asia"],
+"Armenia":["Europe & Central Asia","Asia"],
+"Azerbaijan":["Europe & Central Asia","Asia"],
+"Bangladesh":["South Asia","Asia"],
+"Bahrain":["Middle East & North Africa","Asia"],
+"Brunei":["East Asia","Asia"],
+"Bhutan":["South Asia","Asia"],
+"N. Cyprus":["Europe & Central Asia","Asia"],
+"Cyprus":["Europe & Central Asia","Asia"],
+"Georgia":["Europe & Central Asia","Asia"],
+"China":["East Asia","Asia"],
+"Hong Kong":["East Asia","Asia"],
+"Indian Ocean Ter.":["East Asia","Africa"],
+"Indonesia":["East Asia","Asia"],
+"Iran":["Middle East & North Africa","Asia"],
+"India":["South Asia","Asia"],
+"Iraq":["Middle East & North Africa","Asia"],
+"Israel":["Middle East & North Africa","Asia"],
+"Jordan":["Middle East & North Africa","Asia"],
+"Siachen Glacier":["South Asia","Asia"],
+"Japan":["East Asia","Asia"],
+"Kazakhstan":["Europe & Central Asia","Asia"],
+"Kyrgyzstan":["Europe & Central Asia","Asia"],
+"Cambodia":["East Asia","Asia"],
+"Korea":["East Asia","Asia"],
+"Kuwait":["Middle East & North Africa","Asia"],
+"Lao PDR":["East Asia","Asia"],
+"Lebanon":["Middle East & North Africa","Asia"],
+"Sri Lanka":["South Asia","Asia"],
+"Macao":["East Asia","Asia"],
+"Mongolia":["East Asia","Asia"],
+"Malaysia":["East Asia","Asia"],
+"Myanmar":["East Asia","Asia"],
+"Nepal":["South Asia","Asia"],
+"Oman":["Middle East & North Africa","Asia"],
+"Pakistan":["South Asia","Asia"],
+"Philippines":["East Asia","Asia"],
+"Dem. Rep. Korea":["East Asia","Asia"],
+"Palestine":["Middle East & North Africa","Asia"],
+"Saudi Arabia":["Middle East & North Africa","Asia"],
+"Qatar":["Middle East & North Africa","Asia"],
+"Singapore":["East Asia","Asia"],
+"Syria":["Middle East & North Africa","Asia"],
+"Thailand":["East Asia","Asia"],
+"Tajikistan":["Europe & Central Asia","Asia"],
+"Turkmenistan":["Europe & Central Asia","Asia"],
+"Timor-Leste":["East Asia","Asia"],
+"Taiwan":["East Asia","Asia"],
+"Turkey":["Europe & Central Asia","Asia"],
+"Uzbekistan":["Europe & Central Asia","Asia"],
+"Vietnam":["East Asia","Asia"],
+"Yemen":["Middle East & North Africa","Asia"],
+"Angola":["Sub-Saharan Africa","Africa"],
+"Burundi":["Sub-Saharan Africa","Africa"],
+"Benin":["Sub-Saharan Africa","Africa"],
+"Burkina Faso":["Sub-Saharan Africa","Africa"],
+"Botswana":["Sub-Saharan Africa","Africa"],
+"Central African Rep.":["Sub-Saharan Africa","Africa"],
+"Côte d'Ivoire":["Sub-Saharan Africa","Africa"],
+"Cameroon":["Sub-Saharan Africa","Africa"],
+"Congo":["Sub-Saharan Africa","Africa"],
+"Dem. Rep. Congo":["Sub-Saharan Africa","Africa"],
+"Comoros":["Sub-Saharan Africa","Africa"],
+"Cape Verde":["Sub-Saharan Africa","Africa"],
+"Djibouti":["Middle East & North Africa","Africa"],
+"Algeria":["Middle East & North Africa","Africa"],
+"Egypt":["Middle East & North Africa","Africa"],
+"Eritrea":["Sub-Saharan Africa","Africa"],
+"Ethiopia":["Sub-Saharan Africa","Africa"],
+"Gabon":["Sub-Saharan Africa","Africa"],
+"Ghana":["Sub-Saharan Africa","Africa"],
+"Guinea":["Sub-Saharan Africa","Africa"],
+"Gambia":["Sub-Saharan Africa","Africa"],
+"Guinea-Bissau":["Sub-Saharan Africa","Africa"],
+"Eq. Guinea":["Sub-Saharan Africa","Africa"],
+"Kenya":["Sub-Saharan Africa","Africa"],
+"Liberia":["Sub-Saharan Africa","Africa"],
+"Libya":["Middle East & North Africa","Africa"],
+"Morocco":["Middle East & North Africa","Africa"],
+"Lesotho":["Sub-Saharan Africa","Africa"],
+"Mozambique":["Sub-Saharan Africa","Africa"],
+"Madagascar":["Sub-Saharan Africa","Africa"],
+"Mali":["Sub-Saharan Africa","Africa"],
+"Malawi":["Sub-Saharan Africa","Africa"],
+"Mauritania":["Sub-Saharan Africa","Africa"],
+"Namibia":["Sub-Saharan Africa","Africa"],
+"Niger":["Sub-Saharan Africa","Africa"],
+"Rwanda":["Sub-Saharan Africa","Africa"],
+"Nigeria":["Sub-Saharan Africa","Africa"],
+"W. Sahara":["Middle East & North Africa","Africa"],
+"S. Sudan":["Sub-Saharan Africa","Africa"],
+"Senegal":["Sub-Saharan Africa","Africa"],
+"Sudan":["Sub-Saharan Africa","Africa"],
+"Sierra Leone":["Sub-Saharan Africa","Africa"],
+"Somaliland":["Sub-Saharan Africa","Africa"],
+"Somalia":["Sub-Saharan Africa","Africa"],
+"São Tomé and Principe":["Sub-Saharan Africa","Africa"],
+"Swaziland":["Sub-Saharan Africa","Africa"],
+"Chad":["Sub-Saharan Africa","Africa"],
+"Togo":["Sub-Saharan Africa","Africa"],
+"Tunisia":["Middle East & North Africa","Africa"],
+"Tanzania":["Sub-Saharan Africa","Africa"],
+"Uganda":["Sub-Saharan Africa","Africa"],
+"Zimbabwe":["Sub-Saharan Africa","Africa"],
+"South Africa":["Sub-Saharan Africa","Africa"],
+"Zambia":["Sub-Saharan Africa","Africa"],
+"Albania":["Europe & Central Asia","Europe"],
+"Aland":["Europe & Central Asia","Europe"],
+"Andorra":["Europe & Central Asia","Europe"],
+"Austria":["Europe & Central Asia","Europe"],
+"Belgium":["Europe & Central Asia","Europe"],
+"Bulgaria":["Europe & Central Asia","Europe"],
+"Bosnia and Herz.":["Europe & Central Asia","Europe"],
+"Switzerland":["Europe & Central Asia","Europe"],
+"Belarus":["Europe & Central Asia","Europe"],
+"Czech Rep.":["Europe & Central Asia","Europe"],
+"Denmark":["Europe & Central Asia","Europe"],
+"Germany":["Europe & Central Asia","Europe"],
+"Spain":["Europe & Central Asia","Europe"],
+"Estonia":["Europe & Central Asia","Europe"],
+"Faeroe Is.":["Europe & Central Asia","Europe"],
+"Finland":["Europe & Central Asia","Europe"],
+"France":["Europe & Central Asia","Europe"],
+"Guernsey":["Europe & Central Asia","Europe"],
+"United Kingdom":["Europe & Central Asia","Europe"],
+"Croatia":["Europe & Central Asia","Europe"],
+"Hungary":["Europe & Central Asia","Europe"],
+"Greece":["Europe & Central Asia","Europe"],
+"Isle of Man":["Europe & Central Asia","Europe"],
+"Ireland":["Europe & Central Asia","Europe"],
+"Iceland":["Europe & Central Asia","Europe"],
+"Italy":["Europe & Central Asia","Europe"],
+"Jersey":["Europe & Central Asia","Europe"],
+"Kosovo":["Europe & Central Asia","Europe"],
+"Liechtenstein":["Europe & Central Asia","Europe"],
+"Lithuania":["Europe & Central Asia","Europe"],
+"Luxembourg":["Europe & Central Asia","Europe"],
+"Latvia":["Europe & Central Asia","Europe"],
+"Monaco":["Europe & Central Asia","Europe"],
+"Moldova":["Europe & Central Asia","Europe"],
+"Macedonia":["Europe & Central Asia","Europe"],
+"Malta":["Middle East & North Africa","Europe"],
+"Montenegro":["Europe & Central Asia","Europe"],
+"Netherlands":["Europe & Central Asia","Europe"],
+"Poland":["Europe & Central Asia","Europe"],
+"Portugal":["Europe & Central Asia","Europe"],
+"Romania":["Europe & Central Asia","Europe"],
+"Norway":["Europe & Central Asia","Europe"],
+"San Marino":["Europe & Central Asia","Europe"],
+"Serbia":["Europe & Central Asia","Europe"],
+"Slovakia":["Europe & Central Asia","Europe"],
+"Slovenia":["Europe & Central Asia","Europe"],
+"Sweden":["Europe & Central Asia","Europe"],
+"Ukraine":["Europe & Central Asia","Europe"],
+"Vatican":["Europe & Central Asia","Europe"],
+"American Samoa":["East Asia","Oceania"],
+"Ashmore and Cartier Is.":["East Asia","Oceania"],
+"Russia":["Europe & Central Asia","Europe"],
+"Cook Is.":["East Asia","Oceania"],
+"Fiji":["East Asia","Oceania"],
+"Australia":["East Asia","Oceania"],
+"Micronesia":["East Asia","Oceania"],
+"Guam":["East Asia","Oceania"],
+"Kiribati":["East Asia","Oceania"],
+"New Caledonia":["East Asia","Oceania"],
+"N. Mariana Is.":["East Asia","Oceania"],
+"Marshall Is.":["East Asia","Oceania"],
+"Norfolk Island":["East Asia","Oceania"],
+"Niue":["East Asia","Oceania"],
+"Nauru":["East Asia","Oceania"],
+"Palau":["East Asia","Oceania"],
+"Pitcairn Is.":["East Asia","Oceania"],
+"New Zealand":["East Asia","Oceania"],
+"Fr. Polynesia":["East Asia","Oceania"],
+"Solomon Is.":["East Asia","Oceania"],
+"Papua New Guinea":["East Asia","Oceania"],
+"Tonga":["East Asia","Oceania"],
+"Vanuatu":["East Asia","Oceania"],
+"Wallis and Futuna Is.":["East Asia","Oceania"],
+"Samoa":["East Asia","Oceania"],
+"Fr. S. Antarctic Lands":["Sub-Saharan Africa","Africa"],
+"Heard I. and McDonald Is.":["Sub-Saharan Africa","Africa"],
+"Br. Indian Ocean Ter.":["Sub-Saharan Africa","Africa"],
+"Mauritius":["Sub-Saharan Africa","Africa"],
+"Maldives":["South Asia","Asia"],
+"S. Geo. and S. Sandw. Is.":["Antarctica","Africa"],
+"Saint Helena":["Sub-Saharan Africa","Africa"],
+"Seychelles":["Sub-Saharan Africa","Africa"],
+"Antarctica":["Antarctica","Antarctica"],
+
+
+
+
+
+
+
+
+
+
+
+
+"Bermuda":["North America","America"],
+
+"Curaçao":["Latin America & Caribbean","America"],
+"Cayman Is.":["Latin America & Caribbean","America"],
+
+"Dominican Rep.":["Latin America & Caribbean","America"],
+
+
+"Greenland":["Europe & Central Asia","America"],
+
+"St. Kitts and Nevis":["Latin America & Caribbean","America"],
+"Saint Lucia":["Latin America & Caribbean","America"],
+"St-Martin":["Latin America & Caribbean","America"],
+
+"Montserrat":["Latin America & Caribbean","America"],
+
+"Puerto Rico":["Latin America & Caribbean","America"],
+
+"St. Pierre and Miquelon":["North America","America"],
+
+"Sint Maarten":["Latin America & Caribbean","America"],
+"Turks and Caicos Is.":["Latin America & Caribbean","America"],
+"Trinidad and Tobago":["Latin America & Caribbean","America"],
+"St. Vin. and Gren.":["Latin America & Caribbean","America"],
+"British Virgin Is.":["Latin America & Caribbean","America"],
+"U.S. Virgin Is.":["Latin America & Caribbean","America"],
+
+
+"Falkland Is.":["Latin America & Caribbean","America"],
+
+"Brunei":["East Asia","Asia"],
+"Bhutan":["South Asia","Asia"],
+"N. Cyprus":["Europe & Central Asia","Asia"],
+
+"Indian Ocean Ter.":["East Asia","Africa"],
+
+
+"Siachen Glacier":["South Asia","Asia"],
+
+"Lao PDR":["East Asia","Asia"],
+
+"Macao":["East Asia","Asia"],
+"Mongolia":["East Asia","Asia"],
+
+
+"Oman":["Middle East & North Africa","Asia"],
+
+
+"Palestine":["Middle East & North Africa","Asia"],
+
+
+"Timor-Leste":["East Asia","Asia"],
+
+"Cape Verde":["Sub-Saharan Africa","Africa"],
+
+"Somaliland":["Sub-Saharan Africa","Africa"],
+
+"São Tomé and Principe":["Sub-Saharan Africa","Africa"],
+
+"Aland":["Europe & Central Asia","Europe"],
+
+
+"Faeroe Is.":["Europe & Central Asia","Europe"],
+
+"Guernsey":["Europe & Central Asia","Europe"],
+
+"Isle of Man":["Europe & Central Asia","Europe"],
+
+"Jersey":["Europe & Central Asia","Europe"],
+"
+"Monaco":["Europe & Central Asia","Europe"],
+
+"San Marino":["Europe & Central Asia","Europe"],
+
+"Vatican":["Europe & Central Asia","Europe"],
+"American Samoa":["East Asia","Oceania"],
+"Ashmore and Cartier Is.":["East Asia","Oceania"],
+
+"Cook Is.":["East Asia","Oceania"],
+"Fiji":["East Asia","Oceania"],
+"Micronesia":["East Asia","Oceania"],
+"Guam":["East Asia","Oceania"],
+"Kiribati":["East Asia","Oceania"],
+"New Caledonia":["East Asia","Oceania"],
+"N. Mariana Is.":["East Asia","Oceania"],
+"Marshall Is.":["East Asia","Oceania"],
+"Norfolk Island":["East Asia","Oceania"],
+"Niue":["East Asia","Oceania"],
+"Nauru":["East Asia","Oceania"],
+"Palau":["East Asia","Oceania"],
+"Pitcairn Is.":["East Asia","Oceania"],
+
+"Fr. Polynesia":["East Asia","Oceania"],
+"Solomon Is.":["East Asia","Oceania"],
+"Papua New Guinea":["East Asia","Oceania"],
+"Tonga":["East Asia","Oceania"],
+"Vanuatu":["East Asia","Oceania"],
+"Wallis and Futuna Is.":["East Asia","Oceania"],
+"Samoa":["East Asia","Oceania"],
+"Fr. S. Antarctic Lands":["Sub-Saharan Africa","Africa"],
+"Heard I. and McDonald Is.":["Sub-Saharan Africa","Africa"],
+"Br. Indian Ocean Ter.":["Sub-Saharan Africa","Africa"],
+"Mauritius":["Sub-Saharan Africa","Africa"],
+
+"S. Geo. and S. Sandw. Is.":["Antarctica","Africa"],
+"Saint Helena":["Sub-Saharan Africa","Africa"],
+"Seychelles":["Sub-Saharan Africa","Africa"],
+"Antarctica":["Antarctica","Antarctica"],
+
+
+
+
+  if(NAT1==true && NAT2==true){
+      d3.selectAll(".country").classed("country-on", function(d){
+                  if(d.properties.name == manager.place) return true;
+                  if(d.properties.name == manager.secondPlace) return true;
+                  return false;
+                });
+  }else if(NAT1==true && REG2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  if(d.properties.name == manager.place) return true;
+                  if(diz[d.properties.name][0] == diz[manager.secondPlace][0]) return true;
+                  return false;
+                });  
+  }else if(NAT1==true && CON2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  if(d.properties.name == manager.place) return true;
+                  if(diz[d.properties.name][1] == diz[manager.secondPlace][1]) return true;
+                  return false;
+                });    
+  }else if(REG1==true && NAT2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  console.log(d)
+                  if(diz[d.properties.name][0] == diz[manager.place][0]) return true;
+                  if(d.properties.name == manager.secondPlace) return true;
+                  return false;
+                });    
+  }else if(REG1==true && REG2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  if(diz[d.properties.name][0] == diz[manager.place][0]) return true;
+                  if(diz[d.properties.name][0] == diz[manager.secondPlace][0]) return true;
+                });    
+  }else if(REG1==true && CON2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  if(diz[d.properties.name][0] == diz[manager.place][0]) return true;
+                  if(diz[d.properties.name][1] == diz[manager.secondPlace][1]) return true;
+                  return false;
+                });    
+  }else if(CON1==true && NAT2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  if(diz[d.properties.name][1] == diz[manager.place][1]) return true;
+                  if(d.properties.name == manager.secondPlace) return true;
+                  return false;
+                });    
+  }else if(CON1==true && REG2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  if(diz[d.properties.name][1] == diz[manager.place][1]) return true;
+                  if(diz[d.properties.name][0] == diz[manager.secondPlace][0]) return true;
+                  return false;
+                });    
+  }else if(CON1==true && CON2==true){
+    d3.selectAll(".country").classed("country-on", function(d){
+                  if(diz[d.properties.name][1] == diz[manager.place][1]) return true;
+                  if(diz[d.properties.name][1] == diz[manager.secondPlace][1]) return true;
+                  return false;
+                });    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var svgParallel = d3.select(".parallel_area").append("svg")
+  .attr("width", '100%')
+  .attr("height", '100%')
+  .append("g")
+  .attr("transform", "translate(" + margin_parallel.left + "," + margin_parallel.top + ")");
+  
+
+function brushstart() {
+  d3.event.sourceEvent.stopPropagation();
+}
+//var cambio=false;
+
+function cancelSelection() {
+  key = this.__data__.key;
+  children = this.childNodes;
+  hide = false;
+  for (i = 0; i < children.length; i++) {
+    if (children[i].__data__.type == 'selection' && children[i].y.animVal.value == 0) hide = true;
+  }
+  if (!hide) return;
+  for (i in dimensions) {
+    if (key == dimensions[i].key) {
+      extents[i] = [0, 0];
+      brushParallel()
+    }
+  }
+}
+
+function parallelFiltering(d) {
+  var rangeC = y["region_txt"].range();
+  var rangeT = y["attacktype1_txt"].range();
+  var rangeT2 = y["weaptype1_txt"].range();
+  var rangeT3 = y["targtype1_txt"].range();
+  var rangePointsC = d3.range(rangeC[0], rangeC[1], y["region_txt"].step());
+  var rangePointsT = d3.range(rangeT[0], rangeT[1], y["attacktype1_txt"].step());
+  var rangePointsT2 = d3.range(rangeT2[0], rangeT2[1], y["weaptype1_txt"].step());
+  var rangePointsT3 = d3.range(rangeT3[0], rangeT3[1], y["targtype1_txt"].step());
+  value = dimensions.every(function (p, i) {
+    if (extents[i][0] == 0 && extents[i][1] == 0) {
+      return true;
+    }
+    if (p.key == "region_txt") {
+      if (country_selection == undefined) return true;
+      dValue = rangePointsC[places.indexOf(d[p.key])];
+      return dValue >= country_selection[0] && dValue <= country_selection[1];
+    }
+    else if (p.key == "attacktype1_txt") {
+      if (type_selection == undefined) return true;
+      dValue = rangePointsT[types.indexOf(d[p.key])];
+      return dValue >= type_selection[0] && dValue <= type_selection[1];
+    }
+    else if (p.key == "weaptype1_txt") {
+      if (type2_selection == undefined) return true;
+      dValue = rangePointsT2[types2.indexOf(d[p.key])];
+      return dValue >= type2_selection[0] && dValue <= type2_selection[1];
+    }
+    else if (p.key == "targtype1_txt") {
+      if (type3_selection == undefined) return true;
+      dValue = rangePointsT3[types3.indexOf(d[p.key])];
+      return dValue >= type3_selection[0] && dValue <= type3_selection[1];
+    }else {
+      return extents[i][1] <= d[p.key] && d[p.key] <= extents[i][0];
+    }
+    
+  });
+  return value;
+}
+
+
+function brushParallel() {
+  for (i in dimensions) {
+    if (d3.event.target == y[dimensions[i].key].brush) {
+      if (dimensions[i].key == "region_txt") {
+        country_selection = d3.event.selection;
+        extents[i] = d3.event.selection.map(scalePointInverseC, y[dimensions[i].key]);
+      }
+      else if (dimensions[i].key == "attacktype1_txt") {
+        type_selection = d3.event.selection;
+        extents[i] = d3.event.selection.map(scalePointInverseT, y[dimensions[i].key]);
+      }
+      else if (dimensions[i].key == "weaptype1_txt") {
+        type2_selection = d3.event.selection;
+        extents[i] = d3.event.selection.map(scalePointInverseT2, y[dimensions[i].key]);
+      }
+      else if (dimensions[i].key == "targtype1_txt") {
+        type3_selection = d3.event.selection;
+        extents[i] = d3.event.selection.map(scalePointInverseT3, y[dimensions[i].key]);
+      }
+      else {
+        extents[i] = d3.event.selection.map(y[dimensions[i].key].invert, y[dimensions[i].key]);
+      }
+    }
+  }
+  manager.notifyParallelBrushing();
+  if(manager.place==undefined && manager.group==undefined){
+    foreground.style("display", function (d) {
+      value = parallelFiltering(d);
+      if (value) {
+        return null;
+      }
+      return "none";
+  });
+  }else{
+    foreground.style("stroke", function (d) {
+      value = parallelFiltering(d);
+      if (value) {
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+          else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+          else return "#b3b1b1";
+        }
+        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place) {return "#ffd500";}
+          else if (d.place == manager.secondPlace) return "#8f00ff";
+          else return "#b3b1b1";
+        }
+        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else return "#b3b1b1";
+        }else if(manager.group!=undefined && manager.place==undefined){
+          if (d.gname == manager.group) {return "#B80F0A";}
+          else return "#b3b1b1";
+        }else if(manager.group==undefined && manager.place!=undefined){
+          if (d.place == manager.place) {return "#ffd500";}
+          else if (d.place == manager.secondPlace) return "#8f00ff";
+          else return "#b3b1b1";
+        }else{
+          return "#B80F0A"
+        }
+      }
+      else{
+        return "white";
+      }
+   });
+  }
+  
+}
+
+function scalePointInverseC(pos) {
+  var xPos = pos;
+  var domainC = y["region_txt"].domain();
+  var rangeC = y["region_txt"].range();
+  var rangePointsC = d3.range(rangeC[0], rangeC[1], y["region_txt"].step());
+  var inverseC = domainC[d3.bisect(rangePointsC, xPos)];
+  return inverseC;
+}
+
+function scalePointInverseT(pos) {
+  var xPos = pos;
+  var domainT = y["attacktype1_txt"].domain();
+  var rangeT = y["attacktype1_txt"].range();
+  var rangePointsT = d3.range(rangeT[0], rangeT[1], y["attacktype1_txt"].step());
+  var inverseT = domainT[d3.bisect(rangePointsT, xPos)];
+  return inverseT;
+}
+
+function scalePointInverseT2(pos) {
+  var xPos = pos;
+  var domainT = y["weaptype1_txt"].domain();
+  var rangeT = y["weaptype1_txt"].range();
+  var rangePointsT = d3.range(rangeT[0], rangeT[1], y["weaptype1_txt"].step());
+  var inverseT = domainT[d3.bisect(rangePointsT, xPos)];
+  return inverseT;
+}
+
+function scalePointInverseT3(pos) {
+  var xPos = pos;
+  var domainT = y["targtype1_txt"].domain();
+  var rangeT = y["targtype1_txt"].range();
+  var rangePointsT = d3.range(rangeT[0], rangeT[1], y["targtype1_txt"].step());
+  var inverseT = domainT[d3.bisect(rangePointsT, xPos)];
+  return inverseT;
+}
+
+
+function draw(d) {
+  points = [];
+  for (i in dimensions) {
+    n = dimensions[i].name;
+    r = dimensions[i].key;
+    points.push([x(n), y[r](d[r])]);
+  }
+  return d3.line()(points);
+}
+
+var background;
+var foreground;
+var country_selection;
+var type_selection;
+var type2_selection;
+var type3_selection;
+
+var y = {};
+var names = [];
+var data=[];
+
+function parallel_getData(){
+	  return manager.getDataFilteredByPlace();
+}
+
+function parallel_getDataT(){
+  return manager.getDataFilteredByYear();
+}
+
+function parallel_getDataG(){
+  return manager.getDataFilteredByG();
+}
+
+function parallel_getDataR(){
+  return manager.getDataByRegion();
+}
+
+function parallel_getDataC(){
+  return manager.getDataByContinent();
+}
+
+
+
+function start(){
+  if(REG1 || REG2){
+    data = parallel_getDataR();
+  }else if(CON1 || CON2){
+    data = parallel_getDataC();
+  }else if(manager.place==undefined && manager.group==undefined){
+    data = parallel_getDataT();
+  }else if(manager.place==undefined && manager.group!=undefined){
+    data = parallel_getDataG();
+  }else{
+    data = parallel_getData();
+  }
+  dimensions = [
+    {
+      name: "Region",
+      key: "region_txt"
+    },
+    {
+      name: "Kills",
+      key: "nkill"
+    },
+    {
+      name: "Attack type",
+      key: "attacktype1_txt"
+    },
+    {
+      name: "Weap",
+      key: "weaptype1_txt"
+    },
+    {
+      name: "Target",
+      key: "targtype1_txt"
+    }
+           
+    ];
+
+
+  for (i in dimensions) {
+    j = dimensions[i].key;
+    names.push(dimensions[i].name);
+    if (j == "region_txt") {
+      places = [];
+      data.forEach(element => {
+        if (!places.includes(element[j])) {
+          places.push(element[j])
+        }
+      });
+      places.sort();
+    
+      y[j] = d3.scalePoint()
+        .domain(places)
+        .range([0, height_parallel]);
+        
+    }
+    else if (j == "nkill"){
+      var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+      var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+
+      y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+      
+    }else if (j == "attacktype1_txt"){
+      types = [];
+      data.forEach(element => {
+        if (!types.includes(element[j])) {
+          types.push(element[j])
+        }
+      });
+
+      y[j] = d3.scalePoint()
+        .domain(types)
+        .range([0, height_parallel]);
+      
+    }else if (j == "weaptype1_txt"){
+      types2 = [];
+      data.forEach(element => {
+        if (!types2.includes(element[j])) {
+          types2.push(element[j])
+        }
+      });
+
+      y[j] = d3.scalePoint()
+        .domain(types2)
+        .range([0, height_parallel]);
+      
+    }else if (j == "targtype1_txt"){
+      types3 = [];
+      data.forEach(element => {
+        if (!types3.includes(element[j])) {
+          types3.push(element[j])
+        }
+      });
+
+      y[j] = d3.scalePoint()
+        .domain(types3)
+        .range([0, height_parallel]);
+      
+    }
+
+    
+
+
+    
+  extents = dimensions.map(function (p) { return [0, 0]; });
+
+  background = svgParallel.append("g")
+    .attr("class", "background")
+    .selectAll("path")
+    .data(data)
+    .enter().append("path")
+    .attr("d", draw)
+    .attr("class", "path_background");
+
+
+  foreground = svgParallel.append("g")
+    .attr("class", "foreground")
+    .selectAll("path")
+    .data(data)
+    .enter()
+    .append("path")
+    .attr("d", draw)
+    .attr('class', 'path_foreground path_normal')
+    .style("stroke-opacity", function(d){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0.6;
+      }
+    })
+    .style("stroke", function(d){
+      /*if(manager.compareMode){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#B80F0A";
+      }
+      else if (d.place == manager.secondPlace) return "#8f00ff";
+      else return "#B80F0A";*/
+
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
+    })
+    .style("stroke-width", 1.0);
+    
+
+  svgParallel.selectAll('.path_highlighted').raise();
+
+  var gP = svgParallel.selectAll("axis")
+      .data(dimensions)
+      .enter().append("g")
+      .attr("class", "axis")
+      .attr("transform", function (d) { return "translate(" + x(d.name) + ")"; })
+      .style("fill","#E8EDDF");
+
+
+  gP.append("g")
+    .attr("class", "axis")
+    .each(function (p) { d3.select(this).call(d3.axisLeft().scale(y[p.key])); })
+    .append("text")
+    .style("fill", "#E8EDDF")
+    .style("text-anchor", "middle")
+    .attr("y", -9)
+    .text(function (p) { return p.name; });
+      
+      
+  gP.append("g")
+  .attr("class", "brushParallel")
+  .each(function (p) {
+    d3.select(this).call(y[p.key].brush = d3.brushY().extent([[-8, 0], [8, height_parallel]]).
+      on("start", brushstart).
+      on("brush", brushParallel)).
+      on("click", cancelSelection)
+  })
+  .selectAll("rect")
+  .attr("x", -8)
+  .attr("width", 16);
+      
+  manager.filteringByParallel = parallelFiltering;  
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function upPa(){
+  if(REG1 || REG2){
+    data = parallel_getDataR();
+  }else if(CON1 || CON2){
+    data = parallel_getDataC();
+  }else if(manager.place==undefined && manager.group==undefined){
+    data = parallel_getDataT();
+  }else if(manager.place==undefined && manager.group!=undefined){
+    data = parallel_getDataG();
+  }else{
+    data = parallel_getData();
+  }
+  dimensions = [
+    {
+      name: "Region",
+      key: "region_txt"
+    },
+    {
+      name: "Kills",
+      key: "nkill"
+    },
+    {
+      name: "Attack type",
+      key: "attacktype1_txt"
+    },
+    {
+      name: "Weap",
+      key: "weaptype1_txt"
+    },
+    {
+      name: "Target",
+      key: "targtype1_txt"
+    }
+           
+    ];
+
+
+    if(NAT1==true && NAT2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element["place"]==manager.place){
+                places.push(element[j])
+              }
+              if(element["place"]==manager.secondPlace){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element["place"]==manager.place){
+                types.push(element[j])
+              }
+              if(element["place"]==manager.secondPlace){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+              if(element["place"]==manager.place){
+                types2.push(element[j])
+              }
+              if(element["place"]==manager.secondPlace){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(element["place"]==manager.place){
+                types3.push(element[j])
+              }
+              if(element["place"]==manager.secondPlace){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(NAT1==true && REG2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element["place"]==manager.place){
+                places.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element["place"]==manager.place){
+                types.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+              if(element["place"]==manager.place){
+                types2.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(element["place"]==manager.place){
+                types3.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(NAT1==true && CON2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element["place"]==manager.place){
+                places.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element["place"]==manager.place){
+                types.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+               if(element["place"]==manager.place){
+                types2.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+               if(element["place"]==manager.place){
+                types3.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(REG1==true && NAT2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                places.push(element[j])
+              }
+              if(element[j]==diz[manager.place][0]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                types.push(element[j])
+              }
+              if(element[j]==diz[manager.place][0]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                types2.push(element[j])
+              }
+              if(element[j]==diz[manager.place][0]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                types3.push(element[j])
+              }
+              if(element[j]==diz[manager.place][0]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(REG1==true && REG2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                places.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                types.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                types2.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                types3.push(element[j])
+              }
+              if(element[j]==diz[manager.secondPlace][0]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(REG1==true && CON2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                places.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                types.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                types2.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(element[j]==diz[manager.place][0]){
+                types3.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(CON1==true && NAT2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                places.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                types.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                types2.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(element["place"]==manager.secondPlace){
+                types3.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(CON1==true && REG2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(element[j]==diz[manager.secondPlace][0]){
+                places.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(element[j]==diz[manager.secondPlace][0]){
+                types.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+             if(element[j]==diz[manager.secondPlace][0]){
+                types2.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(element[j]==diz[manager.secondPlace][0]){
+                types3.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+    }
+    }if(CON1==true && CON2==true){
+      for (i in dimensions) {
+        j = dimensions[i].key;
+        names.push(dimensions[i].name);
+        if (j == "region_txt") {
+          places = [];
+          data.forEach(element => {
+            if (!places.includes(element[j])) {
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                places.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                places.push(element[j])
+              }
+            }
+          });
+          places.sort();
+        
+          y[j] = d3.scalePoint()
+            .domain(places)
+            .range([0, height_parallel]);
+            
+        }
+        else if (j == "nkill"){
+          var low = d3.extent(data, function(d) { return +d.nkill; })[0];
+          var high = d3.extent(data, function(d) { return +d.nkill; })[1];
+    
+          y[j] = d3.scaleLinear().domain([low - 1, high + 1]).range([height_parallel, 0]);
+          
+        }else if (j == "attacktype1_txt"){
+          types = [];
+          data.forEach(element => {
+            if (!types.includes(element[j])) {
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types)
+            .range([0, height_parallel]);
+          
+        }else if (j == "weaptype1_txt"){
+          types2 = [];
+          data.forEach(element => {
+            if (!types2.includes(element[j])) {
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types2.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types2.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types2)
+            .range([0, height_parallel]);
+          
+        }else if (j == "targtype1_txt"){
+          types3 = [];
+          data.forEach(element => {
+            if (!types3.includes(element[j])) {
+              if(diz[element["place"]][1]==diz[manager.place][1]){
+                types3.push(element[j])
+              }
+              if(diz[element["place"]][1]==diz[manager.secondPlace][1]){
+                types3.push(element[j])
+              }
+            }
+          });
+    
+          y[j] = d3.scalePoint()
+            .domain(types3)
+            .range([0, height_parallel]);
+          
+        }
+        x = d3.scalePoint()
+        .range([0, width_parallel])
+        .padding(1)
+        .domain(names);
+      }
+  }
+
+
+    
+  extents = dimensions.map(function (p) { return [0, 0]; });
+
+  background = svgParallel.append("g")
+    .attr("class", "background")
+    .selectAll("path")
+    .data(data)
+    .enter().append("path")
+    .attr("d", draw)
+    .attr("class", "path_background");
+
+
+  foreground = svgParallel.append("g")
+    .attr("class", "foreground")
+    .selectAll("path")
+    .data(data)
+    .enter()
+    .append("path")
+    .attr("d", draw)
+    .attr('class', 'path_foreground path_normal')
+    .style("stroke-opacity", function(d){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0.6;
+      }
+    })
+    .style("stroke", function(d){
+      /*if(manager.compareMode){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#B80F0A";
+      }
+      else if (d.place == manager.secondPlace) return "#8f00ff";
+      else return "#B80F0A";*/
+
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A"
+      }
+    })
+    .style("stroke-width", 1.0);
+    
+
+  svgParallel.selectAll('.path_highlighted').raise();
+
+  var gP = svgParallel.selectAll("axis")
+      .data(dimensions)
+      .enter().append("g")
+      .attr("class", "axis")
+      .attr("transform", function (d) { return "translate(" + x(d.name) + ")"; })
+      .style("fill","#E8EDDF");
+
+
+  gP.append("g")
+    .attr("class", "axis")
+    .each(function (p) { d3.select(this).call(d3.axisLeft().scale(y[p.key])); })
+    .append("text")
+    .style("fill", "#E8EDDF")
+    .style("text-anchor", "middle")
+    .attr("y", -9)
+    .text(function (p) { return p.name; });
+      
+      
+  gP.append("g")
+  .attr("class", "brushParallel")
+  .each(function (p) {
+    d3.select(this).call(y[p.key].brush = d3.brushY().extent([[-8, 0], [8, height_parallel]]).
+      on("start", brushstart).
+      on("brush", brushParallel)).
+      on("click", cancelSelection)
+  })
+  .selectAll("rect")
+  .attr("x", -8)
+  .attr("width", 16);
+      
+  manager.filteringByParallel = parallelFiltering;  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+manager.addListener('dataReady', function (e) {
+  	start();
+});
+
+manager.addListener('scatterplotBrushing', function (e) {
+  svgParallel.selectAll('.path_foreground')
+  .style("stroke", setColorByScatterplot)
+  .attr("class", setClass)
+  .style("opacity", setOpacityByScatterplot);
+  svgParallel.selectAll('.path_highlighted').raise();
+});
+
+
+manager.addListener('yearChanged', function (e) {
+	//cambio=false;
+  svgParallel.selectAll("*").remove();
+	start();
+	
+});
+
+manager.addListener('groupChanged', function (e) {
+  svgParallel.selectAll("*").remove();
+	start();  
+});
+
+function updateParallel(){
+  svgParallel.selectAll("*").remove();
+	start();
+}
+
+function updateParallel2(){
+  svgParallel.selectAll("*").remove();
+	upPa();
+}
+
+manager.addListener('placeChanged', function (e) {
+	  //cambio=true;
+	  updateParallel();
+});
+
+
+function setColorByScatterplot(d) {
+  if (manager.filteringByScatterplot == undefined){ 
+    if(manager.filteringByParallel(d)){
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#B80F0A";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffd500";}
+        else if (d.place == manager.secondPlace) return "#8f00ff";
+        else return "#b3b1b1";
+      }else{
+        return "#B80F0A";
+      }
+    }else{
+      if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }
+      else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+        else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group!=undefined && manager.place==undefined){
+        if (d.gname == manager.group) {return "#ffffff";}
+        else return "#b3b1b1";
+      }else if(manager.group==undefined && manager.place!=undefined){
+        if (d.place == manager.place) {return "#ffffff";}
+        else if (d.place == manager.secondPlace) return "#ffffff";
+        else return "#b3b1b1";
+      }else{
+        return "#ffffff";
+      }
+    }
+  }
+  else if(manager.parallelFiltering){    
+        if(manager.filteringByParallel(d) && manager.filteringByScatterplot(d)){
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "green";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
+            else return "#b3b1b1";
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return "green";}
+            else if (d.place == manager.secondPlace) return "green";
+            else return "#b3b1b1";
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "green";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else return "#b3b1b1";
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "green";}
+            else return "#b3b1b1";
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return "green";}
+            else if (d.place == manager.secondPlace) return "green";
+            else return "#b3b1b1";
+          }else{
+            return "green";
+          }
+        }else{
+          if(manager.filteringByParallel(d)){
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#B80F0A";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffd500";}
+              else if (d.place == manager.secondPlace) return "#8f00ff";
+              else return "#b3b1b1";
+            }else{
+              return "#B80F0A";
+            }
+          }else{
+            if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ffffff";}
+              else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }
+            else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+              if (d.place == manager.place && d.gname==manager.group) {return "#ffffff";}
+              else if (d.place == manager.place && d.gname!=manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group!=undefined && manager.place==undefined){
+              if (d.gname == manager.group) {return "#ffffff";}
+              else return "#b3b1b1";
+            }else if(manager.group==undefined && manager.place!=undefined){
+              if (d.place == manager.place) {return "#ffffff";}
+              else if (d.place == manager.secondPlace) return "#ffffff";
+              else return "#b3b1b1";
+            }else{
+              return "#ffffff";
+            }
+          }
+
+         } //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  }else{
+     if(manager.filteringByScatterplot(d)){
+        if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "green";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+          else if (d.place == manager.secondPlace && d.gname==manager.group) return "green";
+          else return "#b3b1b1";
+        }
+        else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+          if (d.place == manager.place) {return "green";}
+          else if (d.place == manager.secondPlace) return "green";
+          else return "#b3b1b1";
+        }
+        else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+          if (d.place == manager.place && d.gname==manager.group) {return "green";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+          else return "#b3b1b1";
+        }else if(manager.group!=undefined && manager.place==undefined){
+          if (d.gname == manager.group) {return "green";}
+          else return "#b3b1b1";
+        }else if(manager.group==undefined && manager.place!=undefined){
+          if (d.place == manager.place) {return "green";}
+          else if (d.place == manager.secondPlace) return "green";
+          else return "#b3b1b1";
+        }else{
+          return "green";
+        } 
+        }else{   
+          if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+            else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+            else return "#b3b1b1";
+          }
+          else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }
+          else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+            if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+            else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+            else return "#b3b1b1";
+          }else if(manager.group!=undefined && manager.place==undefined){
+            if (d.gname == manager.group) {return "#B80F0A";}
+            else return "#b3b1b1";
+          }else if(manager.group==undefined && manager.place!=undefined){
+            if (d.place == manager.place) {return "#ffd500";}
+            else if (d.place == manager.secondPlace) return "#8f00ff";
+            else return "#b3b1b1";
+          }else{
+            return "#B80F0A";
+          }
+        }
+  }
+}
+
+function setOpacityByScatterplot(d){
+  if (manager.filteringByScatterplot == undefined) return 1;
+  value = manager.filteringByScatterplot(d);
+  if (value) {
+    return 1
+  }
+  return 0.6;
+}
+
+function setClass(d) {
+  if (manager.filteringByScatterplot == undefined) return 'path_foreground path_normal';
+  value = manager.filteringByScatterplot(d);
+  if (value){
+    return 'path_foreground path_highlighted';
+  }
+  else return 'path_foreground path_normal';
+}
+
+
+
+$(window).resize(function() {
+  // Resize SVG
+  svgParallel
+    .attr("width", $("#map-holder").width())
+    .attr("height", $("#map-holder").height())
+  ;
+});
+
+
+
+
+
+
+
+
+
+if(NAT1==true && NAT2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(NAT1==true && REG2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.reg2 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.reg2 && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(NAT1==true && CON2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][1] == manager.con2 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][1] == manager.con2 && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (d.place == manager.place && d.gname==manager.group) {return 1;}
+        else if (d.place == manager.place && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(REG1==true && NAT2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (diz[d.place][0] == manager.reg1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.reg1 && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (diz[d.place][0] == manager.reg1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.reg1 && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(REG1==true && REG2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (diz[d.place][0] == manager.reg1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.reg1 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.reg2 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.reg2 && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (diz[d.place][0] == manager.reg1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.reg1 && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(REG1==true && CON2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (diz[d.place][0] == manager.reg1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.reg1 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.con2 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.con2 && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (diz[d.place][0] == manager.reg1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.reg1 && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(CON1==true && NAT2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (diz[d.place][0] == manager.con1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.con1 && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.3;}
+        else if (d.place == manager.secondPlace && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (diz[d.place][0] == manager.con1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.con1 && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(CON1==true && REG2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (diz[d.place][0] == manager.con1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.con1 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.reg2 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.reg2 && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (diz[d.place][0] == manager.con1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.con1 && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}else if(CON1==true && CON2==true){
+   if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+        if (diz[d.place][0] == manager.con1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.con1 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.con2 && d.gname!=manager.group) {return 0.3;}
+        else if (diz[d.place][0] == manager.con2 && d.gname==manager.group) return 1;
+        else return 0.3;
+      }else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+        if (diz[d.place][0] == manager.con1 && d.gname==manager.group) {return 1;}
+        else if (diz[d.place][0] == manager.con1 && d.gname!=manager.group) {return 0.3;}
+        else return 0.3;
+      }else{
+        return 0;
+      }
+}
+
+
+
+
+Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYear) {
+    //if(this.group==undefined){
+        var sel1 = document.querySelector("select[name='s1']");
+        var sel2 = document.querySelector("select[name='s2']");
+        var c1=document.getElementById("continent1");
+        var r1=document.getElementById("region1");
+        var n1=document.getElementById("nation1");
+        var c2=document.getElementById("continent2");
+        var r2=document.getElementById("region2");
+        var n2=document.getElementById("nation2");
+        this.parallelFiltering = false;
+        if (this.compareMode == false){
+            this.place = selectedPlace;
+            this.con1=diz[selectedPlace][1];
+            this.reg1=diz[selectedPlace][0];
+            n1.innerHTML = this.place;
+            r1.innerHTML = diz[this.place][0];
+            c1.innerHTML = diz[this.place][1];
+            if(sel1.value=="region1"){
+                sel1.value = "region1";
+            }else if(sel1.value=="continent1"){
+                sel1.value = "continent1";
+            }else{
+                sel1.value = "nation1";
+            }
+            this.dataContinent =[];
+            this.dataplace =[];
+            this.dataRegion =[];
+            this.dataMap = [];
+            this.dataplaceludo =[];
+            for (i = 0; i < this.dataOriginal.length; i++) {
+                d = this.dataOriginal[i];
+                foundplace = d.place;
+                foundYear = d.iyear;
+                foundRegion = d.region_txt;
+                if(this.con1==diz[foundplace][1] && selectedYear == foundYear){
+                    this.dataContinent.push(d);
+                    if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                        this.dataRegion.push(d);
+                    }
+                }
+                if (selectedPlace == foundplace){
+                    this.dataplaceludo.push(d);
+                }
+                if (selectedPlace == foundplace && selectedYear == foundYear){
+                    this.dataplace.push(d);
+                }
+                else if (selectedYear == foundYear)
+                    this.dataMap.push(d);
+            }
+            svgBar.selectAll("*").remove();
+            updateChart();
+            this._updateDataFromPlace();
+            this.notifyPlaceChanged();
+        }
+        else{
+            if (this.place == undefined){
+                this.place = selectedPlace;
+                this.con1=diz[selectedPlace][1];
+                this.reg1=diz[selectedPlace][0];
+                n1.innerHTML = this.place;
+                r1.innerHTML = diz[this.place][0];
+                c1.innerHTML = diz[this.place][1];
+                if(sel1.value=="region1"){
+                    sel1.value = "region1";
+                }else if(sel1.value=="continent1"){
+                    sel1.value = "continent1";
+                }else{
+                    sel1.value = "nation1";
+                }
+                this.dataContinent =[];
+                this.dataplace =[];
+                this.dataRegion = [];
+                this.dataMap = [];
+                this.dataplaceludo =[];
+                for (i = 0; i < this.dataOriginal.length; i++) {
+                    d = this.dataOriginal[i];
+                    foundplace = d.place
+                    foundYear = d.iyear
+                    if(this.con1==diz[foundplace][1] && selectedYear == foundYear){
+                        this.dataContinent.push(d);
+                        if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                            this.dataRegion.push(d);
+                        }
+                    }
+                    if (selectedPlace == foundplace){
+                        this.dataplaceludo.push(d);
+                    }
+                    if (selectedPlace == foundplace && selectedYear == foundYear){
+                        this.dataplace.push(d);
+                    }
+                    else if (selectedYear == foundYear)
+                        this.dataMap.push(d);
+                }
+                svgBar.selectAll("*").remove();
+                updateChart();
+                this._updateDataFromPlace();
+                this.notifyPlaceChanged();
+            }
+            else if (this.secondPlace == undefined){
+                this.secondPlace = selectedPlace;
+                this.con2=diz[selectedPlace][1];
+                this.reg2=diz[selectedPlace][0];
+                //place2Div.innerHTML = this.secondPlace;
+                n2.innerHTML = this.secondPlace;
+                r2.innerHTML = diz[this.secondPlace][0];
+                c2.innerHTML = diz[this.secondPlace][1];
+                if(sel2.value=="region2"){
+                    sel2.value = "region2";
+                }else if(sel2.value=="continent2"){
+                    sel2.value = "continent2";
+                }else{
+                    sel2.value = "nation2";
+                }
+                this.dataMap = [];
+                for (i = 0; i < this.dataOriginal.length; i++) {
+                    d = this.dataOriginal[i];
+                    foundplace = d.place
+                    foundYear = d.iyear
+                    if(this.con2==diz[foundplace][1] && selectedYear == foundYear && this.con1!=this.con2){
+                        this.dataContinent.push(d);
+                    }
+                    if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear && this.reg1!=this.reg2){
+                        this.dataRegion.push(d);
+                    }
+                    if (selectedPlace == foundplace){
+                        this.dataplaceludo.push(d);
+                    }
+                    if (selectedPlace == foundplace && selectedYear == foundYear){
+                        this.dataplace.push(d);
+                    }
+                    else if (selectedYear == foundYear && foundplace != this.place)
+                        this.dataMap.push(d);
+                }
+                svgBar.selectAll("*").remove();
+                updateChart();
+                this._updateDataFromPlace();
+                this.notifyPlaceChanged();
+            }
+            else{
+                this.dataMap = []
+                if(diz[selectedPlace][1]==this.con2){
+                    if(diz[selectedPlace][0]==this.reg2){
+                        for (var i = this.dataplace.length - 1; i >= 0; i-- ){
+                            if (this.dataplace[i].place == this.secondPlace) {
+                                this.dataplace.splice(i,1);
+                            }
+                        }
+                        for (var i = this.dataplaceludo.length - 1; i >= 0; i-- ){
+                            if (this.dataplaceludo[i].place == this.secondPlace) {
+                                this.dataplaceludo.splice(i,1);
+                            }
+                        }
+                        this.secondPlace = selectedPlace;
+                        n2.innerHTML = this.secondPlace;
+                        r2.innerHTML = diz[this.secondPlace][0];
+                        c2.innerHTML = diz[this.secondPlace][1];
+                        if(sel2.value=="region2"){
+                            sel2.value = "region2";
+                        }else if(sel2.value=="continent2"){
+                            sel2.value = "continent2";
+                        }else{
+                            sel2.value = "nation2";
+                        }
+                        this.con2=diz[selectedPlace][1];
+                        this.reg2=diz[selectedPlace][0];
+                        //place2Div.innerHTML = this.secondPlace;
+                        for (i = 0; i < this.dataOriginal.length; i++) {
+                            d = this.dataOriginal[i];
+                            foundplace = d.place
+                            foundYear = d.iyear
+                            if (selectedPlace == foundplace){
+                                this.dataplaceludo.push(d); //compare mode
+                            }
+                            if (selectedPlace == foundplace && selectedYear == foundYear){
+                                this.dataplace.push(d);
+                            }
+                            else if (selectedYear == foundYear && foundplace != this.place)
+                                this.dataMap.push(d);
+                        }
+                        svgBar.selectAll("*").remove();
+                        updateChart();
+                        this._updateDataFromPlace();
+                        this.notifyPlaceChanged();
+                    }else{
+                        if(this.reg1!=this.reg2){
+                            for (var i = this.dataRegion.length - 1; i >= 0; i-- ){
+                                if(diz[this.dataRegion[i].place][0]==this.reg2){
+                                    this.dataRegion.splice(i,1);
+                                }
+                            }
+                            for (var i = this.dataplace.length - 1; i >= 0; i-- ){
+                                if (this.dataplace[i].place == this.secondPlace) {
+                                    this.dataplace.splice(i,1);
+                                }
+                            }
+                            for (var i = this.dataplaceludo.length - 1; i >= 0; i-- ){
+                                if (this.dataplaceludo[i].place == this.secondPlace) {
+                                    this.dataplaceludo.splice(i,1);
+                                }
+                            }
+                            this.secondPlace = selectedPlace;
+                            n2.innerHTML = this.secondPlace;
+                            r2.innerHTML = diz[this.secondPlace][0];
+                            c2.innerHTML = diz[this.secondPlace][1];
+                            if(sel2.value=="region2"){
+                                sel2.value = "region2";
+                            }else if(sel2.value=="continent2"){
+                                sel2.value = "continent2";
+                            }else{
+                                sel2.value = "nation2";
+                            }
+                            this.con2=diz[selectedPlace][1];
+                            this.reg2=diz[selectedPlace][0];
+                            //place2Div.innerHTML = this.secondPlace;
+                            for (i = 0; i < this.dataOriginal.length; i++) {
+                                d = this.dataOriginal[i];
+                                foundplace = d.place
+                                foundYear = d.iyear
+                                if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                                    this.dataRegion.push(d);
+                                }
+                                if (selectedPlace == foundplace){
+                                    this.dataplaceludo.push(d); //compare mode
+                                }
+                                if (selectedPlace == foundplace && selectedYear == foundYear){
+                                    this.dataplace.push(d);
+                                }
+                                else if (selectedYear == foundYear && foundplace != this.place)
+                                    this.dataMap.push(d);
+                            }
+                            svgBar.selectAll("*").remove();
+                            updateChart();
+                            this._updateDataFromPlace();
+                            this.notifyPlaceChanged();
+                        }else{
+                            for (var i = this.dataplace.length - 1; i >= 0; i-- ){
+                                if (this.dataplace[i].place == this.secondPlace) {
+                                    this.dataplace.splice(i,1);
+                                }
+                            }
+                            for (var i = this.dataplaceludo.length - 1; i >= 0; i-- ){
+                                if (this.dataplaceludo[i].place == this.secondPlace) {
+                                    this.dataplaceludo.splice(i,1);
+                                }
+                            }
+                            this.secondPlace = selectedPlace;
+                            n2.innerHTML = this.secondPlace;
+                            r2.innerHTML = diz[this.secondPlace][0];
+                            c2.innerHTML = diz[this.secondPlace][1];
+                            if(sel2.value=="region2"){
+                                sel2.value = "region2";
+                            }else if(sel2.value=="continent2"){
+                                sel2.value = "continent2";
+                            }else{
+                                sel2.value = "nation2";
+                            }
+                            this.con2=diz[selectedPlace][1];
+                            this.reg2=diz[selectedPlace][0];
+                            //place2Div.innerHTML = this.secondPlace;
+                            for (i = 0; i < this.dataOriginal.length; i++) {
+                                d = this.dataOriginal[i];
+                                foundplace = d.place
+                                foundYear = d.iyear
+                                if (selectedPlace == foundplace){
+                                    this.dataplaceludo.push(d); //compare mode
+                                }
+                                if (selectedPlace == foundplace && selectedYear == foundYear){
+                                    this.dataplace.push(d);
+                                }
+                                else if (selectedYear == foundYear && foundplace != this.place)
+                                    this.dataMap.push(d);
+                            }
+                            svgBar.selectAll("*").remove();
+                            updateChart();
+                            this._updateDataFromPlace();
+                            this.notifyPlaceChanged();
+                        }
+                    }
+                }if(diz[selectedPlace][1]!=this.con2){
+                    if(diz[selectedPlace][0]==this.reg2 && this.reg2!=this.reg1){
+                        
+                    }else{
+
+                    }
+                }
+            }
+        }
+    /*}else{
+        this.parallelFiltering = false;
+        this.place = selectedPlace;
+        //place1Div.innerHTML = this.place;
+        this.dataplace =[];
+        this.dataMap = []
+        for (i = 0; i < this.dataOriginal.length; i++) {
+            d = this.dataOriginal[i];
+            foundgroup = d.gname
+            foundYear = d.iyear
+            foundplace = d.place;
+            if (this.group == foundgroup){
+                this.dataplaceludo.push(d);
+            }
+            if (selectedPlace==foundplace){
+                this.dataplace.push(d);
+            }
+            else if (selectedYear == foundYear)
+                this.dataMap.push(d);
+        }
+        this._updateDataFromPlace();
+        this.notifyPlaceChanged();
+    }*/
+}
+
+
+
+
+
+
+ for (var i = this.dataContinent.length - 1; i >= 0; i-- ){
+                    if(diz[this.dataContinent[i].place][1]==this.con2){
+                        this.dataContinent.splice(i,1);
+                    }
+                }
+                for (var i = this.dataRegion.length - 1; i >= 0; i-- ){
+                    if(diz[this.dataRegion[i].place][0]==this.reg2){
+                        this.dataRegion.splice(i,1);
+                    }
+                }
+                for (var i = this.dataplace.length - 1; i >= 0; i-- ){
+                    if (this.dataplace[i].place == this.secondPlace) {
+                        this.dataplace.splice(i,1);
+                    }
+                }
+                for (var i = this.dataplaceludo.length - 1; i >= 0; i-- ){
+                    if (this.dataplaceludo[i].place == this.secondPlace) {
+                        this.dataplaceludo.splice(i,1);
+                    }
+                }
+                this.secondPlace = selectedPlace;
+                n2.innerHTML = this.secondPlace;
+                r2.innerHTML = diz[this.secondPlace][0];
+                c2.innerHTML = diz[this.secondPlace][1];
+                if(sel2.value=="region2"){
+                    sel2.value = "region2";
+                }else if(sel2.value=="continent2"){
+                    sel2.value = "continent2";
+                }else{
+                    sel2.value = "nation2";
+                }
+                this.con2=diz[selectedPlace][1];
+                this.reg2=diz[selectedPlace][0];
+                //place2Div.innerHTML = this.secondPlace;
+                for (i = 0; i < this.dataOriginal.length; i++) {
+                    d = this.dataOriginal[i];
+                    foundplace = d.place
+                    foundYear = d.iyear
+                    if(this.con2==diz[foundplace][1] && selectedYear == foundYear){
+                        this.dataContinent.push(d);
+                    }
+                    if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                        this.dataRegion.push(d);
+                    }
+                    if (selectedPlace == foundplace){
+                        this.dataplaceludo.push(d); //compare mode
+                    }
+                    if (selectedPlace == foundplace && selectedYear == foundYear){
+                        this.dataplace.push(d);
+                    }
+                    else if (selectedYear == foundYear && foundplace != this.place)
+                        this.dataMap.push(d);
+                }
+                svgBar.selectAll("*").remove();
+                updateChart();
+                this._updateDataFromPlace();
+                this.notifyPlaceChanged();
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if(REG1==true && NAT2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+           }else if(REG1==true && REG2==true){
+               if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                   if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                   else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                   else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+                   else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+                   else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                   if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                   else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                   else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                   if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                   else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                   else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                   if (d.gname == manager.group) {return "#B80F0A";}
+                   else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                   if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                   else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                   else return "#b3b1b1";
+                   }else{
+                   return "#B80F0A";
+                   }
+           }else if(REG1==true && CON2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (diz[d.place][0] == diz[manager.place][0]) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+           }else if(NAT1==true && NAT2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+                     else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (d.place == manager.place) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+                     else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (d.place == manager.place) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+           }else if(NAT1==true && REG2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+                     else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (d.place == manager.place) {return "#ffd500";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+                     else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (d.place == manager.place) {return "#ffd500";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+           }else if(NAT1==true && CON2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+                     else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (d.place == manager.place) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (d.place == manager.place && d.gname==manager.group) {return "#B80F0A";}
+                     else if (d.place == manager.place && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (d.place == manager.place) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+           }else if(CON1==true && NAT2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (d.place == manager.secondPlace && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+                     else if (d.place == manager.secondPlace) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+           }else if(CON1==true && REG2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+                     else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+                 
+           }else if(CON1==true && CON2==true){
+                if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#8f00ff";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#B80F0A";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }
+                   else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                     if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#B80F0A";}
+                     else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffd500";}
+                     else return "#b3b1b1";
+                   }else if(manager.group!=undefined && manager.place==undefined){
+                     if (d.gname == manager.group) {return "#B80F0A";}
+                     else return "#b3b1b1";
+                   }else if(manager.group==undefined && manager.place!=undefined){
+                     if (diz[d.place][1] == diz[manager.place][1]) {return "#ffd500";}
+                     else if (diz[d.place][1] == diz[manager.secondPlace ][1]) return "#8f00ff";
+                     else return "#b3b1b1";
+                   }else{
+                     return "#B80F0A";
+                   }
+           }
+
+
+
+
+
+
+/*giallo #ffff00
+verdino #00ffd0
+grigio #b3b1b1
+rosso #ff0000
+celeste #00eaff
+arancio #ffa600
+ultimo #8800ff
+viola #743dcc*/
+
+
+
+d[1][2]
+
+if(tutte){
+                return "#743dcc";
+            }else if(NAT1==true && NAT2==true){
+                if(d[0] == manager.place) return "#ffff00";
+                else if(d[0] == manager.secondPlace) return "#00ffd0";
+                else return "#743dcc";
+             }else if(NAT1==true && REG2==true){
+                if(d[0] == manager.place) return "#ffff00";
+                else if(diz[d[0]][0] == manager.reg2) return "#00ffd0";
+                else return "#743dcc";
+             }else if(NAT1==true && CON2==true){
+                if(d[0] == manager.place) return "#ffff00";
+                else if(diz[d[0]][1] == manager.con2) return "#00ffd0";
+                else return "#743dcc";
+             }else if(REG1==true && NAT2==true){
+                if(diz[d[0]][0] == manager.reg1) return "#ffff00";
+                else if(d[0] == manager.secondPlace) return "#00ffd0";
+                else return "#743dcc";
+             }else if(REG1==true && REG2==true){
+                if(diz[d[0]][0] == manager.reg1) return "#ffff00";
+                else if(diz[d[0]][0] == manager.reg2) return "#00ffd0";
+                else return "#743dcc";
+             }else if(REG1==true && CON2==true){
+                if(diz[d[0]][0] == manager.reg1) return "#ffff00";
+                else if(diz[d[0]][1] == manager.con2) return "#00ffd0";
+                else return "#743dcc";
+             }else if(CON1==true && NAT2==true){
+                if(diz[d[0]][1] == manager.con1) return "#ffff00";
+                else if(d[0] == manager.secondPlace) return "#00ffd0";
+                else return "#743dcc";
+             }else if(CON1==true && REG2==true){
+                if(diz[d[0]][1] == manager.con1) return "#ffff00";
+                else if(diz[d[0]][0] == manager.reg2) return "#00ffd0";
+                else return "#743dcc";
+             }else if(CON1==true && CON2==true){
+                if(diz[d[0]][1] == manager.con1) return "#ffff00";
+                else if(diz[d[0]][1] == manager.con2) return "#00ffd0";
+                else return "#743dcc";
+            }
+
+
+
+
+
+
+
+
+                         if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname!=manager.group) {return 0.2;}
+                    else if (d.place == manager.secondPlace && d.gname==manager.group) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }
+                  else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
+                    if (d.place == manager.place && d.gname==manager.group) {return 1.0;}
+                    else if (d.place == manager.place && d.gname!=manager.group) {return 0.2;}
+                    else return 0.2;
+                  }else if(manager.group!=undefined && manager.place==undefined){
+                    if (d.gname == manager.group) {return 1.0;}
+                    else return 0.2;
+                  }else if(manager.group==undefined && manager.place!=undefined){
+                    if (d.place == manager.place) {return 1.0;}
+                    else if (d.place == manager.secondPlace) return 1.0;
+                    else return 0.2;
+                  }else{
+                    return 1.0
+                  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  function strokeScatter(d){
+  if (manager.filteringByScatterplot == undefined){ 
+    if(manager.filteringByParallel(d)){
+      
+    }else{
+      
+    }
+  }else if(manager.parallelFiltering){    
+        if(manager.filteringByParallel(d) && manager.filteringByScatterplot(d)){
+          
+        }else{
+          if(manager.filteringByParallel(d)){
+           
+          }else{
+            
+          }
+        }
+  }else{
+     if(manager.filteringByScatterplot(d)){
+      return "#22ff00";
+    }
+  }
+}

@@ -39,27 +39,39 @@ manager.addListener("dataReady", function(d){
         data: {
           reasons: manager.groupsNames,
           selectedludo: "Tutti",
+          count: 0
         },
         methods: {
             onChange(event) {
-                this.selectedludo=event;
-                manager.triggerGroupFilterEvent(event);
+                if(this.count>=1){
+                    this.selectedludo=event;
+                    manager.triggerGroupFilterEvent(event);
+                    this.count+=1;
+                }else{
+                    this.selectedludo=event;
+                    this.count+=1;
+                }
+                
             } 
         }
       }) 
 })
+
+$("#slider").change(function() {
+    ($('#slider').val());
+    setOpacity($('#slider').val());
+  });
 
 
 var q=document.getElementById("my_dataviz");
 var q1=document.getElementById("my_dataviz2");
 var q2=document.getElementById("my_dataviz3");
 var q3=document.getElementById("my_dataviz4");
-var q4=document.getElementById("my_datavizz");
+
 
 var sel = document.querySelector("select[name='select2']");
 sel.addEventListener('change', function () {
     var selected = sel.value;
-    console.log(selected);
     if (selected=="Global trend"){
         sel.value="Global trend";
     }else if(selected=="Terroristic group target"){
@@ -153,26 +165,113 @@ sel4.addEventListener('change', function () {
     }
 });
 
-var sel5 = document.querySelector("select[name='select6']");
-sel5.addEventListener('change', function () {
-    var selected5 = sel5.value;
-    if (selected5=="Global trend"){
-        q4.style.display="none";
-        q.style.display="block";
-        sel5.value="Killer natility";
-    }else if(selected5=="Terroristic group target"){
-        q4.style.display="none";
-        q1.style.display="block";
-        sel5.value="Killer natility";
-    }else if(selected5=="Terroristic group trend"){
-        q4.style.display="none";
-        q2.style.display="block";
-        sel5.value="Killer natility";
-    }else if(selected5=="Global kill trend"){
-        q4.style.display="none";
-        q3.style.display="block";
-        sel5.value="Killer natility";
-    }else if(selected5=="Killer natility"){
-        sel5.value="Killer natility";
+var REG2=false;
+var CON2=false;
+var NAT2=true;
+
+var REG1=false;
+var CON1=false;
+var NAT1=true;
+
+var nrc = document.querySelector("select[name='s2']");
+nrc.addEventListener('input', function () {
+    if(nrc.value=="region2"){
+        CON2=false;
+        REG2=true;
+        NAT2=false;
+        svgBar.selectAll("*").remove();
+        svgP.selectAll("*").remove();
+        svgK.selectAll("*").remove();
+        manager._updateDataFromPlace();
+        svg3.selectAll("*").remove();
+        start2();
+        updateChart();
+        updateParallel2();
+        updateProva();
+        updateK();
+        updateColor();
+    }
+    if(nrc.value=="nation2"){
+        CON2=false;
+        REG2=false;
+        NAT2=true;
+        svgBar.selectAll("*").remove();
+        svgP.selectAll("*").remove();
+        svgK.selectAll("*").remove();
+        manager._updateDataFromPlace();
+        svg3.selectAll("*").remove();
+        start2();
+        updateChart();
+        updateParallel2();
+        updateProva();
+        updateK();
+        updateColor();
+    }else if(nrc.value=="continent2"){
+        NAT2=false;
+        CON2=true;
+        REG2=false;
+        svgBar.selectAll("*").remove();
+        svgP.selectAll("*").remove();
+        svgK.selectAll("*").remove();
+        manager._updateDataFromPlace();
+        svg3.selectAll("*").remove();
+        start2();
+        updateChart();
+        updateParallel2();
+        updateProva();
+        updateK();
+        updateColor();
+    }
+});
+
+var nrc1 = document.querySelector("select[name='s1']");
+
+nrc1.addEventListener('input', function () {
+    if(nrc1.value=="region1"){
+        CON1=false;
+        REG1=true;
+        NAT1=false;
+        svgBar.selectAll("*").remove();
+        svgP.selectAll("*").remove();
+        svgK.selectAll("*").remove();
+        manager._updateDataFromPlace();
+        svg3.selectAll("*").remove();
+        start2();
+        updateChart();
+        updateParallel2();
+        updateProva();
+        updateK();
+        updateColor();
+    }
+    if(nrc1.value=="nation1"){
+        CON1=false;
+        REG1=false;
+        NAT1=true;
+        svgBar.selectAll("*").remove();
+        svgP.selectAll("*").remove();
+        svgK.selectAll("*").remove();
+        manager._updateDataFromPlace();
+        svg3.selectAll("*").remove();
+        start2();
+        updateChart();
+        updateParallel2();
+        updateProva();
+        updateK();
+        updateColor();
+    }else if(nrc1.value=="continent1"){
+        CON1=true;
+        REG1=false;
+        NAT1=false;
+        svgBar.selectAll("*").remove();
+        svgP.selectAll("*").remove();
+        svgK.selectAll("*").remove();
+        manager._updateDataFromPlace();
+        svg3.selectAll("*").remove();
+        start2();
+        updateChart();
+        updateParallel2();
+        updateProva();
+        updateK();
+        updateColor();
     }
 });

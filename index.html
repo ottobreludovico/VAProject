@@ -47,27 +47,29 @@
                     </div>
                     <div class="col-md-3 bootstrap-select-wrapper" style="float: left;">
                         <label style="font-size: 16px;">1 Select</label>
-                        <select name="s1" title="Scegli una opzione" class="bg-dark text-white selct3">
-                            <optgroup label="Continent">
-                                <option id="continent1" value="continent1">No place selected</option>
+                        <select id="s1" name="s1" title="Scegli una opzione" class="bg-dark text-white selct3">
+                            <optgroup label="Nation">
+                                <option id="nation1" value="nation1">No place selected</option>
                               </optgroup>
                               <optgroup label="Region">
                                 <option id="region1" value="region1">No place selected</option>
                               </optgroup>
-                              <optgroup label="Nation">
-                                <option id="nation1" value="nation1">No place selected</option>
+                            <optgroup label="Continent">
+                                <option id="continent1" value="continent1">No place selected</option>
                               </optgroup>
+                              
                         </select>
                         <label style="font-size: 16px; margin-left: 15px;">2 Select</label>
-                        <select name="s2" title="Scegli una opzione" class="bg-dark text-white selct3">
-                            <optgroup label="Continent">
-                                <option id="continent2" value="continent2">No place selected</option>
+                        <select id="s2" name="s2" title="Scegli una opzione" class="bg-dark text-white selct3">
+                            <optgroup label="Nation">
+                                <option id="nation2" value="nation2">No place selected</option>
                               </optgroup>
+                           
                               <optgroup label="Region">
                                 <option id="region2" value="region2">No place selected</option>
                               </optgroup>
-                              <optgroup label="Nation">
-                                <option id="nation2" value="nation2">No place selected</option>
+                              <optgroup label="Continent">
+                                <option id="continent2" value="continent2">No place selected</option>
                               </optgroup>
                         </select>
                       </div>
@@ -81,7 +83,7 @@
                         <!--<select name="selectG" id="ludo" class="form-select bg-dark text-white selct"></select>
                         -->
                         <label style="font-size: 16px;">Select Groups</label>
-                        <v-select :options="reasons" @input="onChange" class="bg-dark text-white selct1"></v-select>
+                        <v-select :options="reasons" @input="onChange" class="bg-dark text-white selct1" v-model="selectedludo"></v-select>
                     </div>      
                     <div class="col-md-2 filters">
                         <label style="font-size: 16px;">Select Year</label>
@@ -141,7 +143,13 @@
         
                 <div class="row" style="margin: 20px; height: 41%;">
                     <div class="flex-item col-md-6" style="">
-                        <div id="map-holder"></div>
+                        <div id="map-holder">
+                            
+                        </div>
+                        <div style="z-index: 2; position: fixed;">
+                            <label for="customRange1" style="margin-left: 15px;">Opacity</label>
+                            <input id="slider" type="range" class="custom-range" id="customRange1" min="0.1" max="1" step="0.05" value="0.8">
+                        </div>
                     </div>
                     <div class="flex-item col-md-6" style="">
                         <div id="parallel_area" class="parallel_area">
@@ -155,6 +163,7 @@
                         <div id="barChart"> 
                             <div id="showDiv"><input type="checkbox" id ="showValues"> <label for="showValues" id="sv">Show Cities</label></div>
                             <div id="showDiv2"><input type="checkbox" id ="showValues2"> <label for="showValues2" id="sv2">Show kill</label></div>
+                            <div id="showDiv3"><input type="checkbox" id ="showValues3"> <label for="showValues3" id="sv3">Show GT</label></div>
                             <div style="clear:both;"></div>
                         </div>      
                     </div>
@@ -165,7 +174,7 @@
                             <option value="Global kill trend">Kills trend</option>
                             <option value="Terroristic group target">Terroristic group target</option>
                             <option value="Terroristic group trend">Terroristic group trend</option>
-                            <option value="Killer natility">Country fatality</option>
+                            <!--<option value="Killer natility">Country fatality</option>-->
                             </select>
                         </div>
                         <div id="my_dataviz2" style="display:none; text-align: center;">
@@ -174,7 +183,7 @@
                             <option value="Global trend">Attacks trend</option>
                             <option value="Global kill trend">Kills trend</option>
                             <option value="Terroristic group trend">Terroristic group trend</option>
-                            <option value="Killer natility">Country fatality</option>
+                             <!--<option value="Killer natility">Country fatality</option>-->
                         </select>
                         </div>
                         <div id="my_dataviz3" style="display:none; text-align: center;">
@@ -183,7 +192,7 @@
                             <option value="Terroristic group target">Terroristic group target</option>
                             <option value="Global trend">Attacks trend</option>
                             <option value="Global kill trend">Kills trend</option>
-                            <option value="Killer natility">Country fatality</option>
+                            <!--<option value="Killer natility">Country fatality</option>-->
                         </select>
                         </div>
                         <div id="my_dataviz4" style="display:none; text-align: center;">
@@ -192,10 +201,10 @@
                             <option value="Terroristic group trend">Terroristic group trend</option>
                             <option value="Terroristic group target">Terroristic group target</option>
                             <option value="Global trend">Attacks trend</option>
-                            <option value="Killer natility">Country fatality</option>
+                        <!--<option value="Killer natility">Country fatality</option>-->
                         </select>
                         </div>
-                        <div id="my_datavizz" style="display:none; text-align: center;">
+                        <!--<div id="my_datavizz" style="display:none; text-align: center;">
                             <select name="select6" class="form-select bg-dark text-white selct2">
                                 <option value="Killer natility">Country fatality</option>
                                 <option value="Global kill trend">Kills trend</option>
@@ -203,7 +212,7 @@
                                 <option value="Terroristic group target">Terroristic group target</option>
                                 <option value="Global trend">Attacks trend</option>
                         </select>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="flex-item col-md-4" style="">
                         <div id="scatter_area">
@@ -287,6 +296,6 @@
     <script src="./js/groupChart.js"></script>
     <script src="./js/groupline.js"></script>
     <script src="./js/groupkill.js"></script>
-    <script src="./js/natility.js"></script>
+   <!--<script src="./js/natility.js"></script>
 
 </body>

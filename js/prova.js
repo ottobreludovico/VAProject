@@ -1,6 +1,6 @@
 var cambio2=false;
 var max;
-
+var data;
 
 // append the svg object to the body of the page
 var svgP = d3.select("#my_dataviz")
@@ -72,22 +72,239 @@ manager.addListener('dataReady', function (e) {
 
 });
 
-function divideData(data){
-  d={}
-  for (i = 0; i < data.length; i++) {
-    place = data[i].place;
-    if(d[place]==undefined){
-      d[place]=[data[i]]
-    }else{
-      d[place].push(data[i])
+function divideData2(data){
+  console.log("divide");
+  if(NAT1==true && NAT2==true){
+    console.log("nn");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      place = data[i].place;
+      if(d[place]==undefined){
+        d[place]=[data[i]]
+      }else{
+        d[place].push(data[i])
+      }
     }
+    
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
+  }else if(NAT1==true && REG2==true){
+    console.log("nr");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(data[i].place==manager.place){
+        place = data[i].place;
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(diz[data[i].place][0]==manager.reg2){
+        place = diz[data[i].place][0];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }
+        
+    }
+    
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
+  }else if(NAT1==true && CON2==true){
+    console.log("nc");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(data[i].place==manager.place){
+        place = data[i].place;
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(diz[data[i].place][1]==manager.con2){
+        place = diz[data[i].place][1];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }
+        
+    }
+    
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
+  }else if(REG1==true && NAT2==true){
+    console.log("rn");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(diz[data[i].place][0]==manager.reg1){
+        place = diz[data[i].place][0];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(data[i].place==manager.secondPlace){
+        place = data[i].place;
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }
+        
+    }
+    
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+    console.log(datas);
+  
+    return datas;
+  }else if(REG1==true && REG2==true){
+    console.log("rr");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(diz[data[i].place][0]==manager.reg1){
+        place = diz[data[i].place][0];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(diz[data[i].place][0]==manager.reg2){
+        place = diz[data[i].place][0];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }       
+    }
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
+  }else if(REG1==true && CON2==true){
+    console.log("rc");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(diz[data[i].place][0]==manager.reg1){
+        place = diz[data[i].place][0];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(diz[data[i].place][1]==manager.con2){
+        place = diz[data[i].place][1];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }     
+    }
+    
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
+  }else if(CON1==true && NAT2==true){
+    console.log("cn");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(diz[data[i].place][1]==manager.con1){
+        place = diz[data[i].place][1];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(data[i].place==manager.secondPlace){
+        place = data[i].place;
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }
+       
+    }
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
+  }else if(CON1==true && REG2==true){
+    console.log("cr");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(diz[data[i].place][1]==manager.con1){
+        place = diz[data[i].place][1];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(diz[data[i].place][0]==manager.reg2){
+        place = diz[data[i].place][0];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }
+        
+    }
+    
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
+  }else if(CON1==true && CON2==true){
+    console.log("cc");
+    d={}
+    for (i = 0; i < data.length; i++) {
+      if(diz[data[i].place][1]==manager.con1){
+        place = diz[data[i].place][1];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }if(diz[data[i].place][1]==manager.con2){
+        place = diz[data[i].place][1];
+        if(d[place]==undefined){
+          d[place]=[data[i]]
+        }else{
+          d[place].push(data[i])
+        }
+      }      
+    }
+    
+    var datas = Object.keys(d).map(function (key) {
+      return [key, d[key]];
+    });
+  
+    return datas;
   }
   
-  var datas = Object.keys(d).map(function (place) {
-    return [place, d[place]];
-  });
-
-  return datas;
 }
 
 
@@ -119,6 +336,14 @@ function prova_getDataP(){
     return manager.getDataByPlace();
 }
 
+function prova_getDataR(){
+  return manager.getDataByRegion();
+}
+
+function prova_getDataC(){
+  return manager.getDataByContinent();
+}
+
 manager.addListener('placeChanged', function (e) {
   svgP.selectAll("*").remove();
   updateProva();
@@ -131,19 +356,32 @@ manager.addListener('yearChanged', function (e) {
 
 function updateProva(){
   var m=false;
-  if(manager.place==undefined){
+  if(manager.place!=undefined && (CON1==true || CON2==true)){
     data = prova_getData();
+    m=true;
+    console.log("1");
+  }
+  else if(manager.place!=undefined && (REG2==true || REG1==true) && !(CON1 || CON2)){
+    data = prova_getData();
+    m=true;
+    console.log("2");
+  }
+  else if(manager.place==undefined){
+    data = prova_getData();
+    console.log("3");
   }else{
     data = prova_getDataP();
+    console.log("4");
     m=true;
   }
-  var ll=divideData(data);
+  var ll=divideData2(data);
+  console.log(ll);
   if(ll.length==2){
     data=[];
     data=ll[0][1];
     data2=ll[1][1]
 
-    if(data[0].place==manager.place){
+    if((data[0].place==manager.place && NAT1) || (diz[data[0].place][0]==manager.reg1 && REG1) || (diz[data[0].place][1]==manager.con1 && CON1)){
       var fqcs2 = computeFrequency2(data);
       var fqcs3 = computeFrequency2(data2);
     }else{

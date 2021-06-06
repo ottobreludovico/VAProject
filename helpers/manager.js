@@ -10,12 +10,18 @@ Manager = function () {
     this.dataplaceludo=[];
     this.dataScattered = [];
     this.dataplace=[];
+    this.dataRegion=[];
+    this.dataContinent=[];
     this.dataGroupYear=[];
     this.dataGroup=[];
     this.groupsNames=[];
     this.places=[];
     this.group=undefined;
     this.place= undefined;
+    this.reg1=undefined;
+    this.reg2=undefined;
+    this.con1=undefined;
+    this.con2=undefined;
     this.year=2017;
     this.filteredByParallel = undefined;
     this.listenersContainer = new EventTarget();
@@ -42,6 +48,7 @@ Manager.prototype.loadData = function () {
         _obj.placesNames = unique(places);
         _obj.groupsNames = unique(groups);
         _obj.data = currData;
+        _obj.dataRegion = currData;
         _obj.dataOriginal = data;
         _obj.dataYear = currData;
         _obj.dataMap = currData;
@@ -124,9 +131,18 @@ Manager.prototype.getDataFilteredByG = function () {
     return this.dataGroupYear;
 }
 
+Manager.prototype.getDataByRegion = function () {
+    return this.dataRegion;
+}
+
 Manager.prototype.getDataFilteredByGG = function () {
     return this.dataGroup;
 }
+
+Manager.prototype.getDataByContinent = function () {
+    return this.dataContinent;
+}
+
 
 Manager.prototype.getDataFilteredByPlace = function () {
     return this.dataplace;
@@ -147,7 +163,6 @@ Manager.prototype.triggerLudo = function () {
 
 
 Manager.prototype.triggerGroupFilterEvent = function (selectedGroup) {
-    console.log(selectedGroup);
     if(selectedGroup!="Tutti" && selectedGroup!="" && selectedGroup!=null){
         this.group=selectedGroup;
         this.dataGroupYear = [];
@@ -183,23 +198,76 @@ Manager.prototype.triggerGroupFilterEvent = function (selectedGroup) {
 }
 
 Manager.prototype.triggerYearFilterEvent = function (selectedYear) {
+    (manager.place);
     this.year=selectedYear;
     this.dataYear = [];
     this.dataMap = [];
     this.dataplace=[];
+    this.dataContinent=[];
+    this.dataRegion=[];
     this.groupsNames=["Tutti"];
     if (this.place != undefined){
         for (i = 0; i < this.dataOriginal.length; i++) {
             d = this.dataOriginal[i];
             foundYear = d.iyear
-            foundplace = d.place    
-            if (selectedYear == foundYear && (foundplace == this.place || foundplace == this.secondPlace)){
-                this.dataYear.push(d);
-                this.dataplace.push(d);
-                this.groupsNames.push(d.gname);
+            foundplace = d.place   
+            if(this.con1==diz[foundplace][1] && selectedYear == foundYear){
+                this.dataContinent.push(d);
             }
-            if (selectedYear == foundYear)
+            if(diz[foundplace][0]==d.region_txt && selectedYear == foundYear){
+                this.dataRegion.push(d);
+            } 
+            if (selectedYear == foundYear ){
+                if(NAT1 && NAT2 && (foundplace == this.place || foundplace == this.secondPlace)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(NAT1 && REG2 && (foundplace == this.place || diz[foundplace][0] == this.reg2)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(NAT1 && CON2 && (foundplace == this.place || diz[foundplace][1] == this.con2)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(REG1 && NAT2 && (diz[foundplace][0] == this.reg1 || foundplace == this.secondPlace)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(REG1 && REG2 && (diz[foundplace][0] == this.reg1 || diz[foundplace][0] == this.reg2)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(REG1 && CON2 && (diz[foundplace][0] == this.reg1 || diz[foundplace][1] == this.con2)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(CON1 && NAT2 && (diz[foundplace][1] == this.con1 || foundplace == this.secondPlace)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(CON1 && REG2 && (diz[foundplace][1] == this.con1 || diz[foundplace][0] == this.reg2)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                if(CON1 && CON2 && (diz[foundplace][1] == this.con1 || diz[foundplace][1] == this.con2)){
+                    this.dataYear.push(d);
+                    this.dataplace.push(d);
+                    this.groupsNames.push(d.gname);
+                }
+                
+            }
+            if (selectedYear == foundYear){
                 this.dataMap.push(d);
+            }        
         }
     }
     else{
@@ -232,17 +300,34 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
         this.parallelFiltering = false;
         if (this.compareMode == false){
             this.place = selectedPlace;
+            this.con1=diz[selectedPlace][1];
+            this.reg1=diz[selectedPlace][0];
             n1.innerHTML = this.place;
             r1.innerHTML = diz[this.place][0];
             c1.innerHTML = diz[this.place][1];
-            sel1.value = "nation1";
+            if(sel1.value=="region1"){
+                sel1.value = "region1";
+            }else if(sel1.value=="continent1"){
+                sel1.value = "continent1";
+            }else{
+                sel1.value = "nation1";
+            }
+            this.dataContinent =[];
             this.dataplace =[];
+            this.dataRegion =[];
             this.dataMap = [];
             this.dataplaceludo =[];
             for (i = 0; i < this.dataOriginal.length; i++) {
                 d = this.dataOriginal[i];
-                foundplace = d.place
-                foundYear = d.iyear
+                foundplace = d.place;
+                foundYear = d.iyear;
+                foundRegion = d.region_txt;
+                if(this.con1==diz[foundplace][1] && selectedYear == foundYear){
+                    this.dataContinent.push(d);
+                }
+                if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                    this.dataRegion.push(d);
+                }
                 if (selectedPlace == foundplace){
                     this.dataplaceludo.push(d);
                 }
@@ -252,23 +337,44 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                 else if (selectedYear == foundYear)
                     this.dataMap.push(d);
             }
+            svgBar.selectAll("*").remove();
+            if(this.group!=undefined){
+                gg=true;
+            }
+            updateChart();
             this._updateDataFromPlace();
             this.notifyPlaceChanged();
         }
         else{
             if (this.place == undefined){
                 this.place = selectedPlace;
+                this.con1=diz[selectedPlace][1];
+                this.reg1=diz[selectedPlace][0];
                 n1.innerHTML = this.place;
-                sel1.value = "nation1";
                 r1.innerHTML = diz[this.place][0];
                 c1.innerHTML = diz[this.place][1];
+                if(sel1.value=="region1"){
+                    sel1.value = "region1";
+                }else if(sel1.value=="continent1"){
+                    sel1.value = "continent1";
+                }else{
+                    sel1.value = "nation1";
+                }
+                this.dataContinent =[];
                 this.dataplace =[];
+                this.dataRegion = [];
                 this.dataMap = [];
                 this.dataplaceludo =[];
                 for (i = 0; i < this.dataOriginal.length; i++) {
                     d = this.dataOriginal[i];
                     foundplace = d.place
                     foundYear = d.iyear
+                    if(this.con1==diz[foundplace][1] && selectedYear == foundYear){
+                        this.dataContinent.push(d);
+                    }
+                    if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear){
+                        this.dataRegion.push(d);
+                    }
                     if (selectedPlace == foundplace){
                         this.dataplaceludo.push(d);
                     }
@@ -278,21 +384,40 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                     else if (selectedYear == foundYear)
                         this.dataMap.push(d);
                 }
+                svgBar.selectAll("*").remove();
+                if(this.group!=undefined){
+                    gg=true;
+                }
+                updateChart();
                 this._updateDataFromPlace();
                 this.notifyPlaceChanged();
             }
             else if (this.secondPlace == undefined){
                 this.secondPlace = selectedPlace;
+                this.con2=diz[selectedPlace][1];
+                this.reg2=diz[selectedPlace][0];
                 //place2Div.innerHTML = this.secondPlace;
                 n2.innerHTML = this.secondPlace;
-                sel2.value = "nation2";
                 r2.innerHTML = diz[this.secondPlace][0];
                 c2.innerHTML = diz[this.secondPlace][1];
+                if(sel2.value=="region2"){
+                    sel2.value = "region2";
+                }else if(sel2.value=="continent2"){
+                    sel2.value = "continent2";
+                }else{
+                    sel2.value = "nation2";
+                }
                 this.dataMap = [];
                 for (i = 0; i < this.dataOriginal.length; i++) {
                     d = this.dataOriginal[i];
                     foundplace = d.place
                     foundYear = d.iyear
+                    if(this.con2==diz[foundplace][1] && selectedYear == foundYear && this.con1!=this.con2){
+                        this.dataContinent.push(d);
+                    }
+                    if(diz[selectedPlace][0]==d.region_txt && selectedYear == foundYear && this.reg1!=this.reg2){
+                        this.dataRegion.push(d);
+                    }
                     if (selectedPlace == foundplace){
                         this.dataplaceludo.push(d);
                     }
@@ -302,11 +427,38 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                     else if (selectedYear == foundYear && foundplace != this.place)
                         this.dataMap.push(d);
                 }
+                svgBar.selectAll("*").remove();
+                if(this.group!=undefined){
+                    gg=true;
+                }
+                updateChart();
                 this._updateDataFromPlace();
                 this.notifyPlaceChanged();
             }
             else{
                 this.dataMap = []
+                var c=false;
+                var r=false;
+                if(diz[selectedPlace][1]!=diz[this.secondPlace][1] && diz[selectedPlace][1]!=diz[this.place][1]){
+                    c=true;
+                }
+                if(diz[selectedPlace][0]!=diz[this.secondPlace][0] && diz[selectedPlace][0]!=diz[this.place][0]){
+                    r=true;
+                }
+                if(diz[this.secondPlace][1]!=diz[this.place][1] && c==true){
+                    for (var i = this.dataContinent.length - 1; i >= 0; i-- ){
+                        if(diz[this.dataContinent[i].place][1]==diz[this.secondPlace][1]){
+                            this.dataContinent.splice(i,1);
+                        }
+                    }
+                }
+                if(diz[this.secondPlace][0]!=diz[this.place][0] && r==true){
+                    for (var i = this.dataRegion.length - 1; i >= 0; i-- ){
+                        if(diz[this.dataRegion[i].place][0]==diz[this.secondPlace][0]){
+                            this.dataRegion.splice(i,1);
+                        }
+                    }
+                }
                 for (var i = this.dataplace.length - 1; i >= 0; i-- ){
                     if (this.dataplace[i].place == this.secondPlace) {
                         this.dataplace.splice(i,1);
@@ -319,15 +471,32 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                 }
                 this.secondPlace = selectedPlace;
                 n2.innerHTML = this.secondPlace;
-                sel2.value = "nation2";
                 r2.innerHTML = diz[this.secondPlace][0];
                 c2.innerHTML = diz[this.secondPlace][1];
+                if(sel2.value=="region2"){
+                    sel2.value = "region2";
+                }else if(sel2.value=="continent2"){
+                    sel2.value = "continent2";
+                }else{
+                    sel2.value = "nation2";
+                }
+                this.con2=diz[selectedPlace][1];
+                this.reg2=diz[selectedPlace][0];
                 //place2Div.innerHTML = this.secondPlace;
                 for (i = 0; i < this.dataOriginal.length; i++) {
                     d = this.dataOriginal[i];
                     foundplace = d.place
                     foundYear = d.iyear
-
+                    if(c==true){
+                        if(diz[this.secondPlace][1]==diz[foundplace][1] && selectedYear == foundYear){
+                            this.dataContinent.push(d);
+                        }  
+                    }
+                    if(r==true){
+                        if(diz[this.secondPlace][0]==d.region_txt && selectedYear == foundYear){
+                            this.dataRegion.push(d);
+                        }
+                    }       
                     if (selectedPlace == foundplace){
                         this.dataplaceludo.push(d); //compare mode
                     }
@@ -337,6 +506,12 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                     else if (selectedYear == foundYear && foundplace != this.place)
                         this.dataMap.push(d);
                 }
+                (this.dataContinent);
+                svgBar.selectAll("*").remove();
+                if(this.group!=undefined){
+                    gg=true;
+                }
+                updateChart();
                 this._updateDataFromPlace();
                 this.notifyPlaceChanged();
             }
@@ -392,7 +567,7 @@ Manager.prototype._updateGroupsNames = function () {
     var a=unique(this.groupsNames);
     this.groupNames=a;
     Vue.set(vm, 'reasons', a);
-    Vue.set(vm, 'selected', vm.selected);
+   // Vue.set(vm, 'selectedludo', vm.selectedludo);
     this.notifyGroupsNames();
 }
 
@@ -401,10 +576,18 @@ Manager.prototype._updateDataFromPlace = function () {
     this.data = [];
     this.filteredByParallel = [];
     this.groupsNames=["Tutti"];
-    for (i = 0; i < this.dataplace.length; i++) {
-        this.data.push(this.dataplace[i]);
-        this.groupsNames.push(this.dataplace[i].gname);
-        this.dataScattered.push(this.dataplace[i]);
+    var x;
+    if(CON1 || CON2){
+        x=this.dataContinent;
+    }else if(REG1 || REG2){
+        x=this.dataRegion;
+    }else{
+        x=this.dataplace;
+    }
+    for (i = 0; i < x.length; i++) {
+        this.data.push(x[i]);
+        this.groupsNames.push(x[i].gname);
+        this.dataScattered.push(x[i]);
     }
     for (i = 0; i < this.data.length; i++) {
         this.filteredByParallel.push(this.data[i]);
@@ -433,7 +616,6 @@ Manager.prototype._updateDataFromGroupYear = function () {
         for (i = 0; i < this.data.length; i++) {
             this.filteredByParallel.push(this.data[i]);
         }
-        console.log(this.filteredByParallel);
     }
     
 }
