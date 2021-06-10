@@ -639,7 +639,7 @@ function updatePoint2(){
         return ccolor(d);
       }else{
         if(manager.place==undefined){
-          return "#743dcc";
+          return "#574cc2";
         }
         return "#b3b1b1"
         }
@@ -871,7 +871,7 @@ function strokeScatter(d){
           if(d.place == manager.secondPlace) return "#22ff00";
           else return "#b3b1b1";
         }else{
-          return "#b3b1b1";
+          return "#22ff00";
         }  
       }else if(NAT1==true && REG2==true){
         if(d.place == manager.place) return "#22ff00";
@@ -913,7 +913,7 @@ function strokeScatter(d){
           if(d.place == manager.secondPlace) return ccolor(d);
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
       }else if(NAT1==true && REG2==true){
         if(d.place == manager.place) return ccolor(d);
@@ -1232,7 +1232,7 @@ function ccolor(d){
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
   }else if(REG1==true && REG2==true){
     if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -1259,7 +1259,7 @@ function ccolor(d){
         else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#00c29e";
         else return "#b3b1b1";
         }else{
-        return "#743dcc";
+        return "#574cc2";
         }
   }else if(REG1==true && CON2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -1286,7 +1286,7 @@ function ccolor(d){
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && diz[d.place][0]!=diz[manager.place][0]) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
   }else if(NAT1==true && NAT2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -1313,7 +1313,7 @@ function ccolor(d){
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
   }else if(NAT1==true && REG2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -1340,7 +1340,7 @@ function ccolor(d){
           else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.place!=manager.place) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
   }else if(NAT1==true && CON2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -1367,7 +1367,7 @@ function ccolor(d){
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.place!=manager.place) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
   }else if(CON1==true && NAT2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -1394,7 +1394,7 @@ function ccolor(d){
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
   }else if(CON1==true && REG2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
@@ -1421,7 +1421,7 @@ function ccolor(d){
           else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
       
   }else if(CON1==true && CON2==true){
@@ -1449,7 +1449,7 @@ function ccolor(d){
           else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#00c29e";
           else return "#b3b1b1";
         }else{
-          return "#743dcc";
+          return "#574cc2";
         }
   }
 }
@@ -1501,6 +1501,49 @@ function mOver(dd,c){
        tip.hide();
     });
 }
+
+function mOverG(dd){
+  console.log(dd);
+  d3.selectAll(".circleMap")
+    .transition()
+    .duration(130)
+    .style("opacity",function(d){
+      if(d.targtype1_txt!=dd[0]){
+        return 0;
+      }
+    })
+    .style("fill", function(d){return ccolor(d)})
+    .style("stroke", function(d){return ccolor(d)})
+    .on("mouseover", function(d, i) {
+      tip.show(d);
+    })
+    .on("mouseout", function(d, i) {
+       tip.hide();
+    });
+}
+
+
+function mOverGR(dd){
+  console.log(dd);
+  d3.selectAll(".circleMap")
+    .transition()
+    .duration(130)
+    .style("opacity",function(d){
+      if(d.gname!=dd[0]){
+        return 0;
+      }
+    })
+    .style("fill", function(d){return ccolor(d)})
+    .style("stroke", function(d){return ccolor(d)})
+    .on("mouseover", function(d, i) {
+      tip.show(d);
+    })
+    .on("mouseout", function(d, i) {
+       tip.hide();
+    });
+}
+
+
 
 function mOut(dd){
   d3.selectAll(".circleMap")

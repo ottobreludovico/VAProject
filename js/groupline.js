@@ -50,8 +50,8 @@ manager.addListener('dataReady', function (e) {
       .attr("y2", yL(maxxx))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "blue"},
-          {offset: "100%", color: "red"}
+          {offset: "0%", color: "#ff0000"},
+          {offset: "100%", color: "#ff0000"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
@@ -149,8 +149,8 @@ function updateLine(){
         .attr("y2", yL(maxxx))
         .selectAll("stop")
           .data([
-            {offset: "0%", color: "blue"},
-            {offset: "100%", color: "red"}
+            {offset: "0%", color: "#ff0000"},
+            {offset: "100%", color: "#ff0000"}
           ])
         .enter().append("stop")
           .attr("offset", function(d) { return d.offset; })

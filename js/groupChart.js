@@ -82,6 +82,14 @@ function start2(){
     .attr("width", function(d) { return x(d[1]); })
     .attr("height", y.bandwidth() )
     .attr("fill", "#B80F0A")
+    .on('mouseenter', function (actual, i) {
+        d3.select(this).attr('opacity', 0.5);
+        mOverG(actual);
+    })
+    .on('mouseleave', function (actual, i) {
+        d3.select(this).attr('opacity', 1);
+        mOut(actual);
+    });
 
 
     // .attr("x", function(d) { return x(d.Country); })
@@ -135,6 +143,30 @@ function computeFrequencyG(data){
 }
 
 function computeFrequencyAux(data){
+    if(manager.place==undefined){
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+            if(data[i].gname==manager.group){
+                if (frequency[target] != undefined){
+                     frequency[target] += 1;  
+                }
+                else{
+                    frequency[target] = 1;
+                }
+            }
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+    }
     if(NAT1==true && NAT2==true){
         var frequency = {};
         var items=[];
@@ -443,6 +475,30 @@ function computeFrequencyAux(data){
 }
 
 function computeFrequencyAux2(data){
+    if(manager.place==undefined){
+        var frequency = {};
+        var items=[];
+        for (i = 0; i < data.length; i++) {
+            target = data[i].targtype1_txt;
+            
+            if (frequency[target] != undefined){
+                frequency[target] += 1;  
+            }
+            else{
+                frequency[target] = 1;
+            }
+           
+        }
+        items = Object.keys(frequency).map(function (target) {
+            return [target, frequency[target]];
+        });
+    
+        items.sort(function(a, b) {
+            return (a[1] < b[1]) ? 1 : -1;;
+        });
+    
+        return items;
+    }
     if(NAT1==true && NAT2==true){
         var frequency = {};
         var items=[];

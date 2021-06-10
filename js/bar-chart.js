@@ -73,10 +73,11 @@ manager.addListener('dataReady', function (e) {
     .attr("width", xBar.bandwidth)
     .attr("y", function(fcy) { return yBar(fcy[1]); })
     .attr("height", function(fcy) { return heightBar - yBar(fcy[1]); })
-    .attr("fill", "#743dcc")
+    .attr("fill", "#574cc2")
     .attr("margin-left", "1px").attr("selected",false)
     .on("click", function(d,i){
         manager.triggerPlaceFilterEvent(d[0],manager.year);
+        updateColor();
     })
     .on('mouseenter', function (actual, i) {
         d3.select(this).attr('opacity', 0.5);
@@ -4143,9 +4144,15 @@ function updateChart(){
                     .on("click", function(d,i){})
                     .on('mouseenter', function (actual, i) {
                         d3.select(this).attr('opacity', 0.5);
+                        if(R){
+                            mOver(actual,true);
+                        }
                     })
                     .on('mouseleave', function (actual, i) {
                         d3.select(this).attr('opacity', 1);
+                        if(R){
+                            mOut();
+                        }
                     });
             });
         });
@@ -4239,7 +4246,7 @@ function updateChart(){
         .attr("height", function(fcy) { return heightBar - yBar(fcy[1][0]); })
         .attr("fill", function(d){
             if(tutte){
-                return "#743dcc";
+                return "#574cc2";
             }else if(manager.place==undefined){
                 if(manager.group!=undefined){
                     return "#ff0000";
@@ -4247,39 +4254,39 @@ function updateChart(){
             }else if(NAT1==true && NAT2==true){
                 if(d[1][1] == manager.place) return "#ffdd03";
                 else if(d[1][1] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(NAT1==true && REG2==true){
                 if(d[1][1] == manager.place) return "#ffdd03";
                 else if(diz[d[1][1]][0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(NAT1==true && CON2==true){
                 if(d[1][1] == manager.place) return "#ffdd03";
                 else if(diz[d[1][1]][1] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && NAT2==true){
                 if(diz[d[1][1]][0] == manager.reg1) return "#ffdd03";
                 else if(d[1][1] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && REG2==true){
                 if(diz[d[1][1]][0] == manager.reg1) return "#ffdd03";
                 else if(diz[d[1][1]][0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && CON2==true){
                 if(diz[d[1][1]][0] == manager.reg1) return "#ffdd03";
                 else if(diz[d[1][1]][1] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && NAT2==true){
                 if(diz[d[1][1]][1] == manager.con1) return "#ffdd03";
                 else if(d[1][1] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && REG2==true){
                 if(diz[d[1][1]][1] == manager.con1) return "#ffdd03";
                 else if(diz[d[1][1]][0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && CON2==true){
                 if(diz[d[1][1]][1] == manager.con1) return "#ffdd03";
                 else if(diz[d[1][1]][1] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
             }
         })
         .attr("margin-left", "1px").attr("selected",false)
@@ -4330,7 +4337,7 @@ function updateChart(){
                 if(manager.group!=undefined){
                     return "#ff0000";
                 }
-                return "#743dcc";
+                return "#574cc2";
             }else if(manager.place==undefined){
                 if(manager.group!=undefined){
                     return "#ff0000";
@@ -4338,48 +4345,54 @@ function updateChart(){
             }else if(NAT1==true && NAT2==true){
                 if(d[0] == manager.place) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(NAT1==true && REG2==true){
                 if(d[0] == manager.place) return "#ffdd03";
                 else if(d[0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(NAT1==true && CON2==true){
                 if(d[0] == manager.place) return "#ffdd03";
                 else if(d[0] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && NAT2==true){
                 if(d[0] == manager.reg1) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && REG2==true){
                 if(d[0] == manager.reg1) return "#ffdd03";
                 else if(d[0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && CON2==true){
                 if(d[0] == manager.reg1) return "#ffdd03";
                 else if(d[0] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && NAT2==true){
                 if(d[0] == manager.con1) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && REG2==true){
                 if(d[0] == manager.con1) return "#ffdd03";
                 else if(d[0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && CON2==true){
                 if(d[0] == manager.con1) return "#ffdd03";
                 else if(d[0] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
             }
         })
         .attr("margin-left", "1px").attr("selected",false)
         .on("click", function(d,i){})
         .on('mouseenter', function (actual, i) {
             d3.select(this).attr('opacity', 0.5);
+            if(manager.group!=undefined && manager.place==undefined){
+                mOver(actual,false);
+            }
         })
         .on('mouseleave', function (actual, i) {
             d3.select(this).attr('opacity', 1);
+            if(manager.group!=undefined && manager.place==undefined){
+                mOut();
+            }
         });
     
         rectBar
@@ -4581,10 +4594,12 @@ function GT(){
        sv3.innerHTML="Show GT";
    })
    .on('mouseenter', function (actual, i) {
-       d3.select(this).attr('opacity', 0.5)
+       d3.select(this).attr('opacity', 0.5);
+       mOverGR(actual);
    })
    .on('mouseleave', function (actual, i) {
-       d3.select(this).attr('opacity', 1)
+       d3.select(this).attr('opacity', 1);
+       mOut();
    });
 
    rectBar
@@ -5043,16 +5058,6 @@ function mostraPop(){
     .attr("height", function(fcy) { return heightBar - yBar(fcy[1]); })
     .attr("fill", "#95AEC9")
     .attr("margin-left", "1px").attr("selected",false)
-    .on("click", function(d,i){
-        vm.$children[0].onChange(d[0])
-        sv3.innerHTML="Show GT";
-    })
-    .on('mouseenter', function (actual, i) {
-        d3.select(this).attr('opacity', 0.5)
-    })
-    .on('mouseleave', function (actual, i) {
-        d3.select(this).attr('opacity', 1)
-    });
  
     rectBar
         .append("text")

@@ -4111,50 +4111,50 @@ rosso #ff0000
 celeste #00eaff
 arancio #ffa600
 ultimo #8800ff
-viola #743dcc*/
+viola #574cc2*/
 
 
 
 d[1][2]
 
 if(tutte){
-                return "#743dcc";
+                return "#574cc2";
             }else if(NAT1==true && NAT2==true){
                 if(d[0] == manager.place) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(NAT1==true && REG2==true){
                 if(d[0] == manager.place) return "#ffdd03";
                 else if(diz[d[0]][0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(NAT1==true && CON2==true){
                 if(d[0] == manager.place) return "#ffdd03";
                 else if(diz[d[0]][1] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && NAT2==true){
                 if(diz[d[0]][0] == manager.reg1) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && REG2==true){
                 if(diz[d[0]][0] == manager.reg1) return "#ffdd03";
                 else if(diz[d[0]][0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(REG1==true && CON2==true){
                 if(diz[d[0]][0] == manager.reg1) return "#ffdd03";
                 else if(diz[d[0]][1] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && NAT2==true){
                 if(diz[d[0]][1] == manager.con1) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && REG2==true){
                 if(diz[d[0]][1] == manager.con1) return "#ffdd03";
                 else if(diz[d[0]][0] == manager.reg2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
              }else if(CON1==true && CON2==true){
                 if(diz[d[0]][1] == manager.con1) return "#ffdd03";
                 else if(diz[d[0]][1] == manager.con2) return "#00ffd0";
-                else return "#743dcc";
+                else return "#574cc2";
             }
 
 

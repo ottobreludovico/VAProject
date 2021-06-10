@@ -51,8 +51,8 @@ manager.addListener('dataReady', function (e) {
       .attr("y2", y(max))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "#743dcc"},
-          {offset: "100%", color: "#743dcc"}
+          {offset: "0%", color: "#574cc2"},
+          {offset: "100%", color: "#574cc2"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
@@ -542,8 +542,8 @@ function updateProva(){
       .attr("y2", y(max))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "#743dcc"},
-          {offset: "100%", color: "#743dcc"}
+          {offset: "0%", color: "#574cc2"},
+          {offset: "100%", color: "#574cc2"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
