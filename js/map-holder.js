@@ -675,21 +675,21 @@ function updatePoint2(){
 		.attr("r", 3).attr("stroke-width", 6)
 		.style("fill", function(d){
 			if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#ffff00";}
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffdd03";}
         else if (d.place == manager.place && d.gname!=manager.group) {return "#ff0000";}
         else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#ff0000";}
         else if (d.place == manager.secondPlace && d.gname==manager.group) return "#00c29e";
         else return "#b3b1b1";
       }
       else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
-        if (d.place == manager.place && d.gname==manager.group) {return "#ffff00";}
+        if (d.place == manager.place && d.gname==manager.group) {return "#ffdd03";}
         else if (d.place == manager.place && d.gname!=manager.group) {return "#ff0000";}
         else return "#b3b1b1";
       }else if(manager.group!=undefined && manager.place==undefined){
         if (d.gname == manager.group) {return "#ff0000";}
         else return "#b3b1b1";
       }else if(manager.group==undefined && manager.place!=undefined){
-        if (d.place == manager.place) {return "#ffff00";}
+        if (d.place == manager.place) {return "#ffdd03";}
         else if (d.place == manager.secondPlace) return "#00c29e";
         else return "#b3b1b1";
       }else{
@@ -1210,25 +1210,25 @@ function ccolor(d){
     if(REG1==true && NAT2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffff00";}
+          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffdd03";}
           else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#00c29e";}
           else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (diz[d.place][0] == diz[manager.place][0] && d.place!=manager.secondPlace) {return "#ffff00";}
+          if (diz[d.place][0] == diz[manager.place][0] && d.place!=manager.secondPlace) {return "#ffdd03";}
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffff00";}
+          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (diz[d.place][0] == diz[manager.place][0] && d.place!=manager.secondPlace) {return "#ffff00";}
+          if (diz[d.place][0] == diz[manager.place][0] && d.place!=manager.secondPlace) {return "#ffdd03";}
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }else{
@@ -1237,25 +1237,25 @@ function ccolor(d){
   }else if(REG1==true && REG2==true){
     if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
         if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ff0000";}
-        else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffff00";}
+        else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffdd03";}
         else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#00c29e";}
         else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#ff0000";
         else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-        if (diz[d.place][0] == diz[manager.place][0]) {return "#ffff00";}
+        if (diz[d.place][0] == diz[manager.place][0]) {return "#ffdd03";}
         else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#00c29e";
         else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
         if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ff0000";}
-        else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffff00";}
+        else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffdd03";}
         else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
         if (d.gname == manager.group) {return "#ff0000";}
         else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-        if (diz[d.place][0] == diz[manager.place][0]) {return "#ffff00";}
+        if (diz[d.place][0] == diz[manager.place][0]) {return "#ffdd03";}
         else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#00c29e";
         else return "#b3b1b1";
         }else{
@@ -1264,25 +1264,25 @@ function ccolor(d){
   }else if(REG1==true && CON2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffff00";}
+          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group && diz[d.place][0]!=diz[manager.place][0]) {return "#00c29e";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (diz[d.place][0] == diz[manager.place][0]) {return "#ffff00";}
+          if (diz[d.place][0] == diz[manager.place][0]) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && diz[d.place][0]!=diz[manager.place][0]) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (diz[d.place][0] == diz[manager.place][0] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffff00";}
+          else if (diz[d.place][0] == diz[manager.place][0] && d.gname!=manager.group) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (diz[d.place][0] == diz[manager.place][0]) {return "#ffff00";}
+          if (diz[d.place][0] == diz[manager.place][0]) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && diz[d.place][0]!=diz[manager.place][0]) return "#00c29e";
           else return "#b3b1b1";
         }else{
@@ -1291,25 +1291,25 @@ function ccolor(d){
   }else if(NAT1==true && NAT2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (d.place == manager.place && d.gname==manager.group) {return "#ff0000";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffff00";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffdd03";}
           else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#00c29e";}
           else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place) {return "#ffff00";}
+          if (d.place == manager.place) {return "#ffdd03";}
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (d.place == manager.place && d.gname==manager.group) {return "#ff0000";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffff00";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (d.place == manager.place) {return "#ffff00";}
+          if (d.place == manager.place) {return "#ffdd03";}
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }else{
@@ -1318,25 +1318,25 @@ function ccolor(d){
   }else if(NAT1==true && REG2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (d.place == manager.place && d.gname==manager.group) {return "#ff0000";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffff00";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffdd03";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group && d.place!=manager.place) {return "#00c29e";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place) {return "#ffff00";}
+          if (d.place == manager.place) {return "#ffdd03";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.place!=manager.place) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (d.place == manager.place && d.gname==manager.group) {return "#ff0000";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffff00";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (d.place == manager.place) {return "#ffff00";}
+          if (d.place == manager.place) {return "#ffdd03";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.place!=manager.place) return "#00c29e";
           else return "#b3b1b1";
         }else{
@@ -1345,25 +1345,25 @@ function ccolor(d){
   }else if(NAT1==true && CON2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (d.place == manager.place && d.gname==manager.group) {return "#ff0000";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffff00";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group && d.place!=manager.place) {return "#00c29e";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (d.place == manager.place) {return "#ffff00";}
+          if (d.place == manager.place) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.place!=manager.place) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (d.place == manager.place && d.gname==manager.group) {return "#ff0000";}
-          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffff00";}
+          else if (d.place == manager.place && d.gname!=manager.group) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (d.place == manager.place) {return "#ffff00";}
+          if (d.place == manager.place) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.place!=manager.place) return "#00c29e";
           else return "#b3b1b1";
         }else{
@@ -1372,25 +1372,25 @@ function ccolor(d){
   }else if(CON1==true && NAT2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffff00";}
+          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffdd03";}
           else if (d.place == manager.secondPlace && d.gname!=manager.group) {return "#00c29e";}
           else if (d.place == manager.secondPlace && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (diz[d.place][1] == diz[manager.place][1] && d.place!=manager.secondPlace) {return "#ffff00";}
+          if (diz[d.place][1] == diz[manager.place][1] && d.place!=manager.secondPlace) {return "#ffdd03";}
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffff00";}
+          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && d.place!=manager.secondPlace) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (diz[d.place][1] == diz[manager.place][1] && d.place!=manager.secondPlace) {return "#ffff00";}
+          if (diz[d.place][1] == diz[manager.place][1] && d.place!=manager.secondPlace) {return "#ffdd03";}
           else if (d.place == manager.secondPlace) return "#00c29e";
           else return "#b3b1b1";
         }else{
@@ -1399,25 +1399,25 @@ function ccolor(d){
   }else if(CON1==true && REG2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && diz[d.place][0]!=manager.reg2) {return "#ffff00";}
+          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && diz[d.place][0]!=manager.reg2) {return "#ffdd03";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname!=manager.group) {return "#00c29e";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0] && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (diz[d.place][1] == diz[manager.place][1] && diz[d.place][0]!=manager.reg2) {return "#ffff00";}
+          if (diz[d.place][1] == diz[manager.place][1] && diz[d.place][0]!=manager.reg2) {return "#ffdd03";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group ) {return "#ff0000";}
-          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && diz[d.place][0]!=manager.reg2) {return "#ffff00";}
+          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group && diz[d.place][0]!=manager.reg2) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (diz[d.place][1] == diz[manager.place][1] && diz[d.place][0]!=manager.reg2) {return "#ffff00";}
+          if (diz[d.place][1] == diz[manager.place][1] && diz[d.place][0]!=manager.reg2) {return "#ffdd03";}
           else if (diz[d.place][0] == diz[manager.secondPlace][0]) return "#00c29e";
           else return "#b3b1b1";
         }else{
@@ -1427,25 +1427,25 @@ function ccolor(d){
   }else if(CON1==true && CON2==true){
       if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace!=undefined){
           if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffff00";}
+          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname!=manager.group) {return "#00c29e";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1] && d.gname==manager.group) return "#ff0000";
           else return "#b3b1b1";
         }
         else if(manager.group==undefined && manager.place!=undefined && manager.secondPlace!=undefined){
-          if (diz[d.place][1] == diz[manager.place][1]) {return "#ffff00";}
+          if (diz[d.place][1] == diz[manager.place][1]) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#00c29e";
           else return "#b3b1b1";
         }
         else if(manager.group!=undefined && manager.place!=undefined && manager.secondPlace==undefined){
           if (diz[d.place][1] == diz[manager.place][1] && d.gname==manager.group) {return "#ff0000";}
-          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffff00";}
+          else if (diz[d.place][1] == diz[manager.place][1] && d.gname!=manager.group) {return "#ffdd03";}
           else return "#b3b1b1";
         }else if(manager.group!=undefined && manager.place==undefined){
           if (d.gname == manager.group) {return "#ff0000";}
           else return "#b3b1b1";
         }else if(manager.group==undefined && manager.place!=undefined){
-          if (diz[d.place][1] == diz[manager.place][1]) {return "#ffff00";}
+          if (diz[d.place][1] == diz[manager.place][1]) {return "#ffdd03";}
           else if (diz[d.place][1] == diz[manager.secondPlace][1]) return "#00c29e";
           else return "#b3b1b1";
         }else{

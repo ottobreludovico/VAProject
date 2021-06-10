@@ -1603,14 +1603,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.reg1){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }
                         sum+=1;          
                     }else{
                         if(country==manager.reg1){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }
@@ -1631,14 +1631,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }
                         sum+=1;          
                     }else{
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         } 
@@ -1684,14 +1684,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.reg1){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         } 
                         sum+=1;        
                     }else{
                         if(country==manager.reg1){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         } 
@@ -1712,14 +1712,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.reg2){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }
                         sum+=1;        
                     }else{
                         if(country!=manager.reg2){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -1765,14 +1765,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.reg1){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=1;      
                     }else{
                         if(country==manager.reg1){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         } 
@@ -1792,14 +1792,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.con2){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }   
                         sum+=1;     
                     }else{
                         if(country!=manager.con2){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -1846,14 +1846,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.place){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }   
                         sum+=1;     
                     }else{
                         if(country==manager.place){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         } 
@@ -1874,14 +1874,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }        
                         sum+=1;
                     }else{
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }    
@@ -1927,14 +1927,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.place){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=1;      
                     }else{
                         if(country==manager.place){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }    
@@ -1955,14 +1955,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.reg2){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=1;      
                     }else{
                         if(country!=manager.reg2){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         } 
@@ -2009,14 +2009,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.place){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         } 
                         sum+=1;       
                     }else{
                         if(country==manager.place){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -2036,14 +2036,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.con2){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=1;      
                     }else{
                         if(country!=manager.con2){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -2089,14 +2089,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.con1){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }
                         sum+=1;        
                     }else{
                         if(country==manager.con1){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }   
@@ -2116,14 +2116,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }
                         sum+=1;        
                     }else{
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -2169,14 +2169,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.con1){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=1;      
                     }else{
                         if(country==manager.con1){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }   
@@ -2196,14 +2196,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.reg2){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         } 
                         sum+=1;       
                     }else{
                         if(country!=manager.reg2){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -2249,14 +2249,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.con1){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=1;      
                     }else{
                         if(country==manager.con1){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -2277,14 +2277,14 @@ function cf(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.con2){
-                            frequency[country] = [[1,"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[1,"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[1,"#ff0000"],[0,"#00ffd0"]];
                         } 
                         sum+=1;       
                     }else{
                         if(country!=manager.con2){
-                            frequency[country] = [[0,"#ff0000"],[1,"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[1,"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[1,"#00ffd0"]];
                         }  
@@ -2332,13 +2332,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2382,13 +2382,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2432,13 +2432,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2482,13 +2482,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2533,13 +2533,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place==manager.place){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place==manager.place){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2583,13 +2583,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place==manager.place){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place==manager.place){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2632,13 +2632,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place==manager.place){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place==manager.place){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2682,13 +2682,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2732,13 +2732,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][0]!=manager.reg2){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][0]!=manager.reg2){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2781,13 +2781,13 @@ function cfR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][1]==manager.con1){
-                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][1]==manager.con1){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
                     }        
@@ -2836,14 +2836,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.reg1){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         } 
                         sum+=parseInt(data[i].nkill);     
                     }else{
                         if(country==manager.reg1){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }
@@ -2863,14 +2863,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }
                         sum+=parseInt(data[i].nkill);        
                     }else{
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }
@@ -2916,14 +2916,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.reg1){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }   
                         sum+=parseInt(data[i].nkill);     
                     }else{
                         if(country==manager.reg1){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }    
@@ -2943,14 +2943,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.reg2){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }    
                         sum+=parseInt(data[i].nkill);    
                     }else{
                         if(country!=manager.reg2){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -2996,14 +2996,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.reg1){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         } 
                         sum+=parseInt(data[i].nkill);       
                     }else{
                         if(country==manager.reg1){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3023,14 +3023,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.con2){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }   
                         sum+=parseInt(data[i].nkill);     
                     }else{
                         if(country!=manager.con2){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3077,14 +3077,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.place){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }   
                         sum+=parseInt(data[i].nkill);     
                     }else{
                         if(country==manager.place){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3104,14 +3104,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=parseInt(data[i].nkill);      
                     }else{
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }   
@@ -3158,14 +3158,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.place){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }   
                         sum+=parseInt(data[i].nkill);     
                     }else{
                         if(country==manager.place){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3185,14 +3185,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.reg2){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }       
                         sum+=parseInt(data[i].nkill); 
                     }else{
                         if(country!=manager.reg2){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }       
@@ -3238,14 +3238,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.place){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }     
                         sum+=parseInt(data[i].nkill);   
                     }else{
                         if(country==manager.place){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }   
@@ -3265,14 +3265,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.con2){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }  
                         sum+=parseInt(data[i].nkill);      
                     }else{
                         if(country!=manager.con2){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3318,14 +3318,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.con1){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }   
                         sum+=parseInt(data[i].nkill);     
                     }else{
                         if(country==manager.con1){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3345,14 +3345,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }      
                         sum+=parseInt(data[i].nkill);  
                     }else{
                         if(country!=manager.secondPlace){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }    
@@ -3399,14 +3399,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.con1){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }    
                         sum+=parseInt(data[i].nkill);    
                     }else{
                         if(country==manager.con1){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3427,14 +3427,14 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.reg2){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }     
                         sum+=parseInt(data[i].nkill);   
                     }else{
                         if(country!=manager.reg2){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }  
@@ -3480,7 +3480,7 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country==manager.con1){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }    
@@ -3489,7 +3489,7 @@ function cfF(data){
                         if(country==manager.con2){
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }else{   
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }   
                         sum+=parseInt(data[i].nkill);     
                     }   
@@ -3507,7 +3507,7 @@ function cfF(data){
                 else{
                     if(data[i].gname==manager.group){
                         if(country!=manager.con2){
-                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffff00"]];
+                            frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#ffdd03"]];
                         }else{
                             frequency[country] = [[parseInt(data[i].nkill),"#ff0000"],[0,"#00ffd0"]];
                         }      
@@ -3516,7 +3516,7 @@ function cfF(data){
                         if(country==manager.con2){
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
                         }else{
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffdd03"]];
                         }  
                         sum+=parseInt(data[i].nkill);      
                     }   
@@ -3562,13 +3562,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3612,13 +3612,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3661,13 +3661,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3710,13 +3710,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][0]==manager.reg1){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3760,13 +3760,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place==manager.place){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place==manager.place){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3809,13 +3809,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place==manager.place){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place==manager.place){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3858,13 +3858,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place==manager.place){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place==manager.place){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3907,13 +3907,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(data[i].place!=manager.secondPlace){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -3956,13 +3956,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][0]!=manager.reg2){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][0]!=manager.reg2){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -4005,13 +4005,13 @@ function cfFR(data){
             else{
                 if(data[i].gname==manager.group){
                     if(diz[data[i].place][1]==manager.con1){
-                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
                     }        
                 }else{
                     if(diz[data[i].place][1]==manager.con1){
-                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffdd03",data[i].place]];
                     }else{
                         frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
                     }        
@@ -4245,39 +4245,39 @@ function updateChart(){
                     return "#ff0000";
                 }
             }else if(NAT1==true && NAT2==true){
-                if(d[1][1] == manager.place) return "#ffff00";
+                if(d[1][1] == manager.place) return "#ffdd03";
                 else if(d[1][1] == manager.secondPlace) return "#00ffd0";
                 else return "#743dcc";
              }else if(NAT1==true && REG2==true){
-                if(d[1][1] == manager.place) return "#ffff00";
+                if(d[1][1] == manager.place) return "#ffdd03";
                 else if(diz[d[1][1]][0] == manager.reg2) return "#00ffd0";
                 else return "#743dcc";
              }else if(NAT1==true && CON2==true){
-                if(d[1][1] == manager.place) return "#ffff00";
+                if(d[1][1] == manager.place) return "#ffdd03";
                 else if(diz[d[1][1]][1] == manager.con2) return "#00ffd0";
                 else return "#743dcc";
              }else if(REG1==true && NAT2==true){
-                if(diz[d[1][1]][0] == manager.reg1) return "#ffff00";
+                if(diz[d[1][1]][0] == manager.reg1) return "#ffdd03";
                 else if(d[1][1] == manager.secondPlace) return "#00ffd0";
                 else return "#743dcc";
              }else if(REG1==true && REG2==true){
-                if(diz[d[1][1]][0] == manager.reg1) return "#ffff00";
+                if(diz[d[1][1]][0] == manager.reg1) return "#ffdd03";
                 else if(diz[d[1][1]][0] == manager.reg2) return "#00ffd0";
                 else return "#743dcc";
              }else if(REG1==true && CON2==true){
-                if(diz[d[1][1]][0] == manager.reg1) return "#ffff00";
+                if(diz[d[1][1]][0] == manager.reg1) return "#ffdd03";
                 else if(diz[d[1][1]][1] == manager.con2) return "#00ffd0";
                 else return "#743dcc";
              }else if(CON1==true && NAT2==true){
-                if(diz[d[1][1]][1] == manager.con1) return "#ffff00";
+                if(diz[d[1][1]][1] == manager.con1) return "#ffdd03";
                 else if(d[1][1] == manager.secondPlace) return "#00ffd0";
                 else return "#743dcc";
              }else if(CON1==true && REG2==true){
-                if(diz[d[1][1]][1] == manager.con1) return "#ffff00";
+                if(diz[d[1][1]][1] == manager.con1) return "#ffdd03";
                 else if(diz[d[1][1]][0] == manager.reg2) return "#00ffd0";
                 else return "#743dcc";
              }else if(CON1==true && CON2==true){
-                if(diz[d[1][1]][1] == manager.con1) return "#ffff00";
+                if(diz[d[1][1]][1] == manager.con1) return "#ffdd03";
                 else if(diz[d[1][1]][1] == manager.con2) return "#00ffd0";
                 else return "#743dcc";
             }
@@ -4336,39 +4336,39 @@ function updateChart(){
                     return "#ff0000";
                 }
             }else if(NAT1==true && NAT2==true){
-                if(d[0] == manager.place) return "#ffff00";
+                if(d[0] == manager.place) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
                 else return "#743dcc";
              }else if(NAT1==true && REG2==true){
-                if(d[0] == manager.place) return "#ffff00";
+                if(d[0] == manager.place) return "#ffdd03";
                 else if(d[0] == manager.reg2) return "#00ffd0";
                 else return "#743dcc";
              }else if(NAT1==true && CON2==true){
-                if(d[0] == manager.place) return "#ffff00";
+                if(d[0] == manager.place) return "#ffdd03";
                 else if(d[0] == manager.con2) return "#00ffd0";
                 else return "#743dcc";
              }else if(REG1==true && NAT2==true){
-                if(d[0] == manager.reg1) return "#ffff00";
+                if(d[0] == manager.reg1) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
                 else return "#743dcc";
              }else if(REG1==true && REG2==true){
-                if(d[0] == manager.reg1) return "#ffff00";
+                if(d[0] == manager.reg1) return "#ffdd03";
                 else if(d[0] == manager.reg2) return "#00ffd0";
                 else return "#743dcc";
              }else if(REG1==true && CON2==true){
-                if(d[0] == manager.reg1) return "#ffff00";
+                if(d[0] == manager.reg1) return "#ffdd03";
                 else if(d[0] == manager.con2) return "#00ffd0";
                 else return "#743dcc";
              }else if(CON1==true && NAT2==true){
-                if(d[0] == manager.con1) return "#ffff00";
+                if(d[0] == manager.con1) return "#ffdd03";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
                 else return "#743dcc";
              }else if(CON1==true && REG2==true){
-                if(d[0] == manager.con1) return "#ffff00";
+                if(d[0] == manager.con1) return "#ffdd03";
                 else if(d[0] == manager.reg2) return "#00ffd0";
                 else return "#743dcc";
              }else if(CON1==true && CON2==true){
-                if(d[0] == manager.con1) return "#ffff00";
+                if(d[0] == manager.con1) return "#ffdd03";
                 else if(d[0] == manager.con2) return "#00ffd0";
                 else return "#743dcc";
             }

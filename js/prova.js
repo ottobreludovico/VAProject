@@ -434,8 +434,8 @@ function updateProva(){
     .attr("y2", y(max))
     .selectAll("stop")
       .data([
-        {offset: "0%", color: "#ffff00"},
-        {offset: "100%", color: "#ffff00"}
+        {offset: "0%", color: "#ffdd03"},
+        {offset: "100%", color: "#ffdd03"}
       ])
     .enter().append("stop")
       .attr("offset", function(d) { return d.offset; })
@@ -526,8 +526,8 @@ function updateProva(){
       .attr("y2", y(max))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "#ffff00"},
-          {offset: "100%", color: "#ffff00"}
+          {offset: "0%", color: "#ffdd03"},
+          {offset: "100%", color: "#ffdd03"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })

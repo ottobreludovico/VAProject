@@ -206,8 +206,8 @@ function updateK(){
     .attr("y2", y(maxK))
     .selectAll("stop")
       .data([
-        {offset: "0%", color: "#ffff00"},
-        {offset: "100%", color: "#ffff00"}
+        {offset: "0%", color: "#ffdd03"},
+        {offset: "100%", color: "#ffdd03"}
       ])
     .enter().append("stop")
       .attr("offset", function(d) { return d.offset; })
@@ -299,8 +299,8 @@ function updateK(){
       .attr("y2", y(maxK))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "#ffff00"},
-          {offset: "100%", color: "#ffff00"}
+          {offset: "0%", color: "#ffdd03"},
+          {offset: "100%", color: "#ffdd03"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
