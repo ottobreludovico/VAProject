@@ -1476,3 +1476,45 @@ function setOpacity(s){
   })
 }
 
+function mOver(dd,c){
+  console.log(dd);
+  d3.selectAll(".circleMap")
+    .transition()
+    .duration(130)
+    .style("opacity",function(d){
+      if(c){
+        if(d.provstate!=dd[0]){
+          return 0;
+        }
+      }else{
+        if(d.place!=dd[0]){
+          return 0;
+        }
+      }  
+    })
+    .style("fill", function(d){return ccolor(d)})
+    .style("stroke", function(d){return ccolor(d)})
+    .on("mouseover", function(d, i) {
+      tip.show(d);
+    })
+    .on("mouseout", function(d, i) {
+       tip.hide();
+    });
+}
+
+function mOut(dd){
+  d3.selectAll(".circleMap")
+    .transition()
+    .duration(130)
+    .style("opacity",function(d){
+      return opacityScatter(d);
+    })
+    .style("fill", function(d){return ccolor(d)})
+    .style("stroke", function(d){return ccolor(d)})
+    .on("mouseover", function(d, i) {
+      tip.show(d);
+    })
+    .on("mouseout", function(d, i) {
+       tip.hide();
+    });
+}

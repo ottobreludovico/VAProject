@@ -539,9 +539,9 @@ function upPa(){
         places = [];
         data.forEach(element => {
           if (!places.includes(element[j])) {
-            if(element["place"]==manager.place || diz[element["place"]][1]==manager.con2){
-              places.push(element[j])
-            }
+            //if(element["place"]==manager.place || diz[element["place"]][1]==manager.con2){
+              places.push(element[j]);
+            //}
           }
         });
         places.sort();
@@ -739,9 +739,9 @@ function upPa(){
         places = [];
         data.forEach(element => {
           if (!places.includes(element[j])) {
-            if(diz[element["place"]][0]==manager.reg1 || diz[element["place"]][1]==manager.con2){
-              places.push(element[j])
-            }
+            //if(diz[element["place"]][0]==manager.reg1 || diz[element["place"]][1]==manager.con2){
+              places.push(element[j]);
+            //}
           }
         });
         places.sort();
@@ -807,9 +807,9 @@ function upPa(){
         places = [];
         data.forEach(element => {
           if (!places.includes(element[j])) {
-            if(element["place"]==manager.secondPlace || diz[element["place"]][1]==manager.con1){
-              places.push(element[j])
-            }
+            //if(element["place"]==manager.secondPlace || diz[element["place"]][1]==manager.con1){
+              places.push(element[j]);
+            //}
           }
         });
         places.sort();
@@ -875,9 +875,9 @@ function upPa(){
         places = [];
         data.forEach(element => {
           if (!places.includes(element[j])) {
-            if(diz[element["place"]][0]==manager.reg2 || diz[element["place"]][1]==manager.con1){
-              places.push(element[j])
-            }
+            //if(diz[element["place"]][0]==manager.reg2 || diz[element["place"]][1]==manager.con1){
+              places.push(element[j]);
+            //}
           }
         });
         places.sort();
@@ -943,9 +943,9 @@ function upPa(){
         places = [];
         data.forEach(element => {
           if (!places.includes(element[j])) {
-            if(diz[element["place"]][1]==manager.con1 || diz[element["place"]][1]==manager.con2){
+           // if(diz[element["place"]][1]==manager.con1 || diz[element["place"]][1]==manager.con2){
               places.push(element[j])
-            }
+            //}
           }
         });
         places.sort();
@@ -1034,7 +1034,9 @@ function upPa(){
     .style("stroke-width", 1.0)
     .style("display",function(d){
       if(manager.group==undefined){
-        if(NAT1==true && NAT2==true){
+        if(manager.place==undefined){
+          return null;
+        }else if(NAT1==true && NAT2==true){
           if(d.place == manager.place) {return null;}
           else if(d.place == manager.secondPlace) {return null;}
           else return "none";
@@ -1072,7 +1074,10 @@ function upPa(){
           else return "none";
         }
       }else{
-        if(NAT1==true && NAT2==true){
+        if(manager.place==undefined){
+          return null;
+        }
+        else if(NAT1==true && NAT2==true){
           if(d.gname == manager.group){return null;}
           else if(d.place == manager.place) {return null;}
           else if(d.place == manager.secondPlace) {return null;}
@@ -1176,7 +1181,7 @@ manager.addListener('scatterplotBrushing', function (e) {
 manager.addListener('yearChanged', function (e) {
 	//cambio=false;
   svgParallel.selectAll("*").remove();
-	start();
+  upPa();
 });
 
 manager.addListener('groupChanged', function (e) {

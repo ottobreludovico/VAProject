@@ -51,8 +51,8 @@ manager.addListener('dataReady', function (e) {
       .attr("y2", y(maxK))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "blue"},
-          {offset: "100%", color: "red"}
+          {offset: "0%", color: "#743dcc"},
+          {offset: "100%", color: "#743dcc"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
@@ -206,8 +206,8 @@ function updateK(){
     .attr("y2", y(maxK))
     .selectAll("stop")
       .data([
-        {offset: "0%", color: "yellow"},
-        {offset: "100%", color: "red"}
+        {offset: "0%", color: "#ffff00"},
+        {offset: "100%", color: "#ffff00"}
       ])
     .enter().append("stop")
       .attr("offset", function(d) { return d.offset; })
@@ -222,8 +222,8 @@ function updateK(){
       .attr("y2", y(maxK))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "darkviolet"},
-          {offset: "100%", color: "violet"}
+          {offset: "0%", color: "#00c29e"},
+          {offset: "100%", color: "#00c29e"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
@@ -256,6 +256,12 @@ function updateK(){
 
 
   }else{
+    if(manager.place!=undefined){
+      data=ll[0][1];
+    }else if(manager.place==undefined){
+      m=false;
+    }
+    console.log(m);
     var fqcsK2 = computeFrequencyK2(data);
 
    var x = d3.scalePoint()
@@ -280,9 +286,10 @@ function updateK(){
       .range([ heightP, 0 ]);
     svgK.append("g")
       .call(d3.axisLeft(y));
-    
+
     // Set the gradient
-    if(m){
+    if(m==true){
+
       svgK.append("linearGradient")
       .attr("id", "line-gradientK")
       .attr("gradientUnits", "userSpaceOnUse")
@@ -292,13 +299,13 @@ function updateK(){
       .attr("y2", y(maxK))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "yellow"},
-          {offset: "100%", color: "red"}
+          {offset: "0%", color: "#ffff00"},
+          {offset: "100%", color: "#ffff00"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
         .attr("stop-color", function(d) { return d.color; });
-    }else{
+    }if(m==false){
       svgK.append("linearGradient")
       .attr("id", "line-gradientK")
       .attr("gradientUnits", "userSpaceOnUse")
@@ -308,8 +315,8 @@ function updateK(){
       .attr("y2", y(maxK))
       .selectAll("stop")
         .data([
-          {offset: "0%", color: "blue"},
-          {offset: "100%", color: "red"}
+          {offset: "0%", color: "#743dcc"},
+          {offset: "100%", color: "#743dcc"}
         ])
       .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })

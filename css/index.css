@@ -540,6 +540,20 @@ body {
   color: #e8eddf
 }
 
+.selctP {
+  margin-left: 10px;
+  margin-top: 10px;
+  display: inline-block;
+  width: 40%;
+  height: 30px;
+  font-size: 10px;
+  border: 2px solid #2e4352; 
+  border-radius: 25px;
+  background-color: #2e4352;
+  color: #e8eddf
+}
+
+
 .selct3 {
   display: inline-block;
   width: 35%;

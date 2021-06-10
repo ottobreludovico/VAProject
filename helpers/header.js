@@ -185,7 +185,13 @@ nrc.addEventListener('input', function () {
         manager._updateDataFromPlace();
         svg3.selectAll("*").remove();
         start2();
-        updateChart();
+        if(ratepop.value=="nuova"){
+            mostraPop();
+            ratepop.value="nuova";
+        }else{
+            updateChart();
+            ratepop.value="normale";
+        } 
         updateParallel2();
         updateProva();
         updateK();
@@ -201,7 +207,13 @@ nrc.addEventListener('input', function () {
         manager._updateDataFromPlace();
         svg3.selectAll("*").remove();
         start2();
-        updateChart();
+        if(ratepop.value=="nuova"){
+            mostraPop();
+            ratepop.value="nuova";
+        }else{
+            updateChart();
+            ratepop.value="normale";
+        } 
         updateParallel2();
         updateProva();
         updateK();
@@ -216,7 +228,13 @@ nrc.addEventListener('input', function () {
         manager._updateDataFromPlace();
         svg3.selectAll("*").remove();
         start2();
-        updateChart();
+        if(ratepop.value=="nuova"){
+            mostraPop();
+            ratepop.value="nuova";
+        }else{
+            updateChart();
+            ratepop.value="normale";
+        } 
         updateParallel2();
         updateProva();
         updateK();
@@ -237,7 +255,13 @@ nrc1.addEventListener('input', function () {
         manager._updateDataFromPlace();
         svg3.selectAll("*").remove();
         start2();
-        updateChart();
+        if(ratepop.value=="nuova"){
+            mostraPop();
+            ratepop.value="nuova";
+        }else{
+            updateChart();
+            ratepop.value="normale";
+        } 
         updateParallel2();
         updateProva();
         updateK();
@@ -253,7 +277,13 @@ nrc1.addEventListener('input', function () {
         manager._updateDataFromPlace();
         svg3.selectAll("*").remove();
         start2();
-        updateChart();
+        if(ratepop.value=="nuova"){
+            mostraPop();
+            ratepop.value="nuova";
+        }else{
+            updateChart();
+            ratepop.value="normale";
+        } 
         updateParallel2();
         updateProva();
         updateK();
@@ -268,7 +298,13 @@ nrc1.addEventListener('input', function () {
         manager._updateDataFromPlace();
         svg3.selectAll("*").remove();
         start2();
-        updateChart();
+        if(ratepop.value=="nuova"){
+            mostraPop();
+            ratepop.value="nuova";
+        }else{
+            updateChart();
+            ratepop.value="normale";
+        } 
         updateParallel2();
         updateProva();
         updateK();

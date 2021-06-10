@@ -2,11 +2,11 @@ var x_Scatter = d3.scaleLinear().range([0, widthScatter]),
     y_Scatter = d3.scaleLinear().range([heightScatter, 0])
 
     var color = {
-        "Asia":    "#fd1cec",
-        "Africa":    "#1df1fe",
-        "America":    "#ffffff",
-        "Oceania":  "#004bff",  
-        "Europe":  "#ffa900",
+        "Asia":    "#ffb997",
+        "Africa":    "#f67e7d",
+        "America":    "#843b62",
+        "Oceania":  "#621940",
+        "Europe":  "#0b032d",
     };
 
 var xAxis = d3.axisBottom(x_Scatter);
@@ -98,7 +98,7 @@ manager.addListener('dataReady', function (e) {
         .call(brushTot);    
 
     var legend = svgScatter.selectAll(".legend")
-            .data(["Oceania", "Africa",  "Asia", "Europe", "America"])
+            .data(["Asia", "Africa",  "America", "Oceania", "Europa"])
         .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function(d, i) { 
@@ -236,10 +236,12 @@ manager.addListener('yearChanged', function (e) {
     updateScatter();
 });
 
+/*
 manager.addListener('placeChanged', function (e) {
     cond=true;
     updateScatter();
 });
+*/
 
 manager.addListener('parallelBrushing', function (e) {
     if (manager.filteringByYear)

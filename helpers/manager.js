@@ -6,6 +6,8 @@ Manager = function () {
     this.dataOriginal = [];
     this.dataYear = [];
     this.data = [];
+    this.mrate={};
+    this.pop={};
     this.dataMap = [];
     this.dataplaceludo=[];
     this.dataScattered = [];
@@ -55,6 +57,22 @@ Manager.prototype.loadData = function () {
         _obj.dataLoaded = true;
         _obj.listenersContainer.dispatchEvent(new Event('dataReady'))
     })
+    d3.csv("./Dataset/mrate.csv", function (data) {
+        rate={}
+        data.forEach(d => {
+            rate[d["place"]]= d[_obj.year];
+        });
+        _obj.mrate = rate;
+    })
+    d3.csv("./Dataset/pop.csv", function (data) {
+        popo=[]
+        data.forEach(d => {
+            popo[d["place"]]= d[_obj.year];
+        });
+        _obj.pop = popo;
+        console.log(_obj.pop);
+    })
+    
 }
 
 Manager.prototype.addListener = function (nameEvent, functionz) {
@@ -81,6 +99,13 @@ Manager.prototype.notifyYearChanged = function () {
 
 Manager.prototype.notifyPlaceChanged = function () {
     this.listenersContainer.dispatchEvent(new Event('placeChanged'));
+    if(ratepop.value=="nuova"){
+        mostraPop();
+        ratepop.value="nuova";
+    }else{
+        updateChart();
+        ratepop.value="normale";
+    } 
 }
 
 Manager.prototype.notifyGroupChanged = function () {
@@ -121,6 +146,14 @@ Manager.prototype.getDataFilteredByScatter = function () {
 
 Manager.prototype.getDataOriginal = function () {
     return this.dataOriginal;
+}
+
+Manager.prototype.getDataPop = function () {
+    return this.pop;
+}
+
+Manager.prototype.getDataRate = function () {
+    return this.mRate;
 }
 
 Manager.prototype.getDataFilteredByYear = function () {
@@ -198,7 +231,6 @@ Manager.prototype.triggerGroupFilterEvent = function (selectedGroup) {
 }
 
 Manager.prototype.triggerYearFilterEvent = function (selectedYear) {
-    (manager.place);
     this.year=selectedYear;
     this.dataYear = [];
     this.dataMap = [];
@@ -211,10 +243,10 @@ Manager.prototype.triggerYearFilterEvent = function (selectedYear) {
             d = this.dataOriginal[i];
             foundYear = d.iyear
             foundplace = d.place   
-            if(this.con1==diz[foundplace][1] && selectedYear == foundYear){
+            if((this.con1==diz[foundplace][1] || this.con2==diz[foundplace][1]) && selectedYear == foundYear){
                 this.dataContinent.push(d);
             }
-            if(diz[foundplace][0]==d.region_txt && selectedYear == foundYear){
+            if((diz[foundplace][0]==this.reg1|| diz[foundplace][0]==this.reg2 )&& selectedYear == foundYear){
                 this.dataRegion.push(d);
             } 
             if (selectedYear == foundYear ){
@@ -282,6 +314,20 @@ Manager.prototype.triggerYearFilterEvent = function (selectedYear) {
                 this.dataMap.push(d);
         }
     }
+    d3.csv("./Dataset/mrate.csv", function (data) {
+        rate={}
+        data.forEach(d => {
+            rate[d["place"]]= d[selectedYear];
+        });
+        _obj.mrate = rate;
+    })
+    d3.csv("./Dataset/pop.csv", function (data) {
+        popo=[]
+        data.forEach(d => {
+            popo[d["place"]]= d[selectedYear];
+        });
+        _obj.pop = popo;
+    })
     this._updateGroupsNames();
     this._updateDataFromYear();
     this.notifyYearChanged();
@@ -341,7 +387,6 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
             if(this.group!=undefined){
                 gg=true;
             }
-            updateChart();
             this._updateDataFromPlace();
             this.notifyPlaceChanged();
         }
@@ -388,7 +433,7 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                 if(this.group!=undefined){
                     gg=true;
                 }
-                updateChart();
+       
                 this._updateDataFromPlace();
                 this.notifyPlaceChanged();
             }
@@ -431,7 +476,6 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                 if(this.group!=undefined){
                     gg=true;
                 }
-                updateChart();
                 this._updateDataFromPlace();
                 this.notifyPlaceChanged();
             }
@@ -439,22 +483,22 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                 this.dataMap = []
                 var c=false;
                 var r=false;
-                if(diz[selectedPlace][1]!=diz[this.secondPlace][1] && diz[selectedPlace][1]!=diz[this.place][1]){
+                if(diz[selectedPlace][1]!=diz[this.place][1]){
                     c=true;
                 }
-                if(diz[selectedPlace][0]!=diz[this.secondPlace][0] && diz[selectedPlace][0]!=diz[this.place][0]){
+                if(diz[selectedPlace][0]!=diz[this.place][0]){
                     r=true;
                 }
-                if(diz[this.secondPlace][1]!=diz[this.place][1] && c==true){
+                if(c==true){
                     for (var i = this.dataContinent.length - 1; i >= 0; i-- ){
-                        if(diz[this.dataContinent[i].place][1]==diz[this.secondPlace][1]){
+                        if(diz[this.dataContinent[i].place][1]==diz[selectedPlace][1]){
                             this.dataContinent.splice(i,1);
                         }
                     }
                 }
-                if(diz[this.secondPlace][0]!=diz[this.place][0] && r==true){
+                if(r==true){
                     for (var i = this.dataRegion.length - 1; i >= 0; i-- ){
-                        if(diz[this.dataRegion[i].place][0]==diz[this.secondPlace][0]){
+                        if(diz[this.dataRegion[i].place][0]==diz[selectedPlace][0]){
                             this.dataRegion.splice(i,1);
                         }
                     }
@@ -511,7 +555,6 @@ Manager.prototype.triggerPlaceFilterEvent = function (selectedPlace, selectedYea
                 if(this.group!=undefined){
                     gg=true;
                 }
-                updateChart();
                 this._updateDataFromPlace();
                 this.notifyPlaceChanged();
             }

@@ -75,12 +75,16 @@ manager.addListener('dataReady', function (e) {
     .attr("height", function(fcy) { return heightBar - yBar(fcy[1]); })
     .attr("fill", "#743dcc")
     .attr("margin-left", "1px").attr("selected",false)
-    .on("click", function(d,i){})
+    .on("click", function(d,i){
+        manager.triggerPlaceFilterEvent(d[0],manager.year);
+    })
     .on('mouseenter', function (actual, i) {
-        d3.select(this).attr('opacity', 0.5)
+        d3.select(this).attr('opacity', 0.5);
+        mOver(actual,false);
     })
     .on('mouseleave', function (actual, i) {
-        d3.select(this).attr('opacity', 1)
+        d3.select(this).attr('opacity', 1);
+        mOut(actual);
     });
 
     rectBar
@@ -93,13 +97,13 @@ manager.addListener('dataReady', function (e) {
             .attr("dy", ".35em")
             .text(function(d) { return d[1]; });
 
-    /*svgBar.append("line")
+    svgBar.append("line")
     .attr("id","limit")
     .attr("x1", xBar(1))
     .attr("x2", widthBar)
     .attr("y1", yBar(media))
     .attr("y2", yBar(media))
-    .style("stroke", "white");*/
+    .style("stroke", "white");
 }); 
 
 function computeFrequency(data){
@@ -109,6 +113,7 @@ function computeFrequency(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].region_txt==diz[manager.place][0]){
                 country = data[i].region_txt;
                 if (frequency[country] != undefined){
@@ -187,7 +192,9 @@ function computeFrequency(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].region_txt==diz[manager.place][0]){
+            
                 country = data[i].region_txt;
                 if (frequency[country] != undefined){
                     frequency[country] += 1;
@@ -266,6 +273,7 @@ function computeFrequency(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -314,6 +322,7 @@ function computeFrequency(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -358,10 +367,11 @@ function computeFrequency(data){
         var frequency = {};
         var items=[]
         sum=0;
-        x=0;
+        
         for (i = 0; i < data.length; i++) {
             if(diz[data[i].place][1]==diz[manager.place][1]){
                 country = diz[data[i].place][1];
+                x=0;
                 if (frequency[country] != undefined){
                     frequency[country] += 1;
                     sum+=1;
@@ -406,6 +416,7 @@ function computeFrequency(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==diz[manager.place][1]){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -451,6 +462,7 @@ function computeFrequency(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             country = diz[data[i].place][1];
 
             if (frequency[country] != undefined){
@@ -482,12 +494,13 @@ function computeFrequency(data){
 }
 
 function computeFrequencyR(data){
-    if(REG1==true && NAT2==true){
+    if(manager.place==undefined){
         var frequencyR = {};
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
-            prov = data[i].provstate;
+            
+                prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
                 frequencyR[prov][0] += 1;
@@ -497,6 +510,42 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+             
+        }
+
+        var items2 = Object.keys(frequencyR).map(function (prov) {
+            return [prov, frequencyR[prov]];
+        });
+
+
+        media=sum/Object.keys(frequencyR).length;
+        items2.sort(function(a, b) {
+            return (a[1][0] < b[1][0]) ? 1 : -1;;
+        });
+
+        if(items2.length>15){
+            items2.splice(15, items2.length);      
+        }
+        return items2;
+
+    }
+    else if(REG1==true && NAT2==true){
+        var frequencyR = {};
+        sum=0;
+        var items2=[];
+        for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || data[i].place==manager.secondPlace){
+                prov = data[i].provstate;
+
+            if (frequencyR[prov] != undefined){
+                frequencyR[prov][0] += 1;
+                sum+=1;
+            }
+            else{
+                frequencyR[prov] = [1,data[i].place];
+                sum+=1
+            }
+            } 
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -519,6 +568,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][0]==manager.reg2){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -529,6 +579,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -550,6 +601,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][1]==manager.con2){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -560,6 +612,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -581,6 +634,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || data[i].place==manager.secondPlace){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -591,6 +645,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -612,6 +667,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][0]==manager.reg2){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -622,6 +678,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -643,6 +700,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][1]==manager.con2){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -653,6 +711,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -674,6 +733,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || data[i].place==manager.secondPlace){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -684,6 +744,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -705,6 +766,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][0]==manager.reg2){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -715,6 +777,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -736,6 +799,7 @@ function computeFrequencyR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][1]==manager.con2){
             prov = data[i].provstate;
 
             if (frequencyR[prov] != undefined){
@@ -746,6 +810,7 @@ function computeFrequencyR(data){
                 frequencyR[prov] = [1,data[i].place];
                 sum+=1
             }
+        }
         }
 
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -772,6 +837,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -819,6 +885,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -865,6 +932,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -911,27 +979,16 @@ function computeFrequencyF(data){
         sum=0;
         x=0
         for (i = 0; i < data.length; i++) {
-            if(data[i].place==manager.place){
-                country = data[i].place;
-                if (frequency[country] != undefined){
-                    frequency[country] += parseInt(data[i].nkill);
-                    sum+=parseInt(data[i].nkill);
-                }
-                else{
-                    frequency[country] = parseInt(data[i].nkill);
-                    x+=1;
-                   
-                }
-            }if(data[i].place==manager.secondPlace){
-                country = data[i].place;
-                if (frequency[country] != undefined){
-                    frequency[country] += parseInt(data[i].nkill);
-                    sum+=parseInt(data[i].nkill);
-                }
-                else{
-                    frequency[country] = parseInt(data[i].nkill);
-                    x+=1;
-                }
+            x=0;
+            country = data[i].place;
+            if (frequency[country] != undefined){
+                frequency[country] += parseInt(data[i].nkill);
+                sum+=parseInt(data[i].nkill);
+            }
+            else{
+                frequency[country] = parseInt(data[i].nkill);
+                x+=1;
+                
             }
             if(x>=1){
                 sum+=parseInt(data[i].nkill);
@@ -958,6 +1015,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -1004,6 +1062,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -1050,6 +1109,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -1096,6 +1156,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -1142,6 +1203,7 @@ function computeFrequencyF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -1186,11 +1248,12 @@ function computeFrequencyF(data){
 }
 
 function computeFrequencyFR(data){
-    if(REG1==true && NAT2==true){
+    if(manager.place==undefined){
         var frequencyR = {};
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1201,6 +1264,40 @@ function computeFrequencyFR(data){
                 frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
                 sum+=parseInt(data[i].nkill)
             }
+        }
+    
+        var items2 = Object.keys(frequencyR).map(function (prov) {
+            return [prov, frequencyR[prov]];
+        });
+    
+    
+        media=sum/Object.keys(frequencyR).length;
+        items2.sort(function(a, b) {
+            return (a[1][0] < b[1][0]) ? 1 : -1;;
+        });
+    
+        if(items2.length>15){
+            items2.splice(15, items2.length);      
+        }
+        return items2;
+    }
+    else if(REG1==true && NAT2==true){
+        var frequencyR = {};
+        sum=0;
+        var items2=[];
+        for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || data[i].place==manager.secondPlace){
+            prov = data[i].provstate;
+    
+            if (frequencyR[prov] != undefined){
+                frequencyR[prov][0] += parseInt(data[i].nkill);
+                sum+=parseInt(data[i].nkill);
+            }
+            else{
+                frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
+                sum+=parseInt(data[i].nkill)
+            }
+        }
         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1222,6 +1319,7 @@ function computeFrequencyFR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][0]==manager.reg2){
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1232,6 +1330,7 @@ function computeFrequencyFR(data){
                 frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
                 sum+=parseInt(data[i].nkill)
             }
+        }
         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1253,6 +1352,7 @@ function computeFrequencyFR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][1]==manager.con2){
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1263,6 +1363,7 @@ function computeFrequencyFR(data){
                 frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
                 sum+=parseInt(data[i].nkill)
             }
+        }
         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1285,6 +1386,7 @@ function computeFrequencyFR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || data[i].place==manager.secondPlace){
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1295,6 +1397,7 @@ function computeFrequencyFR(data){
                 frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
                 sum+=parseInt(data[i].nkill)
             }
+        }
         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1316,6 +1419,7 @@ function computeFrequencyFR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][0]==manager.reg2){
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1327,6 +1431,7 @@ function computeFrequencyFR(data){
                 sum+=parseInt(data[i].nkill)
             }
         }
+         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
             return [prov, frequencyR[prov]];
@@ -1347,6 +1452,7 @@ function computeFrequencyFR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][1]==manager.con2){
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1357,6 +1463,7 @@ function computeFrequencyFR(data){
                 frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
                 sum+=parseInt(data[i].nkill)
             }
+        }
         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1378,6 +1485,7 @@ function computeFrequencyFR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || data[i].place==manager.secondPlace){
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1388,6 +1496,7 @@ function computeFrequencyFR(data){
                 frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
                 sum+=parseInt(data[i].nkill)
             }
+        }
         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1409,6 +1518,7 @@ function computeFrequencyFR(data){
     sum=0;
     var items2=[];
     for (i = 0; i < data.length; i++) {
+        if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][0]==manager.reg2){
         prov = data[i].provstate;
 
         if (frequencyR[prov] != undefined){
@@ -1419,6 +1529,7 @@ function computeFrequencyFR(data){
             frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
             sum+=parseInt(data[i].nkill)
         }
+    }
     }
 
     var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1440,6 +1551,7 @@ function computeFrequencyFR(data){
         sum=0;
         var items2=[];
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][1]==manager.con2){
             prov = data[i].provstate;
     
             if (frequencyR[prov] != undefined){
@@ -1450,6 +1562,7 @@ function computeFrequencyFR(data){
                 frequencyR[prov] = [parseInt(data[i].nkill),data[i].place];
                 sum+=parseInt(data[i].nkill)
             }
+        }
         }
     
         var items2 = Object.keys(frequencyR).map(function (prov) {
@@ -1476,6 +1589,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -1556,6 +1670,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -1636,6 +1751,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -1716,6 +1832,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -1796,6 +1913,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -1877,6 +1995,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -1956,6 +2075,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -2035,6 +2155,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -2114,6 +2235,7 @@ function cf(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -2192,11 +2314,12 @@ function cf(data){
 }
 
 function cfR(data){   
-    if(REG1==true && NAT2==true){
+    if(manager.place==undefined){
         var frequency = {};
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2240,11 +2363,63 @@ function cfR(data){
         }
 
         return items;
+    }
+    else if(REG1==true && NAT2==true){
+        var frequency = {};
+        var items=[]
+        sum=0;
+        for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || data[i].place==manager.secondPlace){
+            country = data[i].provstate;
+            if (frequency[country] != undefined){
+                if(data[i].gname==manager.group){
+                    frequency[country][0][0] += parseInt(data[i].nkill);
+                }else{
+                    frequency[country][1][0] += parseInt(data[i].nkill);
+                }   
+                sum+=parseInt(data[i].nkill)
+            }
+            else{
+                if(data[i].gname==manager.group){
+                    if(data[i].place!=manager.secondPlace){
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                    }else{
+                        frequency[country] = [[parseInt(data[i].nkill),"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
+                    }        
+                }else{
+                    if(data[i].place!=manager.secondPlace){
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#ffff00",data[i].place]];
+                    }else{
+                        frequency[country] = [[0,"#ff0000",data[i].place],[parseInt(data[i].nkill),"#00ffd0",data[i].place]];
+                    }        
+                }   
+                sum+=parseInt(data[i].nkill)
+            }
+        }
+            
+        }
+    
+    
+        items = Object.keys(frequency).map(function (country) {
+            return [country, frequency[country]];
+        });
+        media=sum/Object.keys(frequency).length;
+    
+        items.sort(function(a, b) {
+            return ((a[1][0][0]+a[1][1][0]) < (b[1][0][0]+b[1][1][0])) ? 1 : -1;
+        });
+    
+        if(items.length>15){
+            items.splice(15, items.length);      
+        }
+
+        return items;
     }else if(REG1==true && REG2==true){
         var frequency = {};
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][0]==manager.reg2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2270,6 +2445,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
+        }
             
         }
     
@@ -2293,6 +2469,7 @@ function cfR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][1]==manager.con2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2318,6 +2495,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
+        }
             
         }
     
@@ -2342,6 +2520,7 @@ function cfR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || data[i].place==manager.secondPlace){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2367,6 +2546,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
+        }
             
         }
     
@@ -2390,6 +2570,7 @@ function cfR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][0]==manager.reg2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2415,7 +2596,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
-            
+        }
         }
     
     
@@ -2438,6 +2619,7 @@ function cfR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][1]==manager.con2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2463,6 +2645,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
+        }
             
         }
     
@@ -2486,6 +2669,7 @@ function cfR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || data[i].place==manager.secondPlace){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2511,6 +2695,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
+        }
             
         }
     
@@ -2534,6 +2719,7 @@ function cfR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][0]==manager.reg2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2559,7 +2745,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
-            
+        }
         }
     
     
@@ -2582,6 +2768,7 @@ function cfR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][1]==manager.con2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -2607,7 +2794,7 @@ function cfR(data){
                 }   
                 sum+=parseInt(data[i].nkill)
             }
-            
+        }
         }
     
     
@@ -2635,6 +2822,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -2714,6 +2902,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -2793,6 +2982,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][0]==manager.reg1){
                 country = diz[data[i].place][0];
                 if (frequency[country] != undefined){
@@ -2873,6 +3063,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -2953,6 +3144,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -3032,6 +3224,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(data[i].place==manager.place){
                 country = data[i].place;
                 if (frequency[country] != undefined){
@@ -3111,6 +3304,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -3191,6 +3385,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -3271,6 +3466,7 @@ function cfF(data){
         sum=0;
         x=0;
         for (i = 0; i < data.length; i++) {
+            x=0;
             if(diz[data[i].place][1]==manager.con1){
                 country = diz[data[i].place][1];
                 if (frequency[country] != undefined){
@@ -3291,9 +3487,9 @@ function cfF(data){
                         sum+=parseInt(data[i].nkill);    
                     }else{
                         if(country==manager.con2){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
-                        }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
+                        }else{   
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
                         }   
                         sum+=parseInt(data[i].nkill);     
                     }   
@@ -3318,9 +3514,9 @@ function cfF(data){
                         sum+=parseInt(data[i].nkill);  
                     }else{
                         if(country==manager.con2){
-                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
-                        }else{
                             frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#00ffd0"]];
+                        }else{
+                            frequency[country] = [[0,"#ff0000"],[parseInt(data[i].nkill),"#ffff00"]];
                         }  
                         sum+=parseInt(data[i].nkill);      
                     }   
@@ -3349,7 +3545,7 @@ function cfF(data){
 }
 
 function cfFR(data){
-    if(REG1==true && NAT2==true){
+    if(manager.place==undefined){
         var frequency = {};
         var items=[]
         sum=0;
@@ -3379,6 +3575,57 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        
+        }
+    
+    
+        items = Object.keys(frequency).map(function (country) {
+            return [country, frequency[country]];
+        });
+        media=sum/Object.keys(frequency).length;
+    
+        items.sort(function(a, b) {
+            return ((a[1][0][0]+a[1][1][0]) < (b[1][0][0]+b[1][1][0])) ? 1 : -1;
+        });
+    
+        if(items.length>15){
+            items.splice(15, items.length);      
+        }
+        
+        return items;
+    }
+    else if(REG1==true && NAT2==true){
+        var frequency = {};
+        var items=[]
+        sum=0;
+        for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || data[i].place==manager.secondPlace){
+            country = data[i].provstate;
+            if (frequency[country] != undefined){
+                if(data[i].gname==manager.group){
+                    frequency[country][0][0] += 1;
+                }else{
+                    frequency[country][1][0] += 1;
+                }   
+                sum+=1
+            }
+            else{
+                if(data[i].gname==manager.group){
+                    if(data[i].place!=manager.secondPlace){
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#ffff00",data[i].place]];
+                    }else{
+                        frequency[country] = [[1,"#ff0000",data[i].place],[0,"#00ffd0",data[i].place]];
+                    }        
+                }else{
+                    if(data[i].place!=manager.secondPlace){
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#ffff00",data[i].place]];
+                    }else{
+                        frequency[country] = [[0,"#ff0000",data[i].place],[1,"#00ffd0",data[i].place]];
+                    }        
+                }   
+                sum+=1
+            }
+        }
         }
     
     
@@ -3401,6 +3648,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][0]==manager.reg2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3426,6 +3674,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3448,6 +3697,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][0]==manager.reg1 || diz[data[i].place][1]==manager.con2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3473,6 +3723,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3496,6 +3747,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || data[i].place==manager.secondPlace){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3521,6 +3773,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3543,6 +3796,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][0]==manager.reg2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3568,6 +3822,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3590,6 +3845,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(data[i].place==manager.place || diz[data[i].place][1]==manager.con2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3615,6 +3871,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3637,6 +3894,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || data[i].place==manager.secondPlace){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3662,6 +3920,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3684,6 +3943,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][0]==manager.reg2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3709,6 +3969,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3731,6 +3992,7 @@ function cfFR(data){
         var items=[]
         sum=0;
         for (i = 0; i < data.length; i++) {
+            if(diz[data[i].place][1]==manager.con1 || diz[data[i].place][1]==manager.con2){
             country = data[i].provstate;
             if (frequency[country] != undefined){
                 if(data[i].gname==manager.group){
@@ -3756,6 +4018,7 @@ function cfFR(data){
                 }   
                 sum+=1
             }
+        }
         }
     
     
@@ -3782,22 +4045,20 @@ var R=false;
 var F=false;
 var tutte=true;
 function updateChart(){
+    svgBar.selectAll("*").remove();
     if(CON1==true || CON2==true){
-
         data=[];
         data = bar_getDataC();
         tutte=false;
         showValues.checked = false;
     }
     else if((REG2==true || REG1==true) && !(CON1 || CON2)){
-
         data=[];
         data = bar_getDataR();
         tutte=false;
         showValues.checked = false;
     }
     else if(manager.place==undefined && manager.group!=undefined){
-    
         //gg==false;
         data=[];
         data = bar_getDataL();
@@ -3881,10 +4142,10 @@ function updateChart(){
                     .attr('height', function(e) { return heightBar - yBar(a[0]); })
                     .on("click", function(d,i){})
                     .on('mouseenter', function (actual, i) {
-                        d3.select(this).attr('opacity', 0.5)
+                        d3.select(this).attr('opacity', 0.5);
                     })
                     .on('mouseleave', function (actual, i) {
-                        d3.select(this).attr('opacity', 1)
+                        d3.select(this).attr('opacity', 1);
                     });
             });
         });
@@ -3908,13 +4169,13 @@ function updateChart(){
                 .attr("dy", ".35em")
                 .text(function(d) { return d[1][0][0]+d[1][1][0]; }); 
     
-        /*svgBar.append("line")
+        svgBar.append("line")
         .attr("id","limit")
         .attr("x1", xBar(1))
         .attr("x2", widthBar)
         .attr("y1", yBar(media))
         .attr("y2", yBar(media))
-        .style("stroke", "white");*/
+        .style("stroke", "white");
         
 
     }else{
@@ -3979,6 +4240,10 @@ function updateChart(){
         .attr("fill", function(d){
             if(tutte){
                 return "#743dcc";
+            }else if(manager.place==undefined){
+                if(manager.group!=undefined){
+                    return "#ff0000";
+                }
             }else if(NAT1==true && NAT2==true){
                 if(d[1][1] == manager.place) return "#ffff00";
                 else if(d[1][1] == manager.secondPlace) return "#00ffd0";
@@ -4020,10 +4285,12 @@ function updateChart(){
         .attr("margin-left", "1px").attr("selected",false)
         .on("click", function(d,i){})
         .on('mouseenter', function (actual, i) {
-            d3.select(this).attr('opacity', 0.5)
+            d3.select(this).attr('opacity', 0.5);
+            mOver(actual,true);
         })
         .on('mouseleave', function (actual, i) {
-            d3.select(this).attr('opacity', 1)
+            d3.select(this).attr('opacity', 1);
+            mOut(actual);
         });
     
         rectBar
@@ -4036,13 +4303,13 @@ function updateChart(){
                 .attr("dy", ".35em")
                 .text(function(d) { return d[1][0]; }); 
     
-        /*svgBar.append("line")
+        svgBar.append("line")
         .attr("id","limit")
         .attr("x1", xBar(1))
         .attr("x2", widthBar)
         .attr("y1", yBar(media))
         .attr("y2", yBar(media))
-        .style("stroke", "white");*/
+        .style("stroke", "white");
     
         svgBar.selectAll('rect')
             .on("mouseover", function(d, i) {
@@ -4060,7 +4327,14 @@ function updateChart(){
         .attr("height", function(fcy) { return heightBar - yBar(fcy[1]); })
         .attr("fill", function(d){
             if(tutte){
+                if(manager.group!=undefined){
+                    return "#ff0000";
+                }
                 return "#743dcc";
+            }else if(manager.place==undefined){
+                if(manager.group!=undefined){
+                    return "#ff0000";
+                }
             }else if(NAT1==true && NAT2==true){
                 if(d[0] == manager.place) return "#ffff00";
                 else if(d[0] == manager.secondPlace) return "#00ffd0";
@@ -4102,10 +4376,10 @@ function updateChart(){
         .attr("margin-left", "1px").attr("selected",false)
         .on("click", function(d,i){})
         .on('mouseenter', function (actual, i) {
-            d3.select(this).attr('opacity', 0.5)
+            d3.select(this).attr('opacity', 0.5);
         })
         .on('mouseleave', function (actual, i) {
-            d3.select(this).attr('opacity', 1)
+            d3.select(this).attr('opacity', 1);
         });
     
         rectBar
@@ -4118,13 +4392,13 @@ function updateChart(){
                 .attr("dy", ".35em")
                 .text(function(d) { return d[1]; }); 
     
-        /*svgBar.append("line")
+        svgBar.append("line")
         .attr("id","limit")
         .attr("x1", xBar(1))
         .attr("x2", widthBar)
         .attr("y1", yBar(media))
         .attr("y2", yBar(media))
-        .style("stroke", "white");*/
+        .style("stroke", "white");
 
         }
     } 
@@ -4152,28 +4426,44 @@ function bar_getDT(){
 
 manager.addListener('parallelBrushing', function (e) {
     if (manager.filteringByYear){
-        svgBar.selectAll("*").remove();
         showValues.checked = false;
-        updateChart();
+        if(ratepop.value=="nuova"){
+            mostraPop();
+            ratepop.value="nuova";
+        }else{
+            updateChart();
+            ratepop.value="normale";
+        } 
     }
 });
 
 manager.addListener('groupChanged', function (e) {
     showValues.checked = false;
-    svgBar.selectAll("*").remove();
+
     if(manager.group==undefined){
         gg=false;
     }
     if(manager.place!=undefined && manager.group!=undefined){
         gg=true;
     }
-    updateChart();
+    if(ratepop.value=="nuova"){
+        mostraPop();
+        ratepop.value="nuova";
+    }else{
+        updateChart();
+        ratepop.value="normale";
+    } 
 });
 
 manager.addListener('yearChanged', function (e) {
     showValues.checked = false;
-    svgBar.selectAll("*").remove();
-    updateChart();
+    if(ratepop.value=="nuova"){
+        mostraPop();
+        ratepop.value="nuova";
+    }else{
+        updateChart();
+        ratepop.value="normale";
+    } 
 });
 
 /*
@@ -4196,7 +4486,7 @@ showValues.addEventListener("change", function(){
         sv.innerHTML="Show Countries";
         R=true;
     }
-    svgBar.selectAll("*").remove();
+
     updateChart();
 })
 
@@ -4208,11 +4498,12 @@ showValues2.addEventListener("change", function(){
         sv2.innerHTML="Show freq";
         F=true;
     }
-    svgBar.selectAll("*").remove();
+
     updateChart();
 })
 
 function GT(){
+    svgBar.selectAll("*").remove();
     if(CON1==true || CON2==true){
 
        data=[];
@@ -4306,13 +4597,13 @@ function GT(){
            .attr("dy", ".35em")
            .text(function(d) { return d[1]; });
 
-  /* svgBar.append("line")
+   svgBar.append("line")
    .attr("id","limit")
    .attr("x1", xBar(1))
    .attr("x2", widthBar)
    .attr("y1", yBar(media))
    .attr("y2", yBar(media))
-   .style("stroke", "white");*/
+   .style("stroke", "white");
 }
 
 function computeGT(data){
@@ -4690,3 +4981,135 @@ showValues3.addEventListener("change", function(){
         GT();      
     }
 })
+
+var ratepop = document.getElementById("ratepop");
+ratepop.addEventListener("change", function(){
+    if(ratepop.value=="nuova"){
+        document.getElementById("showDiv").style.display = "none";
+        document.getElementById("showDiv2").style.display = "none";
+        document.getElementById("showDiv3").style.display = "none";
+        mostraPop();
+    }else{
+        document.getElementById("showDiv").style.display = null;
+        document.getElementById("showDiv2").style.display = null;
+        document.getElementById("showDiv3").style.display = null;
+        updateChart();
+    }
+    
+})
+
+
+
+function mostraPop(){
+    svgBar.selectAll("*").remove();
+    var data = bar_getData();
+    tutte=true;
+    showValues.checked = false;
+    fqcs = computeRate(data);
+    xBar.domain(fqcs.map(function(fcy) { return fcy[0]; }));
+    yBar.domain([0, d3.max(fqcs.map(function(fcy) { return fcy[1]; }))]);
+ 
+    xAxisBar = svgBar.append("g")
+    .attr("class", "x-axisBar")
+    .attr("transform", "translate(0," + heightBar + ")")
+    .call(d3.axisBottom(xBar))
+ 
+    xAxisBar.selectAll("text")
+    .style("fill", "#E8EDDF")
+    .attr("transform", "rotate(45)")
+    .style("text-anchor", "start")
+    .attr("dx", ".71em");
+    
+    yAxisBar = svgBar.append("g")
+    .attr("class", "y-axisBar")
+    .attr("x",-5)
+    .call(d3.axisLeft(yBar))
+ 
+    yAxisBar.selectAll("text")
+    .style("fill", "#E8EDDF")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+ 
+    var rectBar = svgBar.selectAll(".bar")
+                        .data(fqcs)
+                        .enter();
+    
+    rectBar.append("rect")
+    .attr("class", "barRect")
+    .attr("x", function(fcy) {return xBar(fcy[0]); })
+    .attr("width", xBar.bandwidth)
+    .attr("y", function(fcy) { return yBar(fcy[1]); })
+    .attr("height", function(fcy) { return heightBar - yBar(fcy[1]); })
+    .attr("fill", "#95AEC9")
+    .attr("margin-left", "1px").attr("selected",false)
+    .on("click", function(d,i){
+        vm.$children[0].onChange(d[0])
+        sv3.innerHTML="Show GT";
+    })
+    .on('mouseenter', function (actual, i) {
+        d3.select(this).attr('opacity', 0.5)
+    })
+    .on('mouseleave', function (actual, i) {
+        d3.select(this).attr('opacity', 1)
+    });
+ 
+    rectBar
+        .append("text")
+            .attr("class", "barValues")
+            .attr("x", function(d) { return xBar(d[0]) + (xBar.bandwidth())/2; })
+            .attr("y", function(d) { return yBar(d[1]) - 8; })
+            .style("fill", "#E8EDDF")
+            .style("text-anchor", "middle")
+            .attr("dy", ".35em")
+            .text(function(d) { return d[1]; });
+ 
+    svgBar.append("line")
+    .attr("id","limit")
+    .attr("x1", xBar(1))
+    .attr("x2", widthBar)
+    .attr("y1", yBar(media2))
+    .attr("y2", yBar(media2))
+    .style("stroke", "white");
+}
+
+var media2;
+
+function computeRate(data){
+    var ccc=0;
+    var sum2=0.0;
+    var frequency = {};
+    var items=[];
+    for (i = 0; i < data.length; i++) {
+        country = data[i].place;
+        if (frequency[country] != undefined){
+            frequency[country] += parseInt(data[i].nkill);
+        }
+        else{
+            frequency[country] = parseInt(data[i].nkill);
+        }
+    }
+
+    items = Object.keys(frequency).map(function (country) {
+        if(manager.mrate[country]!=undefined && manager.pop[country]!=undefined){
+            sum2+=parseFloat(((((frequency[country]*100000/parseInt(manager.pop[country]))/(manager.mrate[country]))* 100) / 100).toFixed(2));
+            ccc+=1;
+            return [country, (Math.round(((frequency[country]*100000/parseInt(manager.pop[country]))/(manager.mrate[country])) * 100) / 100).toFixed(2)];
+        }else{
+            return [country, 0];
+        }
+    });
+    
+    console.log(sum2);
+    console.log(ccc);
+    media2=sum2/ccc;
+
+    items.sort(function(a, b) {
+        return (a[1] < b[1]) ? 1 : -1;;
+    });
+    if(items.length>15){
+        items.splice(15, items.length);      
+    }
+
+    return items;
+}
