@@ -2,7 +2,7 @@
 
 Visual Analytics project for Global Terrorism analysis and deep exploration
 <br><br>
-There it is a link to the <a href="https://github.com/ottobreludovico/VAProject/tree/main/docs/paper.pdf">paper</a> of the project
+There it is a link to the <a href="https://github.com/ottobreludovico/VAProject/blob/main/docs/GlobalTerrorism.pdf">paper</a> of the project
 <br><br>
 There it is a link to the <a href="https://github.com/ottobreludovico/VAProject/tree/main/docs/report.pptx">slides</a> of the project
 <br><br>
